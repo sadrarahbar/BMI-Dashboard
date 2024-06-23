@@ -9,7 +9,7 @@ import React from 'react';
  * @returns
  */
 
-const Welcome: React.FC = () => {
+const Dashboard: React.FC = () => {
   const { token } = theme.useToken();
   const { initialState } = useModel('@@initialState');
   return (
@@ -44,7 +44,7 @@ const Welcome: React.FC = () => {
               width: '65%',
             }}
           >
-            خوش آمدید
+            نمودار
           </p>
         </div>
       </Card>
@@ -52,4 +52,4 @@ const Welcome: React.FC = () => {
   );
 };
 
-export default Welcome;
+export default Dashboard;
