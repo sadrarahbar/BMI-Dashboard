@@ -23,10 +23,27 @@ export default [
     ],
   },
   {
-    path: '/welcome',
-    name: 'welcome',
+    path: '/dashboard',
+    name: 'dashboard',
     icon: 'smile',
-    component: './Welcome',
+    component: './dashboard',
+  },
+  {
+    path: '/content',
+    name: 'content',
+    icon: 'smile',
+    routes: [
+      // {
+      //         path: '/content',
+      //         redirect: '/content/news',
+      //       },
+      {
+        path: '/content/news',
+        name: 'news',
+        icon: 'smile',
+        component: './news',
+      },
+    ],
   },
   {
     path: '/admin',
@@ -53,7 +70,7 @@ export default [
   },
   {
     path: '/',
-    redirect: '/welcome',
+    redirect: '/dashboard',
   },
   {
     path: '*',

@@ -8,6 +8,8 @@ export default {
   'menu.register': 'ثبت نام',
   'menu.register-result': 'ثبت نام نتیجه',
   'menu.dashboard': 'داشبورد',
+  'menu.content': 'محتوی',
+  'menu.content.news': 'خبر ها',
   'menu.dashboard.analysis': 'تحلیل و بررسی',
   'menu.dashboard.monitor': 'نظارت',
   'menu.dashboard.workplace': 'محل کار',
