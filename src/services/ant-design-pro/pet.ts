@@ -44,7 +44,12 @@ export async function getPetById(
 export async function updatePetWithForm(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.updatePetWithFormParams,
-  body: { name?: string; status?: string },
+  body: {
+    /** Updated name of the pet */
+    name?: string;
+    /** Updated status of the pet */
+    status?: string;
+  },
   options?: { [key: string]: any },
 ) {
   const { petId: param0, ...queryParams } = params;
@@ -77,7 +82,10 @@ export async function deletePet(
 export async function uploadFile(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.uploadFileParams,
-  body: { additionalMetadata?: string; file?: string },
+  body: {
+    /** Additional data to pass to server */
+    additionalMetadata?: string;
+  },
   file?: File,
   options?: { [key: string]: any },
 ) {
@@ -128,7 +136,7 @@ export async function findPetsByStatus(
   });
 }
 
-/** Finds Pets by tags Muliple tags can be provided with comma separated strings. Use         tag1, tag2, tag3 for testing. GET /pet/findByTags */
+/** Finds Pets by tags Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing. GET /pet/findByTags */
 export async function findPetsByTags(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.findPetsByTagsParams,

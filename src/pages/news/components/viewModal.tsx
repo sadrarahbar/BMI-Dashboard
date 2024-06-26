@@ -1,19 +1,23 @@
-import { ActionType, ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-components';
+import { ActionType, 
+        // ModalForm, ProFormText, ProFormTextArea
+ } from '@ant-design/pro-components';
 
 import { FC, ReactElement } from 'react';
 
 interface ViewModalProps {
   reload?: ActionType['reload'];
-  values: API.NewsItem;
+//   values: API.NewsItem;
   trigger: ReactElement;
 }
 
-const ViewModal: FC<ViewModalProps> = (props) => {
-  const { trigger, values } = props;
+const ViewModal: FC<ViewModalProps> = (
+        // props
+) => {
+//   const { trigger, values } = props;
 
   return (
     <>
-      <ModalForm
+      {/* <ModalForm
         readonly
         title="مشاهده جزئیات خبر"
         trigger={trigger}
@@ -30,7 +34,7 @@ const ViewModal: FC<ViewModalProps> = (props) => {
         <ProFormText name="id" label={'آیدی خبر'} initialValue={values?.id} />
         <ProFormText name="userId" label={'آیدی کاربر'} initialValue={values?.userId} />
         <ProFormTextArea label={'محتوی'} name="body" initialValue={values?.body} />
-      </ModalForm>
+      </ModalForm> */}
     </>
   );
 };

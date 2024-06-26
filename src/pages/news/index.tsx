@@ -1,16 +1,20 @@
-import { DeleteOutlined, EyeOutlined, FormOutlined } from '@ant-design/icons';
-import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
-import { useModel } from '@umijs/max';
-import { Button, Card, Modal, Tooltip } from 'antd';
-import React, { useRef } from 'react';
-import { useRequest } from 'umi';
-import AddModal from './components/addModal';
-import EditModal from './components/editModal';
-import ViewModal from './components/viewModal';
-import useStyles from './style.style';
+// import { DeleteOutlined, EyeOutlined, FormOutlined } from '@ant-design/icons';
+import {
+        //  ActionType,
+         PageContainer,
+        //   ProColumns, ProTable 
+        } from '@ant-design/pro-components';
+// import { useModel } from '@umijs/max';
+// import { Button, Card, Modal, Tooltip } from 'antd';
+// import React, { useRef } from 'react';
+// import { useRequest } from 'umi';
+// import AddModal from './components/addModal';
+// import EditModal from './components/editModal';
+// import ViewModal from './components/viewModal';
+// import useStyles from './style.style';
 
 const News: React.FC = () => {
-  const { styles: classes } = useStyles();
+//   const { styles: classes } = useStyles();
   //   const mockNewsList: API.NewsItem[] = [
   //     {
   //       id: 1,
@@ -31,102 +35,102 @@ const News: React.FC = () => {
   //     },
   //   ];
 
-  const showDeleteconfirm = () =>
-    // currentItem: API.NewsItem
-    {
-      Modal.confirm({
-        title: 'حذف کار',
-        content: 'آیا مطمئن هستید که می‌خواهید این خبر را حذف کنید؟',
-        okText: 'تأیید',
-        cancelText: 'لغو',
-        centered: true,
-        style: { direction: 'rtl' },
-        //       onOk() {
-        //         console.log('OK');
-        //       },
-        //       onCancel() {
-        //         console.log('Cancel');
-        //       },
-        //   onOk: () => deleteItem(currentItem),
-      });
-    };
-  const actionRef = useRef<ActionType>();
-  const { data, error, loading } = useRequest(async () => {
-    const response = await fetch('https://jsonplaceholder.typicode.com/posts');
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  });
+//   const showDeleteconfirm = () =>
+//     // currentItem: API.NewsItem
+//     {
+//       Modal.confirm({
+//         title: 'حذف کار',
+//         content: 'آیا مطمئن هستید که می‌خواهید این خبر را حذف کنید؟',
+//         okText: 'تأیید',
+//         cancelText: 'لغو',
+//         centered: true,
+//         style: { direction: 'rtl' },
+//         //       onOk() {
+//         //         console.log('OK');
+//         //       },
+//         //       onCancel() {
+//         //         console.log('Cancel');
+//         //       },
+//         //   onOk: () => deleteItem(currentItem),
+//       });
+//     };
+//   const actionRef = useRef<ActionType>();
+//   const { data, error, loading } = useRequest(async () => {
+//     const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+//     if (!response.ok) {
+//       throw new Error('Network response was not ok');
+//     }
+//     return response.json();
+//   });
 
-  const { initialState } = useModel('@@initialState');
+//   const { initialState } = useModel('@@initialState');
 
-  const columns: ProColumns<API.NewsItem>[] = [
-    {
-      title: 'آیدی خبر',
-      dataIndex: 'id',
-      sorter: true,
-    },
-    {
-      title: 'آیدی کاربر',
-      dataIndex: 'userId',
-    },
-    {
-      title: 'عنوان',
-      dataIndex: 'title',
-      sorter: true,
-    },
-    {
-      title: 'محتوا',
-      dataIndex: 'body',
-      sorter: true,
-    },
+//   const columns: ProColumns<API.NewsItem>[] = [
+//     {
+//       title: 'آیدی خبر',
+//       dataIndex: 'id',
+//       sorter: true,
+//     },
+//     {
+//       title: 'آیدی کاربر',
+//       dataIndex: 'userId',
+//     },
+//     {
+//       title: 'عنوان',
+//       dataIndex: 'title',
+//       sorter: true,
+//     },
+//     {
+//       title: 'محتوا',
+//       dataIndex: 'body',
+//       sorter: true,
+//     },
 
-    {
-      title: 'عملیات',
-      dataIndex: 'actions',
-      valueType: 'option',
-      render: (_, record) => {
-        return [
-          <ViewModal
-            trigger={
-              <Button shape="circle" key="view" className={classes.viewButton}>
-                <Tooltip title="مشاهده">
-                  <EyeOutlined />
-                </Tooltip>
-              </Button>
-            }
-            key="view"
-            //     onOk={actionRef.current?.reload}
-            values={record}
-          />,
-          <EditModal
-            trigger={
-              <Button shape="circle" key="edit" className={classes.editButton}>
-                <Tooltip title="ویرایش">
-                  <FormOutlined />
-                </Tooltip>
-              </Button>
-            }
-            key="edit"
-            //     onOk={actionRef.current?.reload}
-            values={record}
-          />,
+//     {
+//       title: 'عملیات',
+//       dataIndex: 'actions',
+//       valueType: 'option',
+//       render: (_, record) => {
+//         return [
+//           <ViewModal
+//             trigger={
+//               <Button shape="circle" key="view" className={classes.viewButton}>
+//                 <Tooltip title="مشاهده">
+//                   <EyeOutlined />
+//                 </Tooltip>
+//               </Button>
+//             }
+//             key="view"
+//             //     onOk={actionRef.current?.reload}
+//             values={record}
+//           />,
+//           <EditModal
+//             trigger={
+//               <Button shape="circle" key="edit" className={classes.editButton}>
+//                 <Tooltip title="ویرایش">
+//                   <FormOutlined />
+//                 </Tooltip>
+//               </Button>
+//             }
+//             key="edit"
+//             //     onOk={actionRef.current?.reload}
+//             values={record}
+//           />,
 
-          <Button
-            key="delete"
-            onClick={() => showDeleteconfirm(record)}
-            className={classes.deleteButton}
-            shape="circle"
-          >
-            <Tooltip title="حذف">
-              <DeleteOutlined />
-            </Tooltip>
-          </Button>,
-        ];
-      },
-    },
-  ];
+//           <Button
+//             key="delete"
+//             onClick={() => showDeleteconfirm(record)}
+//             className={classes.deleteButton}
+//             shape="circle"
+//           >
+//             <Tooltip title="حذف">
+//               <DeleteOutlined />
+//             </Tooltip>
+//           </Button>,
+//         ];
+//       },
+//     },
+//   ];
   //     const columns: ProColumns<API.NewsItem>[] = [
   //         {
   //           title: 'عنوان',
@@ -201,16 +205,16 @@ const News: React.FC = () => {
   //           },
   //         },
   //       ];
-  if (loading) {
-    return <div>در حال بارگزاری ...</div>;
-  }
+//   if (loading) {
+//     return <div>در حال بارگزاری ...</div>;
+//   }
 
-  if (error) {
-    return <div>خطا : {error.message}</div>;
-  }
+//   if (error) {
+//     return <div>خطا : {error.message}</div>;
+//   }
   return (
     <PageContainer>
-      <Card
+      {/* <Card
         style={{}}
         styles={{
           body: {
@@ -220,8 +224,8 @@ const News: React.FC = () => {
                 : 'background-image: linear-gradient(75deg, #FBFDFF 0%, #F5F7FF 100%)',
           },
         }}
-      >
-        <ProTable
+      > */}
+        {/* <ProTable
           //   dataSource={newsList}
           dataSource={data}
           columns={columns}
@@ -243,9 +247,9 @@ const News: React.FC = () => {
               }
             />,
           ]}
-        />
+        /> */}
         {/* {data && data.map((post: any) => <li key={post.id}>{post.title}</li>)} */}
-      </Card>
+      {/* </Card> */}
     </PageContainer>
   );
 };
