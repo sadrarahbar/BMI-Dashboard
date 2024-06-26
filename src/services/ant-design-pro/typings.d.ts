@@ -98,4 +98,19 @@ declare namespace API {
     description?: string;
     type?: NoticeIconItemType;
   };
+  type NewsList = {
+    data?: NewsItem[];
+    total?: number;
+    success?: boolean;
+  };
+  type NewsItemType = 'ورزشی' | 'تکنولوژی' | 'نامشخص';
+
+  type NewsItem = {
+    id: number;
+    title: string;
+    category: NewsItemType; // Category of the news item (e.g., "Sports", "Technology")
+    author?: string; // Author of the news item (optional)
+    content?: string; // Content of the news item (optional)
+    publishDate: string;
+  };
 }
