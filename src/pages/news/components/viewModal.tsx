@@ -27,9 +27,9 @@ const ViewModal: FC<ViewModalProps> = (props) => {
           // labelClassName={}
           initialValue={values?.title}
         />
-        <ProFormText name="category" label={'دسته'} initialValue={values?.category} />
-        <ProFormTextArea label={'محتوی'} name="desc" initialValue={values?.content} />
-        <ProFormText name="publishDate" label={'تاریخ انتشار'} initialValue={values?.publishDate} />
+        <ProFormText name="id" label={'آیدی خبر'} initialValue={values?.id} />
+        <ProFormText name="userId" label={'آیدی کاربر'} initialValue={values?.userId} />
+        <ProFormTextArea label={'محتوی'} name="body" initialValue={values?.body} />
       </ModalForm>
     </>
   );

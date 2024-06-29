@@ -54,24 +54,9 @@ const AddModal: FC<AddModalProps> = (props) => {
           ]}
         />
         <ProFormText
-          name="category"
-          label={'دسته'}
+          name="id"
+          label={'آیدی خبر'}
           // initialValue={values?.category}
-          rules={[
-            {
-              required: true,
-              message: 'ورود این فیلد الزامی است',
-            },
-          ]}
-          valueEnum={{
-            1: 'ورزشی',
-            2: 'تکنولوژی',
-          }}
-        />
-        <ProFormTextArea
-          label={'محتوی'}
-          name="desc"
-          // initialValue={values?.content}
           rules={[
             {
               required: true,
@@ -80,9 +65,20 @@ const AddModal: FC<AddModalProps> = (props) => {
           ]}
         />
         <ProFormText
-          name="publishDate"
-          label={'تاریخ انتشار'}
-          // initialValue={values?.publishDate}
+          name="userId"
+          label={'آیدی کاربر'}
+          // initialValue={values?.category}
+          rules={[
+            {
+              required: true,
+              message: 'ورود این فیلد الزامی است',
+            },
+          ]}
+        />
+        <ProFormTextArea
+          label={'محتوی'}
+          name="body"
+          // initialValue={values?.content}
           rules={[
             {
               required: true,
