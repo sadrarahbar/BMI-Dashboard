@@ -233,7 +233,7 @@ const StepForm: React.FC<Record<string, any>> = () => {
             margin: '40px 0 24px',
           }}
         /> */}
-        <div>
+        {/* <div>
           <h3>نشان دادن</h3>
           <h4>انتقال به حساب Alipay</h4>
           <p>
@@ -247,7 +247,7 @@ const StepForm: React.FC<Record<string, any>> = () => {
             می توانید سوالات متداول در مورد محصول را در اینجا قرار دهید. در صورت نیاز، می توانید
             سوالات متداول در مورد محصول را در اینجا قرار دهید.
           </p>
-        </div>
+        </div> */}
       </Card>
     </PageContainer>
   );

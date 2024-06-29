@@ -37,6 +37,14 @@ ol {
   list-style: none;
 }
 
+// required
+
+.ant-form-item-required::before {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
 // Date Picker
 .rmdp-container {
   width: 100%;
@@ -89,4 +97,10 @@ ol {
       }
     }
   }
+}
+
+// Button Step form
+.ant-pro-steps-form-container .ant-space {
+  display: flex;
+  justify-content: end;
 }
