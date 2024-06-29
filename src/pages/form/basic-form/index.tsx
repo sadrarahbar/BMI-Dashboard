@@ -1,18 +1,27 @@
+import { InboxOutlined } from '@ant-design/icons';
 import {
   PageContainer,
   ProCard,
-  ProFormDatePicker,
-  ProFormDateRangePicker,
+  ProForm,
   ProFormDependency,
-  ProFormDigit,
   ProFormRadio,
   ProFormSelect,
-  ProFormText,
   ProFormTextArea,
-  ProFormUploadDragger,
 } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
-import { Card, Divider, Form, Input, Radio, RadioChangeEvent, message } from 'antd';
+import {
+  Button,
+  Card,
+  Divider,
+  Flex,
+  Form,
+  Input,
+  Radio,
+  RadioChangeEvent,
+  Upload,
+  UploadProps,
+  message,
+} from 'antd';
 import Mock from 'mockjs';
 import type { FC } from 'react';
 import { useState } from 'react';
@@ -20,7 +29,8 @@ import persian from 'react-date-object/calendars/persian';
 import persian_fa from 'react-date-object/locales/persian_fa';
 import DatePicker from 'react-multi-date-picker';
 import { fakeSubmitForm } from './service';
-import useStyles from './style.style';
+import TinyMceEditor from './tinyEditor';
+
 export const waitTime = (time: number = 100) => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -30,8 +40,6 @@ export const waitTime = (time: number = 100) => {
 };
 
 const BasicForm: FC<Record<string, any>> = () => {
-  const { styles } = useStyles();
-  const [form] = Form.useForm();
   const { run } = useRequest(fakeSubmitForm, {
     manual: true,
     onSuccess: () => {
@@ -80,15 +88,94 @@ const BasicForm: FC<Record<string, any>> = () => {
   const [radioValue, setRadioValue] = useState(1);
 
   const onChangeRadio = (e: RadioChangeEvent) => {
-    console.log('radio checked', e.target.value);
     setRadioValue(e.target.value);
   };
+
+  // Upload file
+
+  const { Dragger } = Upload;
+  const draggerProps: UploadProps = {
+    name: 'file',
+    multiple: true,
+    fileList: [],
+    action: 'https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload',
+    onChange(info) {
+      const { status } = info.file;
+      // if (status !== "uploading") {
+      //   console.log(info.file, info.fileList);
+      // }
+      if (status === 'done') {
+        message.success(`${info.file.name} file uploaded successfully.`);
+      } else if (status === 'error') {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+    // onDrop(e) {
+    //   console.log("Dropped files", e.dataTransfer.files);
+    // },
+  };
+
+  const [form] = Form.useForm();
+
+  // console.log(form.getFieldError('date'))
 
   return (
     <PageContainer content="از صفحات فرم برای جمع آوری یا تایید اطلاعات از کاربران استفاده می شود.">
       <Card>
-        <Form
-          form={form}
+        <ProForm
+          submitter={{
+            // Configure the button text
+            searchConfig: {
+              resetText: 'reset',
+              submitText: 'submit',
+            },
+            // Configure the properties of the button
+            resetButtonProps: {
+              style: {
+                // Hide the reset button
+                display: 'none',
+              },
+            },
+            submitButtonProps: {},
+
+            // Fully customize the entire area
+            render: (props) => {
+              return [
+                <Flex key="submitter" gap="middle" style={{ flexDirection: 'row-reverse' }}>
+                  <Form.Item>
+                    <Button
+                      key="submit"
+                      type="primary"
+                      htmlType="submit"
+                      onClick={() => props.form?.submit?.()}
+                    >
+                      ثبت
+                    </Button>
+                  </Form.Item>
+                  <Form.Item>
+                    <Button key="rest" htmlType="reset" onClick={() => props.form?.resetFields()}>
+                      انصراف
+                    </Button>
+                  </Form.Item>
+                </Flex>,
+                // <button
+                //   type="button"
+                //   key="rest"
+                //   onClick={() => props.form?.resetFields()}
+                // >
+                //   Reset
+                // </button>,
+                // <button
+                //   type="button"
+                //   key="submit"
+                //   onClick={() => props.form?.submit?.()}
+                // >
+                //   Submit
+                // </button>,
+              ];
+            },
+          }}
+          // ref={formRef}
           // style={{
           //   width: '100%'
           //   // margin: 'auto',
@@ -99,7 +186,23 @@ const BasicForm: FC<Record<string, any>> = () => {
           // layout="horizontal"
           layout="vertical"
           initialValues={{
-            public: '1',
+            name: '',
+            title: '',
+            number: '',
+            email: '',
+            codemelli: '',
+            sex: '',
+            date: '',
+            file: '',
+            multiSelect: [],
+            select2: '',
+            goal: '',
+            standard: '',
+            client: '',
+            invites: '',
+            weight: '',
+            publicType: '',
+            publicUsers: '',
           }}
           onFinish={onFinish}
         >
@@ -167,7 +270,7 @@ const BasicForm: FC<Record<string, any>> = () => {
             </Radio.Group>
           </Form.Item>
 
-          <ProFormDateRangePicker
+          {/* <ProFormDateRangePicker
             label="تاریخ شروع و پایان"
             name="date"
             rules={[
@@ -183,7 +286,31 @@ const BasicForm: FC<Record<string, any>> = () => {
               },
             }}
             placeholder={['تاریخ شروع', 'تاریخ پایان']}
-          />
+          /> */}
+          {/* <Form.Item
+            label="تاریخ شروع و پایان"
+            name="dateduration"
+            rules={[
+              {
+                required: true,
+                message: "لطفا تاریخ را وارد کنید .",
+              },
+            ]}
+          >
+            <DatePicker
+              multiple
+              range
+              calendar={persian}
+              locale={persian_fa}
+              calendarPosition="bottom-right"
+              inputClass={
+                form.getFieldError("dateduration").length
+                  ? " rmdp-input-datePicker error-border"
+                  : "rmdp-input-datePicker"
+              }
+            />
+          </Form.Item> */}
+
           <Form.Item
             label="تاریخ"
             name="date"
@@ -199,21 +326,44 @@ const BasicForm: FC<Record<string, any>> = () => {
               locale={persian_fa}
               calendarPosition="bottom"
               inputClass={
-                form.getFieldError('date').length
+                form.getFieldError('date')?.length
                   ? ' rmdp-input-datePicker error-border'
                   : 'rmdp-input-datePicker'
               }
+              // inputClass='rmdp-input-datePicker'
             />
           </Form.Item>
-          <ProFormUploadDragger
+          {/* <ProFormUploadDragger
+            accept="image/*, video/*"
             description=""
             title="برای بارگزاری فایل کلیک کنید یا فایل را اینجا رها کنید"
-            max={4}
             label="آپلود فایل"
             name="آپلود"
-          />
+          /> */}
+
+          <Form.Item
+            label="بارگزاری فایل"
+            name="file"
+            rules={[
+              {
+                required: true,
+                message: 'لطفا بارگزاری کنید',
+              },
+            ]}
+          >
+            <Dragger {...draggerProps}>
+              <p className="ant-upload-drag-icon">
+                <InboxOutlined />
+              </p>
+              <p className="ant-upload-text">
+                برای بارگزاری فایل کلیک کنید یا فایل را اینجا رها کنید
+              </p>
+              <p className="ant-upload-hint">jpg - png - jpeg</p>
+            </Dragger>
+          </Form.Item>
+
           <ProFormSelect
-            name="چند انتخابی"
+            name="multiSelect"
             label="چند انتخابی"
             valueEnum={{
               t1: 'مورد اول',
@@ -302,7 +452,7 @@ const BasicForm: FC<Record<string, any>> = () => {
             ]}
             placeholder="لطفا معیارها را وارد کنید"
           />
-
+          {/* 
           <ProFormText
             // width="md"
             label={
@@ -314,9 +464,9 @@ const BasicForm: FC<Record<string, any>> = () => {
             tooltip="دریافت کنندگان خدمات هدف"
             name="client"
             placeholder="لطفاً مشتریانی را که به آنها خدمات ارائه می‌دهید توصیف کنید، مشتریان داخلی مستقیماً @name/job number"
-          />
+          /> */}
 
-          <ProFormText
+          {/* <ProFormText
             // width="md"
             label={
               <span>
@@ -326,9 +476,9 @@ const BasicForm: FC<Record<string, any>> = () => {
             }
             name="invites"
             placeholder="لطفا مستقیماً @name/شماره کارمند، می توانید حداکثر 5 نفر را دعوت کنید"
-          />
-
-          <ProFormDigit
+          /> */}
+          <TinyMceEditor name="description" label="توضیحات" required />
+          {/* <ProFormDigit
             label={
               <span>
                 وزن ها
@@ -344,18 +494,7 @@ const BasicForm: FC<Record<string, any>> = () => {
               formatter: (value) => `${value || 0}%`,
               parser: (value) => Number(value ? value.replace('%', '') : '0'),
             }}
-          />
-
-          <ProFormDatePicker
-            // width="md"
-            name="تاریخ"
-            label="تاریخ"
-            fieldProps={{
-              style: {
-                width: '100%',
-              },
-            }}
-          />
+          /> */}
           <ProCard title="هدف " bordered collapsible>
             <ProFormRadio.Group
               options={[
@@ -375,6 +514,12 @@ const BasicForm: FC<Record<string, any>> = () => {
               // label="عمومی هدف"
               help="مشتریان و بازبین ها به طور پیش فرض به اشتراک گذاشته می شوند"
               name="publicType"
+              rules={[
+                {
+                  required: true,
+                  message: 'لطفا را وارد کنید',
+                },
+              ]}
             />
 
             <ProFormDependency name={['publicType']}>
@@ -413,7 +558,18 @@ const BasicForm: FC<Record<string, any>> = () => {
               margin: '24px 0',
             }}
           />
-        </Form>
+
+          {/* <Flex gap="middle" style={{ flexDirection: "row-reverse" }}>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                ثبت
+              </Button>
+            </Form.Item>
+            <Form.Item>
+              <Button htmlType="reset">انصراف</Button>
+            </Form.Item>
+          </Flex> */}
+        </ProForm>
       </Card>
     </PageContainer>
   );
