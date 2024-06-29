@@ -17,7 +17,7 @@ export default {
   'menu.exception.404': '404',
   'menu.exception.500': '500',
   'menu.form': 'فرم',
-  'menu.form.basic-form': 'فرم اساسی',
+  'menu.form.basic-form': 'فرم ساده',
   'menu.form.step-form': 'فرم مرحله',
   'menu.form.step-form.info': 'فرم مرحله (نوشتن اطلاعات انتقال)',
   'menu.form.step-form.confirm': 'فرم مرحله (تأیید اطلاعات انتقال)',
