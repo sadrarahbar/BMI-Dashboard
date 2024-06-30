@@ -1,4 +1,5 @@
 import { Footer } from '@/components';
+import { history } from '@umijs/max';
 // import { login } from '@/services/ant-design-pro/api';
 import { loginUser } from '@/services/ant-design-pro/user';
 // import { getFakeCaptcha } from '@/services/ant-design-pro/login';
@@ -16,11 +17,11 @@ import {
   ProFormCheckbox,
   ProFormText,
 } from '@ant-design/pro-components';
-import { FormattedMessage, Helmet, SelectLang, useIntl } from '@umijs/max';
+import { FormattedMessage, Helmet, SelectLang, useIntl, useModel, useNavigate } from '@umijs/max';
 import { message, Tabs } from 'antd';
 import { createStyles } from 'antd-style';
 import React, { useState } from 'react';
-// import { flushSync } from 'react-dom';
+import { flushSync } from 'react-dom';
 import Settings from '../../../../config/defaultSettings';
 
 const useStyles = createStyles(({ token }) => {
@@ -80,7 +81,6 @@ const Lang = () => {
     </div>
   );
 };
-
 // const LoginMessage: React.FC<{
 //   content: string;
 // }> = ({ content }) => {
@@ -97,43 +97,86 @@ const Lang = () => {
 // };
 
 const Login: React.FC = () => {
-  const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
+  const [userLoginState, setUserLoginState] = useState<API.loginUserResponse['currentUser']>({});
   const [type, setType] = useState<string>('account');
-  //   const { initialState, setInitialState } = useModel('@@initialState');
+  const { initialState, setInitialState } = useModel('@@initialState');
+
   const { styles } = useStyles();
   const intl = useIntl();
-
-  //   const fetchUserInfo = async () => {
-  //     const userInfo = await initialState?.fetchUserInfo?.();
-  //     if (userInfo) {
-  //       flushSync(() => {
-  //         setInitialState((s) => ({
-  //           ...s,
-  //           currentUser: userInfo,
-  //         }));
-  //       });
-  //     }
-  //   };
-
+  const navigate = useNavigate();
+  console.log('initialState:', initialState);
   const handleSubmit = async (values: API.loginUserParams) => {
     try {
       // 登录
-      const msg = await loginUser({ ...values });
-      console.log(msg);
-      //       if (msg.status === 'ok') {
-      //         const defaultLoginSuccessMessage = intl.formatMessage({
-      //           id: 'pages.login.success',
-      //           defaultMessage: '登录成功！',
-      //         });
-      //         message.success(defaultLoginSuccessMessage);
-      //         // await fetchUserInfo();
-      //         // const urlParams = new URL(window.location.href).searchParams;
-      //         // history.push(urlParams.get('redirect') || '/');
-      //         return;
-      //       }
-      //       console.log(msg);
-      // 如果失败去设置用户错误信息
-      //       setUserLoginState(msg);
+      const res = await loginUser({ ...values });
+      if (res?.message?.includes('logged in')) {
+        message.success('با موفقیت  وارد شدید !');
+        const currentUserData = {
+          name: 'Serati Ma',
+          avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+          userid: '00000001',
+          email: 'antdesign@alipay.com',
+          signature: '海纳百川，有容乃大',
+          title: '交互专家',
+          group: '蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED',
+          tags: [
+            {
+              key: '0',
+              label: '很有想法的',
+            },
+            {
+              key: '1',
+              label: '专注设计',
+            },
+            {
+              key: '2',
+              label: '辣~',
+            },
+            {
+              key: '3',
+              label: '大长腿',
+            },
+            {
+              key: '4',
+              label: '川妹子',
+            },
+            {
+              key: '5',
+              label: '海纳百川',
+            },
+          ],
+          notifyCount: 12,
+          unreadCount: 11,
+          country: 'China',
+          access: 'admin',
+          geographic: {
+            province: {
+              label: '浙江省',
+              key: '330000',
+            },
+            city: {
+              label: '杭州市',
+              key: '330100',
+            },
+          },
+          address: '西湖区工专路 77 号',
+          phone: '0752-268888888',
+        };
+        flushSync(() => {
+          setInitialState({
+            ...initialState,
+            currentUser: currentUserData,
+          });
+        });
+        // setUserLoginState( { token: '123', access: 'admin'  });
+        // console.log(initialState)
+        history.push('/');
+        // navigate('/');
+        return;
+      }
+
+      //       setUserLoginState({ token: '123', access: 'admin' });
+      //       如果失败去设置用户错误信息
     } catch (error) {
       const defaultLoginFailureMessage = intl.formatMessage({
         id: 'pages.login.failure',
@@ -183,7 +226,7 @@ const Login: React.FC = () => {
             <ActionIcons key="icons" />,
           ]}
           onFinish={async (values) => {
-                await handleSubmit(values as API.loginUserParams);
+            await handleSubmit(values as API.loginUserParams);
           }}
         >
           <Tabs
@@ -335,15 +378,18 @@ const Login: React.FC = () => {
                     ),
                   },
                 ]}
-                onGetCaptcha={async (phone) => {
-                  //   const result = await getFakeCaptcha({
-                  //     phone,
-                  //   });
-                  //   if (!result) {
-                  //     return;
-                  //   }
-                  message.success('获取验证码成功！验证码为：1234');
-                }}
+                onGetCaptcha={async () =>
+                  // phone
+                  {
+                    //   const result = await getFakeCaptcha({
+                    //     phone,
+                    //   });
+                    //   if (!result) {
+                    //     return;
+                    //   }
+                    message.success('获取验证码成功！验证码为：1234');
+                  }
+                }
               />
             </>
           )}

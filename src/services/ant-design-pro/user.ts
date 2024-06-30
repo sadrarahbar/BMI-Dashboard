@@ -94,7 +94,7 @@ export async function loginUser(
         params: API.loginUserParams,
         options?: { [key: string]: any },
 ) {
-        return request<string>('/api/user/login', {
+        return request<API.loginUserResponse>('/api/user/login', {
                 method: 'GET',
                 params: {
                         ...params,

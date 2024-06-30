@@ -56,6 +56,17 @@ declare namespace API {
     /** The password for login in clear text */
     password: string;
   };
+  //   type loginUserResponse = {
+  //     type: string;
+  //     code: number;
+  //     message: string;
+  //   };
+  type loginUserResponse = {
+    type?: string;
+    code?: number;
+    message?: string;
+    currentUser: { token?: string; access?: string };
+  };
 
   type Order = {
     id?: number;
