@@ -51,6 +51,7 @@
     "@tinymce/tinymce-react": "^5.1.1",
     "@umijs/route-utils": "^2.2.2",
     "antd": "^5.18.0",
+    "antd-jalali-v5": "^1.0.2",
     "antd-style": "^3.6.2",
     "classnames": "^2.5.1",
     "omit.js": "^2.0.2",

@@ -80,7 +80,7 @@ const StepForm: React.FC<Record<string, any>> = () => {
       <Card bordered={false}>
         <StepsForm
           containerStyle={{
-            width: '100%',
+            width: 'auto',
           }}
           // containerStyle={styles.containerStyle}
           current={current}

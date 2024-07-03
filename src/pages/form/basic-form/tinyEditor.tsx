@@ -66,7 +66,7 @@ const TinyMceEditor: React.FC<TinyMceEditorProps> = ({
           toolbar:
             'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
             'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
-            'forecolor backcolor emoticons | help | code',
+            'forecolor backcolor emoticons | help | code| table',
         }}
       />
     </Form.Item>
