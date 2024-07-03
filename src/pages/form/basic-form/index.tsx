@@ -1,34 +1,24 @@
 import { InboxOutlined } from '@ant-design/icons';
 import {
-  PageContainer,
-  ProCard,
-  ProForm,
-  ProFormDependency,
-  ProFormRadio,
-  ProFormSelect,
-  ProFormTextArea,
-} from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
-import {
   Button,
   Card,
+  DatePicker,
   Divider,
   Flex,
   Form,
   Input,
+  Layout,
   Radio,
   RadioChangeEvent,
+  Select,
   Upload,
   UploadProps,
   message,
 } from 'antd';
-import Mock from 'mockjs';
+import JalaliProvider from 'antd-jalali-v5';
+import { createStyles } from 'antd-style';
 import type { FC } from 'react';
 import { useState } from 'react';
-import persian from 'react-date-object/calendars/persian';
-import persian_fa from 'react-date-object/locales/persian_fa';
-import DatePicker from 'react-multi-date-picker';
-import { fakeSubmitForm } from './service';
 import TinyMceEditor from './tinyEditor';
 
 export const waitTime = (time: number = 100) => {
@@ -40,15 +30,15 @@ export const waitTime = (time: number = 100) => {
 };
 
 const BasicForm: FC<Record<string, any>> = () => {
-  const { run } = useRequest(fakeSubmitForm, {
-    manual: true,
-    onSuccess: () => {
-      message.success('با موفقیت ثبت شد');
-    },
-  });
-  const onFinish = async (values: Record<string, any>) => {
-    run(values);
-  };
+  // const { run } = useRequest(fakeSubmitForm, {
+  //   manual: true,
+  //   onSuccess: () => {
+  //     message.success('با موفقیت ثبت شد');
+  //   },
+  // });
+  // const onFinish = async (values: Record<string, any>) => {
+  //   run(values);
+  // };
 
   // Alpha
   const validateAlpha = (_, value) => {
@@ -116,99 +106,50 @@ const BasicForm: FC<Record<string, any>> = () => {
   };
 
   const [form] = Form.useForm();
+  console.log(form.getFieldError('sex'));
 
-  // console.log(form.getFieldError('date'))
+  // multi select with search
+
+  const { Option } = Select;
+  const useStyles = createStyles({
+    footer: {
+      flexDirection: 'row-reverse',
+    },
+    divider: {
+      margin: '24px 0',
+    },
+    datepicker: {
+      width: '100%',
+    },
+    GroupBox: {
+      paddingRight: '10px',
+      border: '1px solid #d9d9d9',
+      borderRadius: '6px',
+    },
+    GroupBoxError: {
+      paddingRight: '10px',
+      border: '1px solid #ff4d4f',
+      borderRadius: '6px',
+    },
+  });
+
+  const { styles } = useStyles();
+
+  console.log(form);
 
   return (
-    <PageContainer content="از صفحات فرم برای جمع آوری یا تایید اطلاعات از کاربران استفاده می شود.">
+    <Layout>
       <Card>
-        <ProForm
-          submitter={{
-            // Configure the button text
-            searchConfig: {
-              resetText: 'reset',
-              submitText: 'submit',
-            },
-            // Configure the properties of the button
-            resetButtonProps: {
-              style: {
-                // Hide the reset button
-                display: 'none',
-              },
-            },
-            submitButtonProps: {},
-
-            // Fully customize the entire area
-            render: (props) => {
-              return [
-                <Flex key="submitter" gap="middle" style={{ flexDirection: 'row-reverse' }}>
-                  <Form.Item>
-                    <Button
-                      key="submit"
-                      type="primary"
-                      htmlType="submit"
-                      onClick={() => props.form?.submit?.()}
-                    >
-                      ثبت
-                    </Button>
-                  </Form.Item>
-                  <Form.Item>
-                    <Button key="rest" htmlType="reset" onClick={() => props.form?.resetFields()}>
-                      انصراف
-                    </Button>
-                  </Form.Item>
-                </Flex>,
-                // <button
-                //   type="button"
-                //   key="rest"
-                //   onClick={() => props.form?.resetFields()}
-                // >
-                //   Reset
-                // </button>,
-                // <button
-                //   type="button"
-                //   key="submit"
-                //   onClick={() => props.form?.submit?.()}
-                // >
-                //   Submit
-                // </button>,
-              ];
-            },
-          }}
-          // ref={formRef}
-          // style={{
-          //   width: '100%'
-          //   // margin: 'auto',
-          //   // marginTop: 8,
-          //   // maxWidth: 600,
-          // }}
-          name="basic"
-          // layout="horizontal"
+        <Form
+          scrollToFirstError
+          autoComplete="off"
           layout="vertical"
-          initialValues={{
-            name: '',
-            title: '',
-            number: '',
-            email: '',
-            codemelli: '',
-            sex: '',
-            date: '',
-            file: '',
-            multiSelect: [],
-            select2: '',
-            goal: '',
-            standard: '',
-            client: '',
-            invites: '',
-            weight: '',
-            publicType: '',
-            publicUsers: '',
-          }}
-          onFinish={onFinish}
+          form={form}
+          initialValues={{ mixName: '', char: '', number: '', email: '', codemelli: '' }}
         >
           <Form.Item
             label="حروف و عدد"
-            name="name"
+            name="mixName"
             rules={[{ required: true, message: 'لطفا فیلد را وارد کنید .' }]}
           >
             <Input />
@@ -216,7 +157,7 @@ const BasicForm: FC<Record<string, any>> = () => {
 
           <Form.Item
             label="فقط حروف"
-            name="title"
+            name="char"
             rules={[
               { required: true, message: 'لطفا فیلد را وارد کنید .' },
               { validator: validateAlpha },
@@ -236,10 +177,10 @@ const BasicForm: FC<Record<string, any>> = () => {
           </Form.Item>
 
           <Form.Item
-            label="E-mail"
+            label="ایمیل"
             name="email"
             rules={[
-              { type: 'email', message: 'ایمیل معتبر نمیباشد!' },
+              { type: 'email', message: 'ایمیل معتبر نمیباشد' },
               { required: true, message: 'لطفا ایمیل را وارد نمایید!' },
             ]}
           >
@@ -259,58 +200,17 @@ const BasicForm: FC<Record<string, any>> = () => {
           </Form.Item>
 
           <Form.Item
-            style={{ border: '1px solid #d9d9d9', borderRadius: '6px', paddingRight: '10px' }}
             label="جنسیت"
             name="sex"
             rules={[{ required: true, message: 'انتخاب کنید ' }]}
+            className={`${form.getFieldError('sex') ? styles.GroupBox : styles.GroupBoxError}`}
           >
             <Radio.Group onChange={onChangeRadio} value={radioValue}>
               <Radio value={1}>مونث</Radio>
               <Radio value={2}>مذکر</Radio>
             </Radio.Group>
           </Form.Item>
-
-          {/* <ProFormDateRangePicker
-            label="تاریخ شروع و پایان"
-            name="date"
-            rules={[
-              {
-                required: true,
-                message: 'لطفا تاریخ شروع و پایان را انتخاب کنید',
-              },
-            ]}
-            // className={styles.rangePicker}
-            fieldProps={{
-              style: {
-                width: '100%',
-              },
-            }}
-            placeholder={['تاریخ شروع', 'تاریخ پایان']}
-          /> */}
-          {/* <Form.Item
-            label="تاریخ شروع و پایان"
-            name="dateduration"
-            rules={[
-              {
-                required: true,
-                message: "لطفا تاریخ را وارد کنید .",
-              },
-            ]}
-          >
-            <DatePicker
-              multiple
-              range
-              calendar={persian}
-              locale={persian_fa}
-              calendarPosition="bottom-right"
-              inputClass={
-                form.getFieldError("dateduration").length
-                  ? " rmdp-input-datePicker error-border"
-                  : "rmdp-input-datePicker"
-              }
-            />
-          </Form.Item> */}
-
+          <JalaliProvider />
           <Form.Item
             label="تاریخ"
             name="date"
@@ -321,26 +221,28 @@ const BasicForm: FC<Record<string, any>> = () => {
               },
             ]}
           >
-            <DatePicker
-              calendar={persian}
-              locale={persian_fa}
-              calendarPosition="bottom"
-              inputClass={
-                form.getFieldError('date')?.length
-                  ? ' rmdp-input-datePicker error-border'
-                  : 'rmdp-input-datePicker'
-              }
-              // inputClass='rmdp-input-datePicker'
-            />
+            <DatePicker className={styles.datepicker} />
           </Form.Item>
-          {/* <ProFormUploadDragger
-            accept="image/*, video/*"
-            description=""
-            title="برای بارگزاری فایل کلیک کنید یا فایل را اینجا رها کنید"
-            label="آپلود فایل"
-            name="آپلود"
-          /> */}
 
+          <Form.Item
+            label="بازه تاریخ"
+            name="dateduration"
+            rules={[
+              {
+                required: true,
+                message: 'لطفا بازه تاریخ را وارد کنید .',
+              },
+            ]}
+          >
+            <DatePicker.RangePicker className={styles.datepicker} />
+          </Form.Item>
+          <Form.Item
+            name="intro"
+            label="توضیحات"
+            rules={[{ required: true, message: 'لطفا توضیحات را وارد نمایید.' }]}
+          >
+            <Input.TextArea showCount maxLength={100} />
+          </Form.Item>
           <Form.Item
             label="بارگزاری فایل"
             name="file"
@@ -361,205 +263,32 @@ const BasicForm: FC<Record<string, any>> = () => {
               <p className="ant-upload-hint">jpg - png - jpeg</p>
             </Dragger>
           </Form.Item>
-
-          <ProFormSelect
-            name="multiSelect"
-            label="چند انتخابی"
-            valueEnum={{
-              t1: 'مورد اول',
-              t2: 'مورد دوم',
-              t3: 'مورد سوم',
-            }}
-            fieldProps={{
-              mode: 'multiple',
-            }}
-            placeholder=""
-            rules={[
-              {
-                required: true,
-                message: 'حداقل یک مورد را انتخاب کنید!',
-                type: 'array',
-              },
-            ]}
-          />
-          <ProFormSelect
-            name="select2"
-            label="قابل سرچ بودن سلکت"
-            showSearch
-            debounceTime={300}
-            request={async ({ keyWords }) => {
-              await waitTime(100);
-              // console.log(
-              //   Mock.mock({
-              //     'data|1-10': [
-              //       {
-              //         value: '@id',
-              //         label: '@name',
-              //       },
-              //     ],
-              //   }).data.concat({
-              //     value: keyWords,
-              //     label: '目标_target',
-              //   }),
-              // );
-              return Mock.mock({
-                'data|1-10': [
-                  {
-                    value: '@id',
-                    label: '@name',
-                  },
-                ],
-              }).data.concat([
-                {
-                  value: keyWords,
-                  label: '目标_target',
-                },
-                { value: '520000201604258831', label: 'Patricia Lopez' },
-                { value: '520000198509222123', label: 'Jose Martinez' },
-                { value: '210000200811194757', label: 'Elizabeth Thomas' },
-                { value: '530000198808222758', label: 'Scott Anderson' },
-                { value: '500000198703236285', label: 'George Jackson' },
-                { value: '610000199906148074', label: 'Linda Hernandez' },
-                { value: '150000197210168659', label: 'Sandra Hall' },
-                { label: '目标_target' },
-              ]);
-            }}
-            placeholder="یک مورد را انتخاب کنید"
+          <Form.Item
+            name="select"
+            label="سلکت"
+            hasFeedback
             rules={[{ required: true, message: 'لطفا یک مورد را انتخاب کنید!' }]}
-          />
-          <ProFormTextArea
-            label="شرح هدف"
-            // width="xl"
-            name="goal"
-            rules={[
-              {
-                required: true,
-                message: 'لطفاً شرح هدف را وارد کنید',
-              },
-            ]}
-            placeholder="لطفاً اهداف کاری مرحله‌ای خود را وارد کنید"
-          />
-
-          <ProFormTextArea
-            label="معیارهای"
-            name="standard"
-            // width="xl"
-            rules={[
-              {
-                required: true,
-                message: 'لطفا معیارها را وارد کنید',
-              },
-            ]}
-            placeholder="لطفا معیارها را وارد کنید"
-          />
-          {/* 
-          <ProFormText
-            // width="md"
-            label={
-              <span>
-                مشتری
-                <em className={styles.optional}>（اختیاری）</em>
-              </span>
-            }
-            tooltip="دریافت کنندگان خدمات هدف"
-            name="client"
-            placeholder="لطفاً مشتریانی را که به آنها خدمات ارائه می‌دهید توصیف کنید، مشتریان داخلی مستقیماً @name/job number"
-          /> */}
-
-          {/* <ProFormText
-            // width="md"
-            label={
-              <span>
-                از بازبینان دعوت کنید
-                <em className={styles.optional}>（اختیاری）</em>
-              </span>
-            }
-            name="invites"
-            placeholder="لطفا مستقیماً @name/شماره کارمند، می توانید حداکثر 5 نفر را دعوت کنید"
-          /> */}
+          >
+            <Select placeholder="">
+              <Option value="china">China</Option>
+              <Option value="usa">U.S.A</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
+            name="select-multiple"
+            label="قابل سرچ بودن سلکت "
+            rules={[{ required: true, message: 'لطفا یک مورد را انتخاب کنید', type: 'array' }]}
+          >
+            <Select mode="multiple" placeholder="">
+              <Option value="red">Red</Option>
+              <Option value="green">Green</Option>
+              <Option value="blue">Blue</Option>
+            </Select>
+          </Form.Item>
           <TinyMceEditor name="description" label="توضیحات" required />
-          {/* <ProFormDigit
-            label={
-              <span>
-                وزن ها
-                <em className={styles.optional}>（اختیاری）</em>
-              </span>
-            }
-            name="weight"
-            placeholder="لطفا وارد کنید"
-            min={0}
-            max={100}
-            // width="xs"
-            fieldProps={{
-              formatter: (value) => `${value || 0}%`,
-              parser: (value) => Number(value ? value.replace('%', '') : '0'),
-            }}
-          /> */}
-          <ProCard title="هدف " bordered collapsible>
-            <ProFormRadio.Group
-              options={[
-                {
-                  value: '1',
-                  label: 'عمومی',
-                },
-                {
-                  value: '2',
-                  label: 'تا حدی عمومی',
-                },
-                {
-                  value: '3',
-                  label: 'خصوصی',
-                },
-              ]}
-              // label="عمومی هدف"
-              help="مشتریان و بازبین ها به طور پیش فرض به اشتراک گذاشته می شوند"
-              name="publicType"
-              rules={[
-                {
-                  required: true,
-                  message: 'لطفا را وارد کنید',
-                },
-              ]}
-            />
-
-            <ProFormDependency name={['publicType']}>
-              {({ publicType }) => {
-                return (
-                  <ProFormSelect
-                    // width="md"
-                    name="publicUsers"
-                    fieldProps={{
-                      style: {
-                        // margin: '8px 0',
-                        display: publicType && publicType === '2' ? 'block' : 'none',
-                      },
-                    }}
-                    options={[
-                      {
-                        value: '1',
-                        label: 'همکار A',
-                      },
-                      {
-                        value: '2',
-                        label: 'همکار B',
-                      },
-                      {
-                        value: '3',
-                        label: 'همکار C',
-                      },
-                    ]}
-                  />
-                );
-              }}
-            </ProFormDependency>
-          </ProCard>
-          <Divider
-            style={{
-              margin: '24px 0',
-            }}
-          />
-
-          {/* <Flex gap="middle" style={{ flexDirection: "row-reverse" }}>
+          <Divider className={styles.divider} />
+          {/* </ProForm> */}
+          <Flex gap="middle" className={styles.footer}>
             <Form.Item>
               <Button type="primary" htmlType="submit">
                 ثبت
@@ -568,10 +297,11 @@ const BasicForm: FC<Record<string, any>> = () => {
             <Form.Item>
               <Button htmlType="reset">انصراف</Button>
             </Form.Item>
-          </Flex> */}
-        </ProForm>
+          </Flex>
+        </Form>
       </Card>
-    </PageContainer>
+    </Layout>
   );
+  console.log(form.getFieldError('sex'));
 };
 export default BasicForm;
