@@ -2,6 +2,10 @@ import { createStyles } from 'antd-style';
 
 const useStyles = createStyles(({ token }) => {
   return {
+    footer: {
+      flexDirection: 'row-reverse',
+      marginLeft: '2.8rem',
+    },
     card: {
       marginBottom: '24px',
       '.ant-legacy-form-item .ant-legacy-form-item-control-wrapper': {

@@ -1,8 +1,6 @@
-import { CloseCircleOutlined } from '@ant-design/icons';
 import type { ProColumnType } from '@ant-design/pro-components';
 import {
   EditableProTable,
-  FooterToolbar,
   PageContainer,
   ProForm,
   ProFormDateRangePicker,
@@ -10,7 +8,7 @@ import {
   ProFormText,
   ProFormTimePicker,
 } from '@ant-design/pro-components';
-import { Card, Col, Popover, Row, message } from 'antd';
+import { Button, Card, Col, Flex, Form, Row, message } from 'antd';
 import type { FC } from 'react';
 import { useState } from 'react';
 import { fakeSubmitForm } from './service';
@@ -38,6 +36,7 @@ const fieldLabels = {
   dateRange2: 'تاریخ اجرا',
   type2: 'نوع وظیفه',
 };
+
 const tableData = [
   {
     key: '1',
@@ -65,50 +64,53 @@ interface ErrorField {
 const AdvancedForm: FC<Record<string, any>> = () => {
   const { styles } = useStyles();
   const [error, setError] = useState<ErrorField[]>([]);
-  const getErrorInfo = (errors: ErrorField[]) => {
-    const errorCount = errors.filter((item) => item.errors.length > 0).length;
-    if (!errors || errorCount === 0) {
-      return null;
-    }
-    const scrollToField = (fieldKey: string) => {
-      const labelNode = document.querySelector(`label[for="${fieldKey}"]`);
-      if (labelNode) {
-        labelNode.scrollIntoView(true);
-      }
-    };
-    const errorList = errors.map((err) => {
-      if (!err || err.errors.length === 0) {
-        return null;
-      }
-      const key = err.name[0] as 'name' | 'url' | 'owner' | 'approver' | 'dateRange' | 'type';
-      return (
-        <li key={key} className={styles.errorListItem} onClick={() => scrollToField(key)}>
-          <CloseCircleOutlined className={styles.errorIcon} />
-          <div className={styles.errorMessage}>{err.errors[0]}</div>
-          <div className={styles.errorField}>{fieldLabels[key]}</div>
-        </li>
-      );
-    });
-    return (
-      <span className={styles.errorIcon}>
-        <Popover
-          title="اطلاعات تایید فرم"
-          content={errorList}
-          overlayClassName={styles.errorPopover}
-          trigger="click"
-          getPopupContainer={(trigger: HTMLElement) => {
-            if (trigger && trigger.parentNode) {
-              return trigger.parentNode as HTMLElement;
-            }
-            return trigger;
-          }}
-        >
-          <CloseCircleOutlined />
-        </Popover>
-        {errorCount}
-      </span>
-    );
-  };
+
+  console.log(error);
+
+  // const getErrorInfo = (errors: ErrorField[]) => {
+  //   const errorCount = errors.filter((item) => item.errors.length > 0).length;
+  //   if (!errors || errorCount === 0) {
+  //     return null;
+  //   }
+  //   const scrollToField = (fieldKey: string) => {
+  //     const labelNode = document.querySelector(`label[for="${fieldKey}"]`);
+  //     if (labelNode) {
+  //       labelNode.scrollIntoView(true);
+  //     }
+  //   };
+  //   const errorList = errors.map((err) => {
+  //     if (!err || err.errors.length === 0) {
+  //       return null;
+  //     }
+  //     const key = err.name[0] as 'name' | 'url' | 'owner' | 'approver' | 'dateRange' | 'type';
+  //     return (
+  //       <li key={key} className={styles.errorListItem} onClick={() => scrollToField(key)}>
+  //         <CloseCircleOutlined className={styles.errorIcon} />
+  //         <div className={styles.errorMessage}>{err.errors[0]}</div>
+  //         <div className={styles.errorField}>{fieldLabels[key]}</div>
+  //       </li>
+  //     );
+  //   });
+  //   return (
+  //     <span className={styles.errorIcon}>
+  //       <Popover
+  //         title="اطلاعات تایید فرم"
+  //         content={errorList}
+  //         overlayClassName={styles.errorPopover}
+  //         trigger="click"
+  //         getPopupContainer={(trigger: HTMLElement) => {
+  //           if (trigger && trigger.parentNode) {
+  //             return trigger.parentNode as HTMLElement;
+  //           }
+  //           return trigger;
+  //         }}
+  //       >
+  //         <CloseCircleOutlined />
+  //       </Popover>
+  //       {errorCount}
+  //     </span>
+  //   );
+  // };
   const onFinish = async (values: Record<string, any>) => {
     setError([]);
     try {
@@ -158,20 +160,44 @@ const AdvancedForm: FC<Record<string, any>> = () => {
       },
     },
   ];
+
   return (
     <ProForm
-      layout="vertical"
-      hideRequiredMark
       submitter={{
-        render: (props, dom) => {
-          return (
-            <FooterToolbar>
-              {getErrorInfo(error)}
-              {dom}
-            </FooterToolbar>
-          );
+        // Configure the button text
+        searchConfig: {
+          resetText: 'reset',
+          submitText: 'submit',
+        },
+        // Configure the properties of the button
+        resetButtonProps: {
+          style: {
+            // Hide the reset button
+            display: 'none',
+          },
+        },
+        submitButtonProps: {},
+
+        // Fully customize the entire area
+        render: (props) => {
+          console.log(props);
+          return [
+            <Flex gap="middle" className={styles.footer} key="submitBtns">
+              <Form.Item>
+                <Button key="submit" onClick={() => props.form?.submit?.()} type="primary">
+                  ثبت
+                </Button>
+              </Form.Item>
+              <Form.Item>
+                <Button key="rest" onClick={() => props.form?.resetFields()} htmlType="reset">
+                  انصراف
+                </Button>
+              </Form.Item>
+            </Flex>,
+          ];
         },
       }}
+      layout="vertical"
       initialValues={{
         members: tableData,
       }}
