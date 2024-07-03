@@ -60,24 +60,9 @@ const EditModal: FC<EditModalProps> = (props) => {
           ]}
         />
         <ProFormText
-          name="category"
-          label={'دسته'}
-          initialValue={values?.category}
-          rules={[
-            {
-              required: true,
-              message: 'ورود این فیلد الزامی است',
-            },
-          ]}
-          valueEnum={{
-            1: 'ورزشی',
-            2: 'تکنولوژی',
-          }}
-        />
-        <ProFormTextArea
-          label={'محتوی'}
-          name="desc"
-          initialValue={values?.content}
+          name="id"
+          label={'آیدی خبر'}
+          initialValue={values?.id}
           rules={[
             {
               required: true,
@@ -86,9 +71,20 @@ const EditModal: FC<EditModalProps> = (props) => {
           ]}
         />
         <ProFormText
-          name="publishDate"
-          label={'تاریخ انتشار'}
-          initialValue={values?.publishDate}
+          name="userId"
+          label={'آیدی کابر'}
+          initialValue={values?.userId}
+          rules={[
+            {
+              required: true,
+              message: 'ورود این فیلد الزامی است',
+            },
+          ]}
+        />
+        <ProFormTextArea
+          label={'محتوی'}
+          name="body"
+          initialValue={values?.body}
           rules={[
             {
               required: true,
