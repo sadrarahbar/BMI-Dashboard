@@ -1,14 +1,15 @@
+import { CheckCircleOutlined, CloseCircleOutlined, DeleteOutlined } from '@ant-design/icons';
 import type { ProColumnType } from '@ant-design/pro-components';
 import {
   EditableProTable,
   PageContainer,
   ProForm,
-  ProFormDateRangePicker,
+  ProFormRadio,
   ProFormSelect,
   ProFormText,
   ProFormTimePicker,
 } from '@ant-design/pro-components';
-import { Button, Card, Col, Flex, Form, Row, message } from 'antd';
+import { Button, Card, Flex, Form, Tooltip, message } from 'antd';
 import type { FC } from 'react';
 import { useState } from 'react';
 import { fakeSubmitForm } from './service';
@@ -125,7 +126,7 @@ const AdvancedForm: FC<Record<string, any>> = () => {
   };
   const columns: ProColumnType<TableFormDateType>[] = [
     {
-      title: 'نام عضو',
+      title: 'نام ',
       dataIndex: 'name',
       key: 'name',
       width: '20%',
@@ -154,13 +155,13 @@ const AdvancedForm: FC<Record<string, any>> = () => {
               action?.startEditable(record.key);
             }}
           >
-            ویرایش کنید
+            عملیات
           </a>,
         ];
       },
     },
   ];
-
+  const [position, setPosition] = useState<'top' | 'bottom' | 'hidden'>('bottom');
   return (
     <ProForm
       submitter={{
@@ -206,352 +207,224 @@ const AdvancedForm: FC<Record<string, any>> = () => {
     >
       <PageContainer content="فرم‌های پیشرفته معمولاً در سناریوهایی استفاده می‌شوند که مقادیر زیادی داده در یک زمان وارد و ارسال می‌شوند.">
         <Card title="مدیریت انبار" className={styles.card} bordered={false}>
-          <Row gutter={16}>
-            <Col lg={6} md={12} sm={24}>
-              <ProFormText
-                label={fieldLabels.name}
-                name="name"
-                rules={[
-                  {
-                    required: true,
-                    message: 'لطفا نام انبار را وارد کنید',
-                  },
-                ]}
-                placeholder="لطفا نام انبار را وارد کنید"
-              />
-            </Col>
-            <Col
-              xl={{
-                span: 6,
-                offset: 2,
-              }}
-              lg={{
-                span: 8,
-              }}
-              md={{
-                span: 12,
-              }}
-              sm={24}
-            >
-              <ProFormText
-                label={fieldLabels.url}
-                name="url"
-                rules={[
-                  {
-                    required: true,
-                    message: 'لطفا انتخاب کنید',
-                  },
-                ]}
-                fieldProps={{
-                  style: {
-                    width: '100%',
-                  },
-                  addonBefore: 'http://',
-                  addonAfter: '.com',
-                }}
-                placeholder="لطفا وارد کنید"
-              />
-            </Col>
-            <Col
-              xl={{
-                span: 8,
-                offset: 2,
-              }}
-              lg={{
-                span: 10,
-              }}
-              md={{
-                span: 24,
-              }}
-              sm={24}
-            >
-              <ProFormSelect
-                label={fieldLabels.owner}
-                name="owner"
-                rules={[
-                  {
-                    required: true,
-                    message: 'لطفاً یک مدیر انتخاب کنید',
-                  },
-                ]}
-                options={[
-                  {
-                    label: 'فو شیائوکسیائو',
-                    value: 'xiao',
-                  },
-                  {
-                    label: 'ژو مائومائو',
-                    value: 'mao',
-                  },
-                ]}
-                placeholder="لطفاً یک مدیر انتخاب کنید"
-              />
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col lg={6} md={12} sm={24}>
-              <ProFormSelect
-                label={fieldLabels.approver}
-                name="approver"
-                rules={[
-                  {
-                    required: true,
-                    message: 'لطفاً یک تأیید کننده انتخاب کنید',
-                  },
-                ]}
-                options={[
-                  {
-                    label: 'فو شیائوکسیائو',
-                    value: 'xiao',
-                  },
-                  {
-                    label: 'ژو مائومائو',
-                    value: 'mao',
-                  },
-                ]}
-                placeholder="لطفاً یک تأیید کننده انتخاب کنید"
-              />
-            </Col>
-            <Col
-              xl={{
-                span: 6,
-                offset: 2,
-              }}
-              lg={{
-                span: 8,
-              }}
-              md={{
-                span: 12,
-              }}
-              sm={24}
-            >
-              <ProFormDateRangePicker
-                label={fieldLabels.dateRange}
-                name="dateRange"
-                fieldProps={{
-                  style: {
-                    width: '100%',
-                  },
-                }}
-                rules={[
-                  {
-                    required: true,
-                    message: 'لطفا تاریخ انتخاب کنید',
-                  },
-                ]}
-              />
-            </Col>
-            <Col
-              xl={{
-                span: 8,
-                offset: 2,
-              }}
-              lg={{
-                span: 10,
-              }}
-              md={{
-                span: 24,
-              }}
-              sm={24}
-            >
-              <ProFormSelect
-                label={fieldLabels.type}
-                name="type"
-                rules={[
-                  {
-                    required: true,
-                    message: 'لطفا نوع انبار را انتخاب کنید',
-                  },
-                ]}
-                options={[
-                  {
-                    label: 'خصوصی',
-                    value: 'private',
-                  },
-                  {
-                    label: 'عمومی',
-                    value: 'public',
-                  },
-                ]}
-                placeholder="لطفا نوع انبار را انتخاب کنید"
-              />
-            </Col>
-          </Row>
+          <ProFormText
+            label={fieldLabels.name}
+            name="name"
+            rules={[
+              {
+                required: true,
+                message: 'لطفا نام انبار را وارد کنید',
+              },
+            ]}
+            placeholder="لطفا نام انبار را وارد کنید"
+          />
+          <ProFormText
+            label={fieldLabels.url}
+            name="url"
+            rules={[
+              {
+                required: true,
+                message: 'لطفا انتخاب کنید',
+              },
+            ]}
+            fieldProps={{
+              style: {
+                width: '100%',
+              },
+              addonBefore: 'com.',
+              addonAfter: '//:http',
+            }}
+            placeholder="لطفا وارد کنید"
+          />
+          <ProFormSelect
+            label={fieldLabels.type}
+            name="type"
+            rules={[
+              {
+                required: true,
+                message: 'لطفا نوع انبار را انتخاب کنید',
+              },
+            ]}
+            options={[
+              {
+                label: 'خصوصی',
+                value: 'private',
+              },
+              {
+                label: 'عمومی',
+                value: 'public',
+              },
+            ]}
+            placeholder="لطفا نوع انبار را انتخاب کنید"
+          />
         </Card>
         <Card title="مدیریت کارها" className={styles.card} bordered={false}>
-          <Row gutter={16}>
-            <Col lg={6} md={12} sm={24}>
-              <ProFormText
-                label={fieldLabels.name2}
-                name="name2"
-                rules={[
-                  {
-                    required: true,
-                    message: 'لطفا وارد کنید',
-                  },
-                ]}
-              />
-            </Col>
-            <Col
-              xl={{
-                span: 6,
-                offset: 2,
-              }}
-              lg={{
-                span: 8,
-              }}
-              md={{
-                span: 12,
-              }}
-              sm={24}
-            >
-              <ProFormText
-                label={fieldLabels.url2}
-                name="url2"
-                rules={[
-                  {
-                    required: true,
-                    message: 'لطفا انتخاب کنید',
-                  },
-                ]}
-              />
-            </Col>
-            <Col
-              xl={{
-                span: 8,
-                offset: 2,
-              }}
-              lg={{
-                span: 10,
-              }}
-              md={{
-                span: 24,
-              }}
-              sm={24}
-            >
-              <ProFormSelect
-                label={fieldLabels.owner2}
-                name="owner2"
-                rules={[
-                  {
-                    required: true,
-                    message: 'لطفاً یک مدیر انتخاب کنید',
-                  },
-                ]}
-                options={[
-                  {
-                    label: 'xiao',
-                    value: 'xiao',
-                  },
-                  {
-                    label: 'mao',
-                    value: 'mao',
-                  },
-                ]}
-              />
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col lg={6} md={12} sm={24}>
-              <ProFormSelect
-                label={fieldLabels.approver2}
-                name="approver2"
-                rules={[
-                  {
-                    required: true,
-                    message: 'لطفاً یک تأیید کننده انتخاب کنید',
-                  },
-                ]}
-                options={[
-                  {
-                    label: 'xiao',
-                    value: 'xiao',
-                  },
-                  {
-                    label: 'mao',
-                    value: 'mao',
-                  },
-                ]}
-                placeholder="لطفاً یک تأیید کننده انتخاب کنید"
-              />
-            </Col>
-            <Col
-              xl={{
-                span: 6,
-                offset: 2,
-              }}
-              lg={{
-                span: 8,
-              }}
-              md={{
-                span: 12,
-              }}
-              sm={24}
-            >
-              <ProFormTimePicker
-                label={fieldLabels.dateRange2}
-                name="dateRange2"
-                rules={[
-                  {
-                    required: true,
-                    message: 'لطفا وارد کنید',
-                  },
-                ]}
-                placeholder="زمان یادآوری"
-                fieldProps={{
-                  style: {
-                    width: '100%',
-                  },
-                }}
-              />
-            </Col>
-            <Col
-              xl={{
-                span: 8,
-                offset: 2,
-              }}
-              lg={{
-                span: 10,
-              }}
-              md={{
-                span: 24,
-              }}
-              sm={24}
-            >
-              <ProFormSelect
-                label={fieldLabels.type2}
-                name="type2"
-                rules={[
-                  {
-                    required: true,
-                    message: 'لطفا نوع انبار را انتخاب کنید',
-                  },
-                ]}
-                options={[
-                  {
-                    label: 'خصوصی',
-                    value: 'private',
-                  },
-                  {
-                    label: 'عمومی',
-                    value: 'public',
-                  },
-                ]}
-                placeholder="لطفا نوع انبار را انتخاب کنید"
-              />
-            </Col>
-          </Row>
+          <ProFormText
+            label={fieldLabels.name2}
+            name="name2"
+            rules={[
+              {
+                required: true,
+                message: 'لطفا وارد کنید',
+              },
+            ]}
+          />
+
+          <ProFormText
+            label={fieldLabels.url2}
+            name="url2"
+            rules={[
+              {
+                required: true,
+                message: 'لطفا انتخاب کنید',
+              },
+            ]}
+          />
+          <ProFormSelect
+            label={fieldLabels.owner2}
+            name="owner2"
+            rules={[
+              {
+                required: true,
+                message: 'لطفاً یک مدیر انتخاب کنید',
+              },
+            ]}
+            options={[
+              {
+                label: 'xiao',
+                value: 'xiao',
+              },
+              {
+                label: 'mao',
+                value: 'mao',
+              },
+            ]}
+          />
+          <ProFormSelect
+            label={fieldLabels.approver2}
+            name="approver2"
+            rules={[
+              {
+                required: true,
+                message: 'لطفاً یک تأیید کننده انتخاب کنید',
+              },
+            ]}
+            options={[
+              {
+                label: 'xiao',
+                value: 'xiao',
+              },
+              {
+                label: 'mao',
+                value: 'mao',
+              },
+            ]}
+            placeholder="لطفاً یک تأیید کننده انتخاب کنید"
+          />
+          <ProFormTimePicker
+            label={fieldLabels.dateRange2}
+            name="dateRange2"
+            rules={[
+              {
+                required: true,
+                message: 'لطفا وارد کنید',
+              },
+            ]}
+            placeholder="زمان یادآوری"
+            fieldProps={{
+              style: {
+                width: '100%',
+              },
+            }}
+          />
+          <ProFormSelect
+            label={fieldLabels.type2}
+            name="type2"
+            rules={[
+              {
+                required: true,
+                message: 'لطفا نوع انبار را انتخاب کنید',
+              },
+            ]}
+            options={[
+              {
+                label: 'خصوصی',
+                value: 'private',
+              },
+              {
+                label: 'عمومی',
+                value: 'public',
+              },
+            ]}
+            placeholder="لطفا نوع انبار را انتخاب کنید"
+          />
         </Card>
         <Card title="مدیریت اعضا" bordered={false}>
           <ProForm.Item name="members">
             <EditableProTable<TableFormDateType>
-              recordCreatorProps={{
-                record: () => {
-                  return {
-                    key: `0${Date.now()}`,
-                  };
-                },
+              editable={{
+                type: 'multiple',
+                // editableKeys,
+                // actionRender: (row, config, defaultDoms) => {
+                //   return [defaultDoms.delete];
+                // },
+                // onValuesChange: (record, recordList) => {
+                //   setDataSource(recordList);
+                // },
+                // onChange: setEditableRowKeys,
+
+                deleteText: (
+                  <Tooltip title="حذف">
+                    <DeleteOutlined />
+                  </Tooltip>
+                ),
+                cancelText: (
+                  <Tooltip title="لغو">
+                    <CloseCircleOutlined />
+                  </Tooltip>
+                ),
+                saveText: (
+                  <Tooltip title="ذخیره">
+                    <CheckCircleOutlined />
+                  </Tooltip>
+                ),
+                deletePopconfirmMessage: 'آیا مطمئن هستید که می‌خواهید این ردیف را حذف کنید؟ ',
               }}
+              toolBarRender={() => [
+                <ProFormRadio.Group
+                  key="render"
+                  fieldProps={{
+                    value: position,
+                    onChange: (e) => setPosition(e.target.value),
+                  }}
+                  options={[
+                    {
+                      label: 'بالا',
+                      value: 'top',
+                    },
+                    {
+                      label: 'پایین',
+                      value: 'bottom',
+                    },
+                    {
+                      label: 'غیرفعال',
+                      value: 'hidden',
+                    },
+                  ]}
+                />,
+              ]}
+              recordCreatorProps={
+                position !== 'hidden'
+                  ? {
+                      position: position as 'top',
+                      record: () => {
+                        return {
+                          key: `0${Date.now()}`,
+                        };
+                      },
+                    }
+                  : false
+              }
               columns={columns}
               rowKey="key"
             />
