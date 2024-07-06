@@ -1,3 +1,4 @@
+import GroupBox from '@/libs/groupBox';
 import { InboxOutlined } from '@ant-design/icons';
 import {
   Button,
@@ -106,7 +107,6 @@ const BasicForm: FC<Record<string, any>> = () => {
   };
 
   const [form] = Form.useForm();
-  console.log(form.getFieldError('sex'));
 
   // multi select with search
 
@@ -135,7 +135,7 @@ const BasicForm: FC<Record<string, any>> = () => {
 
   const { styles } = useStyles();
 
-  console.log(form);
+  // console.log(form);
 
   return (
     <Layout>
@@ -155,6 +155,14 @@ const BasicForm: FC<Record<string, any>> = () => {
             <Input />
           </Form.Item>
 
+          <GroupBox title="جنسیت" required={true}>
+            <Form.Item name="sex" rules={[{ required: true, message: 'انتخاب کنید ' }]}>
+              <Radio.Group onChange={onChangeRadio} value={radioValue}>
+                <Radio value={1}>مونث</Radio>
+                <Radio value={2}>مذکر</Radio>
+              </Radio.Group>
+            </Form.Item>
+          </GroupBox>
           <Form.Item
             label="فقط حروف"
             name="char"
@@ -199,17 +207,16 @@ const BasicForm: FC<Record<string, any>> = () => {
             <Input onKeyPress={handleKeyPressNumber} maxLength={10} />
           </Form.Item>
 
-          <Form.Item
+          {/* <Form.Item
             label="جنسیت"
             name="sex"
             rules={[{ required: true, message: 'انتخاب کنید ' }]}
-            className={`${form.getFieldError('sex') ? styles.GroupBox : styles.GroupBoxError}`}
           >
             <Radio.Group onChange={onChangeRadio} value={radioValue}>
               <Radio value={1}>مونث</Radio>
               <Radio value={2}>مذکر</Radio>
             </Radio.Group>
-          </Form.Item>
+          </Form.Item> */}
           <JalaliProvider />
           <Form.Item
             label="تاریخ"
@@ -302,6 +309,5 @@ const BasicForm: FC<Record<string, any>> = () => {
       </Card>
     </Layout>
   );
-  console.log(form.getFieldError('sex'));
 };
 export default BasicForm;
