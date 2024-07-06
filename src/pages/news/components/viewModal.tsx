@@ -14,15 +14,16 @@ const ViewModal: FC<ViewModalProps> = (props) => {
   return (
     <>
       <ModalForm
-        readonly
+        // readonly
+        submitter={false}
         title=" جزئیات "
         trigger={trigger}
         width="500px"
         labelCol={{ span: 6 }} // Adjust the span value to allocate more space for labels
       >
-        <ProFormText name="id" label={'آیدی '} initialValue={values?.id} />
-        <ProFormText name="name" label={'نام '} initialValue={values?.name} />
-        <ProFormText name="status" label={'وضعیت '} initialValue={values?.status} />
+        <ProFormText name="id" label={'آیدی '} disabled initialValue={values?.id} />
+        <ProFormText name="name" label={'نام '} disabled initialValue={values?.name} />
+        <ProFormText name="status" label={'وضعیت '} disabled initialValue={values?.status} />
       </ModalForm>
     </>
   );
