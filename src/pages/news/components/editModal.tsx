@@ -1,71 +1,49 @@
-import { ActionType,
-        //  ModalForm, ProFormText, ProFormTextArea
-         } from '@ant-design/pro-components';
-// import { useRequest } from '@umijs/max';
-// import { message } from 'antd';
+import { ActionType, ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
+import { message } from 'antd';
 
 // import { addRule } from '@/services/ant-design-pro/api';
 import { FC, ReactElement } from 'react';
 
 interface EditModalProps {
   reload?: ActionType['reload'];
-//   values: API.NewsItem;
+  values: API.Pet;
   trigger: ReactElement;
 }
 
-const EditModal: FC<EditModalProps> = (
-        // props
-) => {
-//   const { reload, trigger, values } = props;
+const EditModal: FC<EditModalProps> = (props) => {
+  const { reload, trigger, values } = props;
 
-//   const [messageApi, contextHolder] = message.useMessage();
-  /**
-   * @en-US International configuration
-   * @zh-CN 国际化配置
-   * */
-  // const intl = useIntl();
+  const [messageApi, contextHolder] = message.useMessage();
 
-//   const { run, loading } = useRequest(addRule, {
-//     manual: true,
-//     onSuccess: () => {
-//       messageApi.success('با موفقیت ویرایش شد');
-//       reload?.();
-//     },
-//     onError: () => {
-//       messageApi.error('عملیات ویرایش ناموفق بود ! دوباره سعی کنید .');
-//     },
-//   });
+  //   const { run, loading } = useRequest(addRule, {
+  //     manual: true,
+  //     onSuccess: () => {
+  //       messageApi.success('با موفقیت ویرایش شد');
+  //       reload?.();
+  //     },
+  //     onError: () => {
+  //       messageApi.error('عملیات ویرایش ناموفق بود ! دوباره سعی کنید .');
+  //     },
+  //   });
 
   return (
     <>
-      {/* {contextHolder} */}
-      {/* <ModalForm
-        title="ویرایش خبر"
+      {contextHolder}
+      <ModalForm
+        title="ویرایش "
         trigger={trigger}
-        width="800px"
-        modalProps={{ okButtonProps: { loading } }}
+        width="600px"
+        // modalProps={{ okButtonProps: { loading } }}
         labelCol={{ span: 6 }} // Adjust the span value to allocate more space for labels
-        // wrapperCol={{ span: 18 }} // Adjust the span value for input fields
         onFinish={async (value) => {
-          await run({ data: value as API.RuleListItem });
+          //   await run({ data: value as API.RuleListItem });
 
           return true;
         }}
       >
         <ProFormText
-          name="title"
-          label={'عنوان'}
-          initialValue={values?.title}
-          rules={[
-            {
-              required: true,
-              message: 'ورود این فیلد الزامی است',
-            },
-          ]}
-        />
-        <ProFormText
           name="id"
-          label={'آیدی خبر'}
+          label={'آیدی '}
           initialValue={values?.id}
           rules={[
             {
@@ -75,9 +53,9 @@ const EditModal: FC<EditModalProps> = (
           ]}
         />
         <ProFormText
-          name="userId"
-          label={'آیدی کابر'}
-          initialValue={values?.userId}
+          name="name"
+          label={'نام'}
+          initialValue={values?.name}
           rules={[
             {
               required: true,
@@ -85,18 +63,26 @@ const EditModal: FC<EditModalProps> = (
             },
           ]}
         />
-        <ProFormTextArea
-          label={'محتوی'}
-          name="body"
-          initialValue={values?.body}
-          rules={[
+        <ProFormSelect
+          initialValue={'available'}
+          options={[
             {
-              required: true,
-              message: 'ورود این فیلد الزامی است',
+              value: 'available',
+              label: 'Available',
+            },
+            {
+              value: 'pending',
+              label: 'Pending',
+            },
+            {
+              value: 'sold',
+              label: 'Sold',
             },
           ]}
+          name="status"
+          label="وضعیت"
         />
-      </ModalForm> */}
+      </ModalForm>
     </>
   );
 };

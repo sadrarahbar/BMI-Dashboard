@@ -7,7 +7,7 @@ const useStyles = createStyles(({ token }) => {
               align-items: center;
               padding: 4px;
               cursor: pointer;
-              fontSize: '14px'
+              font-size: '14px';
               transition: all 0.2s ease-in-out;
             `;
 

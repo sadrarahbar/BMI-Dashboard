@@ -27,7 +27,7 @@ declare namespace API {
 
   type findPetsByStatusParams = {
     /** Status values that need to be considered for filter */
-    status: ('available' | 'pending' | 'sold')[];
+    status: ('available' | 'pending' | 'sold');
   };
 
   type findPetsByTagsParams = {

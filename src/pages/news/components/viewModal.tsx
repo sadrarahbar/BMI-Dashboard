@@ -1,40 +1,29 @@
-import { ActionType, 
-        // ModalForm, ProFormText, ProFormTextArea
- } from '@ant-design/pro-components';
+import { ActionType, ModalForm, ProFormText } from '@ant-design/pro-components';
 
 import { FC, ReactElement } from 'react';
 
 interface ViewModalProps {
   reload?: ActionType['reload'];
-//   values: API.NewsItem;
+  values: API.Pet;
   trigger: ReactElement;
 }
 
-const ViewModal: FC<ViewModalProps> = (
-        // props
-) => {
-//   const { trigger, values } = props;
+const ViewModal: FC<ViewModalProps> = (props) => {
+  const { trigger, values } = props;
 
   return (
     <>
-      {/* <ModalForm
+      <ModalForm
         readonly
-        title="مشاهده جزئیات خبر"
+        title=" جزئیات "
         trigger={trigger}
-        width="800px"
+        width="500px"
         labelCol={{ span: 6 }} // Adjust the span value to allocate more space for labels
-        // wrapperCol={{ span: 18 }} // Adjust the span value for input fields
       >
-        <ProFormText
-          name="title"
-          label={'عنوان'}
-          // labelClassName={}
-          initialValue={values?.title}
-        />
-        <ProFormText name="id" label={'آیدی خبر'} initialValue={values?.id} />
-        <ProFormText name="userId" label={'آیدی کاربر'} initialValue={values?.userId} />
-        <ProFormTextArea label={'محتوی'} name="body" initialValue={values?.body} />
-      </ModalForm> */}
+        <ProFormText name="id" label={'آیدی '} initialValue={values?.id} />
+        <ProFormText name="name" label={'نام '} initialValue={values?.name} />
+        <ProFormText name="status" label={'وضعیت '} initialValue={values?.status} />
+      </ModalForm>
     </>
   );
 };

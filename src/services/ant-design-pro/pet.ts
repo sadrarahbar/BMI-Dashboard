@@ -1,5 +1,6 @@
 // @ts-ignore
 /* eslint-disable */
+import { nanoid } from '@ant-design/pro-components';
 import { request } from '@umijs/max';
 
 /** Update an existing pet PUT /pet */
@@ -122,18 +123,46 @@ export async function uploadFile(
 }
 
 /** Finds Pets by status Multiple status values can be provided with comma separated strings GET /pet/findByStatus */
+// export async function findPetsByStatus(
+//   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+//   params: API.findPetsByStatusParams,
+//   options?: { [key: string]: any },
+// ) {
+//   return request<API.Pet[]>('/pet/findByStatus', {
+//     method: 'GET',
+//     params: {
+//       ...params,
+//     },
+//     ...(options || {}),
+//   });
+// }
 export async function findPetsByStatus(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.findPetsByStatusParams,
   options?: { [key: string]: any },
 ) {
-  return request<API.Pet[]>('/pet/findByStatus', {
-    method: 'GET',
-    params: {
-      ...params,
-    },
-    ...(options || {}),
-  });
+  try {
+    const response = await request<API.Pet[]>('/api/pet/findByStatus', {
+      method: 'GET',
+      params: {
+        ...params,
+        ...(options || {}),
+      },
+    });
+    return {
+      data: response.map((i) => {
+        return { ...i, id: nanoid() };
+      }),
+      success: true,
+      total: response.length || 0,
+    };
+  } catch (error) {
+    console.error('Error fetching pets:', error);
+    return {
+      data: [],
+      success: false,
+      total: 0,
+    };
+  }
 }
 
 /** Finds Pets by tags Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing. GET /pet/findByTags */
