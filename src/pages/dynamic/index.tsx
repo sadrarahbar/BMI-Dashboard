@@ -7,7 +7,7 @@ import React, { useRef, useState } from 'react';
 import View from './components/view';
 import useStyles from './style.style';
 
-const News: React.FC = () => {
+const Dynamic: React.FC = () => {
   const { styles: classes } = useStyles();
   const [currentRecord, setCurrentRecord] = useState<API.Pet|null>(null);
   const [openView, setOpenView] = useState<boolean>(false);
@@ -119,7 +119,7 @@ const News: React.FC = () => {
               <EyeOutlined />
             </Tooltip>
           </Button>,
-          <Link to={`/content/news/edit/${record?.id}`} key="edit" state={record}>
+          <Link to={`/content/dynamic/edit/${record?.id}`} key="edit" state={record}>
             <Button shape="circle" className={classes.editButton}>
               <Tooltip title="ویرایش">
                 <FormOutlined />
@@ -166,8 +166,8 @@ const News: React.FC = () => {
             defaultCollapsed: true,
           }}
           toolBarRender={() => [
-            <Link to="/content/news/create" key="create">
-              <Button key="Add News" type="primary" className={classes.addButton}>
+            <Link to="/content/dynamic/create" key="create">
+              <Button key="Add" type="primary" className={classes.addButton}>
                 افزودن
               </Button>
             </Link>,
@@ -179,4 +179,4 @@ const News: React.FC = () => {
   );
 };
 
-export default News;
+export default Dynamic;

@@ -5,54 +5,54 @@ import React from 'react';
 import useStyles from './style.style';
 
 const Update: React.FC = () => {
-    const { styles: classes } = useStyles();
+  const { styles: classes } = useStyles();
   const { initialState } = useModel('@@initialState');
   const { location } = history;
   const { id } = useParams();
 
-  const isCreateMode=location.pathname === '/content/news/create'
+  const isCreateMode = location.pathname === '/content/dynamic/create';
   const record: API.Pet = location.state;
   const handleCancel = () => {
-        history.push('/content/news'); // Navigate to a specific URL
-      };
+    history.push('/content/dynamic'); // Navigate to a specific URL
+  };
   return (
     <PageContainer>
       <Card
         styles={{
           body: {
-        backgroundImage:
-        initialState?.settings?.navTheme === 'realDark'
+            backgroundImage:
+              initialState?.settings?.navTheme === 'realDark'
                 ? 'background-image: linear-gradient(75deg, #1A1B1F 0%, #191C1F 100%)'
                 : 'background-image: linear-gradient(75deg, #FBFDFF 0%, #F5F7FF 100%)',
           },
         }}
       >
         <ProForm
-                 submitter={{
-                        searchConfig: {
-                          resetText: 'reset',
-                          submitText: 'submit',
-                        },
-                        resetButtonProps: {
-                          style: {
-                            display: 'none',
-                          },
-                        },
-                        submitButtonProps: {},
-                        render: (props) => {
-                          return [
-                            <Flex gap="middle" className={classes.footer} key="submitBtns">
-                                <Button key="submit" onClick={() => props.form?.submit?.()} type="primary">
-                                 { isCreateMode?"ایجاد":"ویرایش"}
-                                </Button>
-                                <Button key="rest" onClick={handleCancel} htmlType="reset">
-                                  انصراف
-                                </Button>
-                            </Flex>,
-                          ];
-                        },
-                      }}
-              onFinish={async (values) => console.log(values)}
+          submitter={{
+            searchConfig: {
+              resetText: 'reset',
+              submitText: 'submit',
+            },
+            resetButtonProps: {
+              style: {
+                display: 'none',
+              },
+            },
+            submitButtonProps: {},
+            render: (props) => {
+              return [
+                <Flex gap="middle" className={classes.footer} key="submitBtns">
+                  <Button key="submit" onClick={() => props.form?.submit?.()} type="primary">
+                    {isCreateMode ? 'ایجاد' : 'ویرایش'}
+                  </Button>
+                  <Button key="rest" onClick={handleCancel} htmlType="reset">
+                    انصراف
+                  </Button>
+                </Flex>,
+              ];
+            },
+          }}
+          onFinish={async (values) => console.log(values)}
         >
           <ProFormText
             name="id"
@@ -77,7 +77,7 @@ const Update: React.FC = () => {
             ]}
           />
           <ProFormSelect
-            initialValue={'available'}
+            initialValue={record?.status}
             options={[
               {
                 value: 'available',

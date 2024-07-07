@@ -12,15 +12,15 @@
  */
 export default [
   {
-    path: '/user',
+    //     path: '/user',
+    path: '/login',
     layout: false,
-    routes: [
-      {
-        name: 'login',
-        path: '/user/login',
-        component: './User/Login',
-      },
-    ],
+    name: 'login',
+    component: './auth/Login',
+    //     routes: [
+    //       {
+    //       },
+    //     ],
   },
   {
     path: '/dashboard',
@@ -34,27 +34,30 @@ export default [
     icon: 'smile',
     routes: [
       {
-        path: '/content/news',
-        name: 'اخبار',
+        path: '/content',
+        redirect: '/content/dynamic',
+      },
+      {
         icon: 'smile',
-        // component: './news',
+        name: 'اخبار',
+        path: '/content/dynamic',
         routes: [
           {
-            path: '/content/news',
+            path: '/content/dynamic',
             name: 'اخبار',
-            component: './news',
+            component: './dynamic',
           },
           {
-            path: '/content/news/edit/:id',
+            path: '/content/dynamic/edit/:id',
             name: 'به روز رسانی خبر',
-            component: './news/update',
+            component: './dynamic/update',
             hideInMenu: true,
           },
           {
             icon: 'smile',
-            path: '/content/news/create',
+            path: '/content/dynamic/create',
             name: 'ایجاد خبر',
-            component: './news/update',
+            component: './dynamic/update',
             hideInMenu: true,
           },
         ],
@@ -77,12 +80,6 @@ export default [
         component: './Admin',
       },
     ],
-  },
-  {
-    name: 'list.table-list',
-    icon: 'table',
-    path: '/list',
-    component: './TableList',
   },
   {
     path: '/',
