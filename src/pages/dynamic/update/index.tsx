@@ -78,6 +78,12 @@ const Update: React.FC = () => {
           />
           <ProFormSelect
             initialValue={record?.status}
+            rules={[
+                {
+                  required: true,
+                  message: 'ورود این فیلد الزامی است',
+                },
+              ]}
             options={[
               {
                 value: 'available',
