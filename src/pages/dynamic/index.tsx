@@ -1,7 +1,7 @@
 import { findPetsByStatus } from '@/services/ant-design-pro/pet';
 import { DeleteOutlined, EyeOutlined, FormOutlined } from '@ant-design/icons';
 import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
-import { Link, useModel } from '@umijs/max';
+import { getLocale, Link, useModel } from '@umijs/max';
 import { Button, Card, Image, Modal, Tooltip } from 'antd';
 import React, { useRef, useState } from 'react';
 import View from './components/view';
@@ -18,7 +18,7 @@ const Dynamic: React.FC = () => {
       okText: 'تأیید',
       cancelText: 'لغو',
       centered: true,
-      style: { direction: 'rtl' },
+      style: { direction: getLocale()==='fa-IR'?'rtl':'ltr' },
       //       onOk() {
       //         console.log('OK');
       //       },
