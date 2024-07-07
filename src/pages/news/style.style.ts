@@ -2,14 +2,14 @@ import { createStyles, css } from 'antd-style';
 
 const useStyles = createStyles(({ token }) => {
   const baseButtonStyles = css`
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              padding: 4px;
-              cursor: pointer;
-              font-size: '14px';
-              transition: all 0.2s ease-in-out;
-            `;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+    cursor: pointer;
+    font-size: '14px';
+    transition: all 0.2s ease-in-out;
+  `;
 
   const viewButtonStyles = css`
     ${baseButtonStyles};
@@ -53,12 +53,19 @@ const useStyles = createStyles(({ token }) => {
       border-color: ${token?.colorSuccessHover}!important; // Use Ant Design tokens
     }
   `;
+  const tableItemStyles = css`
+    white-space: nowrap; /* Prevent wrapping to next line */
+    overflow: hidden; /* Hide overflowing content */
+    text-overflow: ellipsis; /* Show ellipsis (...) */
+    width: 100px; /* Set desired width for the paragraph */
+  `;
 
   return {
     viewButton: viewButtonStyles,
     editButton: editButtonStyles,
     deleteButton: deleteButtonStyles,
     addButton: addButtonStyles,
+    tableItem: tableItemStyles,
   };
 });
 

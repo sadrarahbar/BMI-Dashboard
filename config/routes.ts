@@ -30,18 +30,34 @@ export default [
   },
   {
     path: '/content',
-    name: 'content',
+    name: 'محتوا',
     icon: 'smile',
     routes: [
-      // {
-      //         path: '/content',
-      //         redirect: '/content/news',
-      //       },
       {
         path: '/content/news',
-        name: 'news',
+        name: 'اخبار',
         icon: 'smile',
-        component: './news',
+        // component: './news',
+        routes: [
+          {
+            path: '/content/news',
+            name: 'اخبار',
+            component: './news',
+          },
+          {
+            path: '/content/news/edit/:id',
+            name: 'به روز رسانی خبر',
+            component: './news/update',
+            hideInMenu: true,
+          },
+          {
+            icon: 'smile',
+            path: '/content/news/create',
+            name: 'ایجاد خبر',
+            component: './news/update',
+            hideInMenu: true,
+          },
+        ],
       },
     ],
   },
