@@ -17,7 +17,7 @@ export async function updatePet(body: API.Pet, options?: { [key: string]: any })
 
 /** Add a new pet to the store POST /pet */
 export async function addPet(body: API.Pet, options?: { [key: string]: any }) {
-  return request<any>('/pet', {
+  return request<any>('/api/pet', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -149,8 +149,8 @@ export async function findPetsByStatus(
       },
     });
     return {
-      data: response.map((i) => {
-        return { ...i, id: nanoid() };
+      data: response.map((item) => {
+        return { ...item, id: nanoid(), key: item?.id };
       }),
       success: true,
       total: response.length || 0,

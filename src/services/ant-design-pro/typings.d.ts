@@ -79,9 +79,10 @@ declare namespace API {
   };
 
   type Pet = {
-    id?: number;
+    id?: string;
     category?: Category;
     name: string;
+    key?:number;
     photoUrls: string[];
     tags?: Tag[];
     /** pet status in the store */
