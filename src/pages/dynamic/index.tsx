@@ -47,7 +47,7 @@ const Dynamic: React.FC = () => {
   const columns: ProColumns<API.Pet>[] = [
     {
       title: 'تصویر',
-      width: 80,
+      width: 100,
       hideInSearch: true,
       valueType: 'image',
       render: (_, record) => (
@@ -63,14 +63,14 @@ const Dynamic: React.FC = () => {
     {
       title: 'شناسه ',
       dataIndex: 'id',
-      width: 200,
+      width: 350,
       hideInSearch: true,
     },
     {
       title: 'نام',
       dataIndex: 'name',
       hideInSearch: true,
-      //       width: 100,
+      width: 130,
       ellipsis: true,
       render: (_, record) => {
         return <p className={classes.tableItem}>{record?.name}</p>;
@@ -81,7 +81,7 @@ const Dynamic: React.FC = () => {
       title: 'دسته',
       dataIndex: 'category.name',
       hideInSearch: true,
-      width: 100,
+      width: 130,
       ellipsis: true,
       render: (_, record) => {
         return record?.category?.name ? record?.category.name : '-';
@@ -91,6 +91,7 @@ const Dynamic: React.FC = () => {
       title: 'وضعیت',
       dataIndex: 'status',
       initialValue: 'available',
+      width: 130,
       valueEnum: {
         available: {
           text: 'available',
@@ -110,6 +111,8 @@ const Dynamic: React.FC = () => {
       title: 'عملیات',
       dataIndex: 'actions',
       valueType: 'option',
+      width: '150px',
+      fixed: 'right',
       render: (_, record) => {
         return [
           <Button
@@ -149,9 +152,9 @@ const Dynamic: React.FC = () => {
   return (
     <PageContainer>
       <Card
-        style={{}}
         styles={{
           body: {
+            padding: '0px',
             backgroundImage:
               initialState?.settings?.navTheme === 'realDark'
                 ? 'background-image: linear-gradient(75deg, #1A1B1F 0%, #191C1F 100%)'
