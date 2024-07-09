@@ -1,4 +1,4 @@
-import { addPet, updatePetWithForm } from '@/services/ant-design-pro/pet';
+import { addPet, updatePet, uploadFile } from '@/services/ant-design-pro/pet';
 import {
   nanoid,
   PageContainer,
@@ -7,8 +7,8 @@ import {
   ProFormText,
   ProFormUploadDragger,
 } from '@ant-design/pro-components';
-import { history, useModel, useParams } from '@umijs/max';
-import { Button, Card, Flex } from 'antd';
+import { history, useModel } from '@umijs/max';
+import { Button, Card, Flex, message } from 'antd';
 import React from 'react';
 import useStyles from './style.style';
 
@@ -16,9 +16,8 @@ const Update: React.FC = () => {
   const { styles: classes } = useStyles();
   const { initialState } = useModel('@@initialState');
   const { location } = history;
-  const { id } = useParams();
+  //   const { id } = useParams();
 
-  // Define your options as arrays
   const categoryOptions = [
     { value: 0, label: 'دسته0' },
     { value: 1, label: 'دسته1' },
@@ -37,39 +36,75 @@ const Update: React.FC = () => {
     { value: 'sold', label: 'Sold' },
   ];
   const isCreateMode = location?.pathname === '/content/dynamic/create';
-  const values: API.Pet = location?.state;
+  const locationState: API.Pet = location?.state;
   const record = {
-    ...values,
-    tags: values?.tags?.map((t) => {
+    ...locationState,
+    tags: locationState?.tags?.map((t) => {
       return { value: t?.id, label: t?.name };
     }),
-    category: values?.tags
-      ? { value: values?.category?.id, label: values?.category?.name }
+    category: locationState?.tags
+      ? { value: locationState?.category?.id, label: locationState?.category?.name }
       : undefined,
   };
+  console.log(locationState);
+  console.log(record);
+  async function handleFileUpload(petId: number, file: File, additionalMetadata?: string) {
+    const params = {
+      petId: petId,
+    };
+    const body = {
+      additionalMetadata: additionalMetadata,
+    };
+    try {
+      const response = await uploadFile(params, body, file);
+      console.log('Upload successful:', response);
+      message.success('با موفقیت آپلود شد');
+      history.push('/content/dynamic'); // Navigate to a specific URL
+    } catch (error) {
+      console.error('Upload failed:', error);
+      message.error('عملیات آپلود موفقیت آمیز نبود !');
+    }
+  }
   const handleCancel = () => {
-    history.push('/content/dynamic'); // Navigate to a specific URL
+    history.push('/content/dynamic');
   };
-  const submitHandler = (values: API.Pet) => {
-    console.log(values);
+  const submitHandler = (formData: API.Pet) => {
+    const filteredTagOptions = tagOptions
+      ?.filter((option) => formData?.tags?.includes(option?.value))
+      ?.map((item) => ({ id: +item?.value, name: item?.label }));
+    const filteredCategoryOptions = categoryOptions
+      ?.filter((cat) => formData?.category === cat?.value)
+      ?.map((item) => ({ id: +item?.value, name: item?.label }))[0];
     if (isCreateMode) {
-      const filteredTagOptions = tagOptions
-        ?.filter((option) => values?.tags?.includes(option?.value))
-        ?.map((item) => ({ id: +item?.value, name: item?.label }));
-      const filteredCategoryOptions = categoryOptions
-        ?.filter((cat) => values?.category == cat?.value)
-        ?.map((item) => ({ id: +item?.value, name: item?.label }))[0];
       addPet({
         category: filteredCategoryOptions,
-        name: values?.name,
+        name: formData?.name,
         photoUrls: [''], //todo
         tags: filteredTagOptions,
-        status: values?.status,
-      }).then((res) => console.log(res));
+        status: formData?.status,
+      }).then((res) => {
+        if (res?.id) {
+          message.success('با موفقیت اضافه شد');
+          formData?.file?.map((f) => handleFileUpload(res?.id, f, `fileName:${res?.name}`));
+        } else {
+          message.success('عملیات موفقیت آمیز نبود');
+        }
+      });
     } else {
-      updatePetWithForm(+values.id || 0, { name: values?.name, status: values?.status });
+      const body = {
+        id: locationState.key || 0,
+        category: filteredCategoryOptions,
+        name: formData?.name,
+        tags: filteredTagOptions,
+        status: formData?.status,
+        photoUrls: record?.photoUrls, //todo
+      };
+      updatePet(body).then((res) => {
+        formData?.file?.map((f) => {
+          handleFileUpload(res?.id, f, `fileName:${res?.name}`);
+        });
+      });
     }
-    //     history.push('/content/dynamic'); // Navigate to a specific URL
   };
 
   return (
@@ -109,7 +144,7 @@ const Update: React.FC = () => {
               ];
             },
           }}
-          onFinish={async (values) => submitHandler(values)}
+          onFinish={async (data) => submitHandler(data)}
         >
           <ProFormUploadDragger
             label="بارگزاری عکس"
@@ -129,9 +164,9 @@ const Update: React.FC = () => {
             //     action={`https://petstore.swagger.io/v2/pet/${values?.key}/uploadImage`}
             //     accept="png"
             initialValue={
-              values?.photoUrls
+              locationState?.photoUrls
                 ? [
-                    ...values?.photoUrls?.map((p) => {
+                    ...locationState?.photoUrls?.map((p) => {
                       return { name: p, uid: nanoid() };
                     }),
                   ]

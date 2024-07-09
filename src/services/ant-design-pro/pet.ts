@@ -5,7 +5,7 @@ import { request } from '@umijs/max';
 
 /** Update an existing pet PUT /pet */
 export async function updatePet(body: API.Pet, options?: { [key: string]: any }) {
-  return request<any>('/pet', {
+  return request<any>('/api/pet', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ export async function deletePet(
   options?: { [key: string]: any },
 ) {
   const { petId: param0, ...queryParams } = params;
-  return request<any>(`/pet/${param0}`, {
+  return request<any>(`/api/pet/${param0}`, {
     method: 'DELETE',
     params: { ...queryParams },
     ...(options || {}),
@@ -113,7 +113,7 @@ export async function uploadFile(
     }
   });
 
-  return request<API.ApiResponse>(`/pet/${param0}/uploadImage`, {
+  return request<API.ApiResponse>(`/api/pet/${param0}/uploadImage`, {
     method: 'POST',
     params: { ...queryParams },
     data: formData,

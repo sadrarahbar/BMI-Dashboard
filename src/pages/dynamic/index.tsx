@@ -1,34 +1,40 @@
-import { findPetsByStatus } from '@/services/ant-design-pro/pet';
+import { deletePet, findPetsByStatus } from '@/services/ant-design-pro/pet';
 import { DeleteOutlined, EyeOutlined, FormOutlined } from '@ant-design/icons';
 import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
 import { getLocale, Link, useModel } from '@umijs/max';
-import { Button, Card, Image, Modal, Tooltip } from 'antd';
+import { Button, Card, Image, message, Modal, Tooltip } from 'antd';
 import React, { useRef, useState } from 'react';
 import View from './components/view';
 import useStyles from './style.style';
 
 const Dynamic: React.FC = () => {
   const { styles: classes } = useStyles();
-  const [currentRecord, setCurrentRecord] = useState<API.Pet|null>(null);
+  const [currentRecord, setCurrentRecord] = useState<API.Pet | null>(null);
+  const actionRef = useRef<ActionType>();
   const [openView, setOpenView] = useState<boolean>(false);
   const showDeleteconfirm = (currentItem: API.Pet) => {
     Modal.confirm({
       title: 'حذف ',
-      content: 'آیا از حذف اطمینان دارید ؟',
+      content: `آیا از حذف ${currentItem?.name} اطمینان دارید ؟`,
       okText: 'تأیید',
       cancelText: 'لغو',
       centered: true,
-      style: { direction: getLocale()==='fa-IR'?'rtl':'ltr' },
-      //       onOk() {
-      //         console.log('OK');
-      //       },
+      style: { direction: getLocale() === 'fa-IR' ? 'rtl' : 'ltr' },
+      onOk() {
+        console.log('OK');
+        deletePet({ petId: currentItem?.key }).then((res) => {
+          if (res.code === 200) {
+            actionRef.current.reload();
+            message.success('با موفقیت حذف شد');
+          }
+        });
+      },
       //       onCancel() {
       //         console.log('Cancel');
       //       },
       //   onOk: () => deleteItem(currentItem),
     });
   };
-  const actionRef = useRef<ActionType>();
 
   const [params, setParams] = useState({}); // Initial params (including status filter)
   const handleParamsChange = (newParams) => {
@@ -174,7 +180,12 @@ const Dynamic: React.FC = () => {
           ]}
         />
       </Card>
-      <View record={currentRecord} setCurrentRecord={setCurrentRecord} open={openView} setOpen={setOpenView} />
+      <View
+        record={currentRecord}
+        setCurrentRecord={setCurrentRecord}
+        open={openView}
+        setOpen={setOpenView}
+      />
     </PageContainer>
   );
 };
