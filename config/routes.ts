@@ -77,7 +77,7 @@ export default [
       {
         path: '/admin/sub-page',
         name: 'sub-page',
-        component: './Admin',
+        component: './admin',
       },
     ],
   },
