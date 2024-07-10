@@ -4,8 +4,8 @@ import { Base } from '@ant-design/plots';
 const CompositeFacetCircle = () => {
   const config = {
     type: 'facetCircle',
-    width: 480,
-    height: 480,
+    width: 400,
+    height: 300,
     autoFit: false,
     data: [
       { month: 'Jan.', name: 'A', value: 0.6326436603187056 },

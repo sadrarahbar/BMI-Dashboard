@@ -157,4 +157,10 @@ export default defineConfig({
   },
   esbuildMinifyIIFE: true,
   requestRecord: {},
+  chainWebpack(config) {
+        config.externals({
+          // ... other externals
+        //   '@ant-design/plots': 'ant-design/plots', // Replace with the appropriate external name if needed
+        });
+      },
 });
