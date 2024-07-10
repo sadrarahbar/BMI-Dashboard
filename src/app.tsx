@@ -25,8 +25,8 @@ export async function getInitialState(): Promise<{
       //       const msg = await loginUser({ password: '1213', username: 'dfg' });
       //       return msg;
       const currentUserData = {
-        name: 'Serati Ma',
-        avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+        name: 'فائزه مرادی',
+        avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_UP3m1iNsigc_SlmkKuMlPcDeEEfe9DewQYSQCLti-DtNK1BOgkyTHvynZh2frtu3Z7s&usqp=CAU',
         userid: '00000001',
         email: 'antdesign@alipay.com',
         signature: '海纳百川，有容乃大',

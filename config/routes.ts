@@ -39,7 +39,7 @@ export default [
       },
       {
         icon: 'smile',
-        name: 'اخبار',
+        name: 'محتوای داینامیک',
         path: '/content/dynamic',
         routes: [
           {
@@ -60,13 +60,18 @@ export default [
             component: './dynamic/update',
             hideInMenu: true,
           },
+          // {
+          //   path: '/content/admin',
+          //   name: 'نشریات',
+          //   component: './admin',
+          // },
         ],
       },
     ],
   },
   {
     path: '/admin',
-    name: 'admin',
+    name: 'پروفایل',
     icon: 'crown',
     access: 'canAdmin',
     routes: [
@@ -76,7 +81,7 @@ export default [
       },
       {
         path: '/admin/sub-page',
-        name: 'sub-page',
+        name: 'پروفایل',
         component: './admin',
       },
     ],

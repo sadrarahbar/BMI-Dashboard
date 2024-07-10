@@ -39,6 +39,7 @@ const PageHeaderContent: FC<{
     </div>
   );
 };
+
 const ExtraContent: FC<Record<string, any>> = () => {
   const { styles } = useStyles();
   return (
@@ -55,6 +56,7 @@ const ExtraContent: FC<Record<string, any>> = () => {
     </div>
   );
 };
+
 const topColResponsiveProps = {
   xs: 24,
   sm: 12,
@@ -65,23 +67,24 @@ const topColResponsiveProps = {
     marginBottom: 24,
   },
 };
+
 const Dashboard: FC = () => {
   return (
     <PageContainer
-      content={
-        <PageHeaderContent
-          currentUser={{
-            avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
-            name: 'فائزه مرادی',
-            userid: '00000001',
-            email: 'antdesign@alipay.com',
-            signature: 'زندگی زیباست',
-            title: 'کارشناس پروژه',
-            group: 'معاونت نرم افزار - مهندس جعفرزاده',
-          }}
-        />
-      }
-      extraContent={<ExtraContent />}
+      // content={
+      //   <PageHeaderContent
+      //     currentUser={{
+      //       avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
+      //       name: 'فائزه مرادی',
+      //       userid: '00000001',
+      //       email: 'antdesign@alipay.com',
+      //       signature: 'زندگی زیباست',
+      //       title: 'کارشناس پروژه',
+      //       group: 'معاونت نرم افزار - مهندس جعفرزاده',
+      //     }}
+      //   />
+      // }
+      // extraContent={<ExtraContent />}
     >
       <Row gutter={24}>
         <Col {...topColResponsiveProps}>
@@ -268,7 +271,7 @@ const Dashboard: FC = () => {
             //     loading={data?.radarData?.length === 0}
           >
             {/* <div> */}
-              <CompositeFacetCircle />
+            <CompositeFacetCircle />
             {/* </div> */}
           </Card>
         </Col>
@@ -276,4 +279,5 @@ const Dashboard: FC = () => {
     </PageContainer>
   );
 };
+
 export default Dashboard;
