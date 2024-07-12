@@ -1,6 +1,6 @@
 /**
- * loading 占位
- * 解决首次加载时白屏的问题
+ * loading Placeholder
+ * Solve the problem of white screen when loading for the first time
  */
  (function () {
   const _root = document.querySelector('#root');

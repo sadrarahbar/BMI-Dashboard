@@ -1,15 +1,16 @@
 ﻿/**
- * @name umi 的路由配置
- * @description 只支持 path,component,routes,redirect,wrappers,name,icon 的配置
- * @param path  path 只支持两种占位符配置，第一种是动态参数 :id 的形式，第二种是 * 通配符，通配符只能出现路由字符串的最后。
- * @param component 配置 location 和 path 匹配后用于渲染的 React 组件路径。可以是绝对路径，也可以是相对路径，如果是相对路径，会从 src/pages 开始找起。
- * @param routes 配置子路由，通常在需要为多个路径增加 layout 组件时使用。
- * @param redirect 配置路由跳转
- * @param wrappers 配置路由组件的包装组件，通过包装组件可以为当前的路由组件组合进更多的功能。 比如，可以用于路由级别的权限校验
- * @param name 配置路由的标题，默认读取国际化文件 menu.ts 中 menu.xxxx 的值，如配置 name 为 login，则读取 menu.ts 中 menu.login 的取值作为标题
- * @param icon 配置路由的图标，取值参考 https://ant.design/components/icon-cn， 注意去除风格后缀和大小写，如想要配置图标为 <StepBackwardOutlined /> 则取值应为 stepBackward 或 StepBackward，如想要配置图标为 <UserOutlined /> 则取值应为 user 或者 User
- * @doc https://umijs.org/docs/guides/routes
+* @name Umi routing configuration
+* @description Only supports configuration of path, component, routes, redirect, wrappers, name, and icon.
+* @param path Path only supports two types of placeholder configuration: the first is the dynamic parameter :id, and the second is the * wildcard, which can only appear at the end of the route string.
+* @param component Configures the React component path to be rendered after location and path match. It can be an absolute path or a relative path. If it is a relative path, it will start searching from src/pages.
+* @param routes Configures child routes. It is usually used when you need to add a layout component to multiple paths.
+* @param redirect Configures route redirection.
+* @param wrappers Configures wrapper components for route components. Through wrapper components, more functions can be combined into the current route component. For example, it can be used for route-level permission verification.
+* @param name Configures the title of the route. By default, it reads the value of menu.xxxx in the internationalization file menu.ts. For example, if name is configured as login, the value of menu.login in menu.ts is read as the title.
+* @param icon Configures the icon of the route. Refer to https://ant.design/components/icon-cn for values. Note that the style suffix and case should be removed. For example, if you want to configure the icon as <StepBackwardOutlined />, the value should be stepBackward or StepBackward. If you want to configure the icon as <UserOutlined />, the value should be user or User.
+* @doc https://umijs.org/docs/guides/routes
  */
+
 export default [
   {
     //     path: '/user',
@@ -43,28 +44,56 @@ export default [
         path: '/content/dynamic',
         routes: [
           {
-            path: '/content/dynamic',
+            path: '/content/dynamic/news',
             name: 'اخبار',
-            component: './dynamic',
+            component: './dynamic/news',
           },
           {
-            path: '/content/dynamic/edit/:id',
+            path: '/content/dynamic/news/edit/:id',
             name: 'به روز رسانی خبر',
-            component: './dynamic/update',
+            component: './dynamic/news/update',
             hideInMenu: true,
           },
           {
             icon: 'smile',
-            path: '/content/dynamic/create',
-            name: 'ایجاد خبر',
-            component: './dynamic/update',
+            path: '/content/dynamic/news/create',
+            name: 'ایجاد خبر جدید',
+            component: './dynamic/news/update',
             hideInMenu: true,
           },
-          // {
-          //   path: '/content/admin',
-          //   name: 'نشریات',
-          //   component: './admin',
-          // },
+         
+         
+         
+          {
+            path: '/content/dynamic/journals',
+            name: 'نشریات',
+            component: './dynamic/journals',
+          },
+          {
+            path: '/content/dynamic/journals/edit/:id',
+            name: 'به روز رسانی نشریه',
+            component: './dynamic/journals/update',
+            hideInMenu: true,
+          },
+          {
+            icon: 'smile',
+            path: '/content/dynamic/journals/create',
+            name: 'ایجاد نشریه جدید',
+            component: './dynamic/journals/update',
+            hideInMenu: true,
+          },
+        ],
+      },
+      {
+        icon: 'smile',
+        name: 'محتوای استاتیک',
+        path: '/content/static',
+        routes: [
+          {
+            path: '/content/static',
+            name: 'تنظیمات',
+            component: './404',
+          },
         ],
       },
     ],

@@ -1,4 +1,4 @@
-import { AvatarDropdown, AvatarName, Footer, Question, SelectLang } from '@/components';
+import { AvatarDropdown, AvatarName, SelectLang } from '@/components';
 // import { currentUser as queryCurrentUser } from '@/services/ant-design-pro/api';
 import { LinkOutlined } from '@ant-design/icons';
 import type { Settings as LayoutSettings } from '@ant-design/pro-components';
@@ -14,6 +14,8 @@ const loginPath = '/login';
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
  * */
+
+
 export async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
   currentUser?: API.loginUserResponse['currentUser'];
@@ -22,40 +24,42 @@ export async function getInitialState(): Promise<{
 }> {
   const fetchUserInfo = async () => {
     try {
-      //       const msg = await loginUser({ password: '1213', username: 'dfg' });
-      //       return msg;
+      // const msg = await loginUser({ password: '1213', username: 'dfg' });
+      // return msg;
       const currentUserData = {
         name: 'فائزه مرادی',
-        avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_UP3m1iNsigc_SlmkKuMlPcDeEEfe9DewQYSQCLti-DtNK1BOgkyTHvynZh2frtu3Z7s&usqp=CAU',
+        avatar:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_UP3m1iNsigc_SlmkKuMlPcDeEEfe9DewQYSQCLti-DtNK1BOgkyTHvynZh2frtu3Z7s&usqp=CAU',
         userid: '00000001',
         email: 'antdesign@alipay.com',
-        signature: '海纳百川，有容乃大',
-        title: '交互专家',
-        group: '蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED',
+        signature: 'The sea embraces all rivers, and tolerance is great',
+        title: 'Interaction expert',
+        group:
+          'Ant Financial Services Group - XXXX Business Group - XXXX Platform Department - XXXX Technology Department - UED',
         tags: [
           {
             key: '0',
-            label: '很有想法的',
+            label: 'Very thoughtful',
           },
           {
             key: '1',
-            label: '专注设计',
+            label: 'Focus on design',
           },
           {
             key: '2',
-            label: '辣~',
+            label: 'Spicy~',
           },
           {
             key: '3',
-            label: '大长腿',
+            label: 'Long legs',
           },
           {
             key: '4',
-            label: '川妹子',
+            label: 'Sichuan girl',
           },
           {
             key: '5',
-            label: '海纳百川',
+            label: 'The sea embraces all rivers',
           },
         ],
         notifyCount: 12,
@@ -64,15 +68,15 @@ export async function getInitialState(): Promise<{
         access: 'admin',
         geographic: {
           province: {
-            label: '浙江省',
+            label: 'Zhejiang Province',
             key: '330000',
           },
           city: {
-            label: '杭州市',
+            label: 'Hangzhou',
             key: '330100',
           },
         },
-        address: '西湖区工专路 77 号',
+        address: 'No. 77 Gongzhuan Road, Xihu District',
         phone: '0752-268888888',
       };
       return currentUserData;
@@ -81,7 +85,7 @@ export async function getInitialState(): Promise<{
     }
     return undefined;
   };
-  // 如果不是登录页面，执行
+  // If it is not a login page, execute
   const { location } = history;
   if (location.pathname !== loginPath) {
     const currentUser = await fetchUserInfo();
@@ -97,10 +101,17 @@ export async function getInitialState(): Promise<{
   };
 }
 
-// ProLayout 支持的api https://procomponents.ant.design/components/layout
+// APIs supported by ProLayout https://procomponents.ant.design/components/layout
+
 export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
   return {
-    actionsRender: () => [<Question key="doc" />, <SelectLang key="SelectLang" />],
+    actionsRender: () => [
+      // Disabled Question
+      // <Question key="doc" />,
+
+      // Enabled Languages
+      <SelectLang key="SelectLang" />,
+    ],
     avatarProps: {
       src: initialState?.currentUser?.avatar,
       title: <AvatarName />,
@@ -111,10 +122,10 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     // waterMarkProps: {
     //   content: initialState?.currentUser?.name,
     // },
-    footerRender: () => <Footer />,
+    // footerRender: () => <Footer />,
     onPageChange: () => {
-            const { location } = history;
-      // 如果没有登录，重定向到 login
+      const { location } = history;
+      // If not logged in, redirect to login
       if (!initialState?.currentUser && location.pathname !== loginPath) {
         history.push(loginPath);
       }
@@ -143,19 +154,20 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
       ? [
           <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
             <LinkOutlined />
-            <span>OpenAPI 文档</span>
+            <span>OpenAPI document</span>
           </Link>,
         ]
       : [],
     menuHeaderRender: undefined,
-    // 自定义 403 页面
+    // Custom 403 page
     // unAccessible: <div>unAccessible</div>,
-    // 增加一个 loading 的状态
+    // Add a loading state
     childrenRender: (children) => {
       // if (initialState?.loading) return <PageLoading />;
       return (
         <>
           {children}
+          // Desabled Setting Drawer
           {isDev && (
             <SettingDrawer
               disableUrlParams
@@ -177,9 +189,9 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
 };
 
 /**
- * @name request 配置，可以配置错误处理
- * 它基于 axios 和 ahooks 的 useRequest 提供了一套统一的网络请求和错误处理方案。
- * @doc https://umijs.org/docs/max/request#配置
+ * @name request configuration, you can configure error handling
+ * It provides a unified network request and error handling solution based on useRequest of axios and ahooks.
+ * @doc https://umijs.org/docs/max/request#Configuration
  */
 export const request = {
   ...errorConfig,

@@ -1,6 +1,6 @@
 /**
- * @name 代理的配置
- * @see 在生产环境 代理是无法生效的，所以这里没有生产环境的配置
+ * @name Configuration of the proxy
+ * @see  The agent cannot take effect in the production environment, so there is no configuration of the production environment
  * -------------------------------
  * The agent cannot take effect in the production environment
  * so there is no configuration of the production environment
@@ -10,21 +10,21 @@
  * @doc https://umijs.org/docs/guides/proxy
  */
 export default {
-        //   如果需要自定义本地开发服务器  请取消注释按需调整
+        //   If you need to customize the local development server, please uncomment and adjust as needed
         dev: {
                 // localhost:8000/api/** -> https://preview.pro.ant.design/api/**
                 '/api': {
-                        // 要代理的地址
+                        // Address to proxy
                         target: 'https://petstore.swagger.io/v2/',
-                        // 配置了这个可以从 http 代理到 https
-                        // 依赖 origin 的功能可能需要这个，比如 cookie
+                        // Configure this to proxy from http to https
+                        // Functionality that depends on origin may need this, such as cookies
                         changeOrigin: true,
                         'pathRewrite': { '^/api': '' },
                 },
         },
         mako: {},
         /**
-         * @name 详细的代理配置
+         * @name Detailed proxy configuration
          * @doc https://github.com/chimurai/http-proxy-middleware
          */
         test: {

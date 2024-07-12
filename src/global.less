@@ -68,34 +68,58 @@ ol {
   justify-content: end;
 }
 
-
-
-:where(.css-dev-only-do-not-override-61l1mm).ant-menu-light.ant-menu-horizontal >.ant-menu-item-selected,
-:where(.css-dev-only-do-not-override-61l1mm).ant-menu-light>.ant-menu.ant-menu-horizontal >.ant-menu-item-selected,
-:where(.css-dev-only-do-not-override-61l1mm).ant-menu-light.ant-menu-horizontal >.ant-menu-submenu-selected,
-:where(.css-dev-only-do-not-override-61l1mm).ant-menu-light>.ant-menu.ant-menu-horizontal >.ant-menu-submenu-selected {
-  color:rgba(0, 0, 0, 0.95);
-  background-color:transparent;
+.ant-menu-overflow-item.ant-menu-item.ant-menu-item-selected.ant-menu-item-only-child.ant-pro-base-menu-horizontal-menu-item
+{
+  color: rgba(0, 0, 0, 0.95);
   font-weight: 500;
+  background-color: transparent;
   border-bottom: 3px solid #d2d2d2;
-  border-radius: 0;
+  border-radius: 0 !important;
 }
 
 .ant-pro-top-nav-header-menu {
-  line-height: unset;
   padding-right: 3rem;
+  line-height: unset;
 }
 
 .ant-pro-top-nav-header-logo > :first-child > h1 {
   font-weight: 500;
 }
 
-
 .ant-pro-layout .ant-pro-sider .ant-layout-sider-children {
   padding-inline: 16px;
 }
 
-
 :where(.css-dev-only-do-not-override-pcfdof).ant-menu .ant-menu-item-divider {
-margin: 10px 6px !important;
+  margin: 10px 6px !important;
+}
+
+
+.ant-pro-setting-drawer-handle {
+  position: fixed;
+  inset-block-start: 68px;
+}
+
+// .ant-pro-layout .ant-pro-layout-content {
+//   padding-block: 32px;
+//   padding-inline: 40px;
+// }
+
+.ant-pro-form-login-logo {
+  width: unset;
+  height: unset;
+  margin-inline-end: 0;
+  // vertical-align: top;
+}
+
+.ant-pro-form-login-desc {
+  margin-block-start: 2rem;
+  margin-block-end: 2rem;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.ant-pro-form-login-container {
+  justify-content: center;
 }

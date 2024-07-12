@@ -107,42 +107,43 @@ const Login: React.FC = () => {
   console.log('initialState:', initialState);
   const handleSubmit = async (values: API.loginUserParams) => {
     try {
-      // 登录
+      // Login
       const res = await loginUser({ ...values });
       if (res?.message?.includes('logged in')) {
-        message.success('با موفقیت  وارد شدید !');
+        message.success('با موفقیت وارد شدید !');
         const currentUserData = {
           name: 'Serati Ma',
           avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
           userid: '00000001',
           email: 'antdesign@alipay.com',
-          signature: '海纳百川，有容乃大',
-          title: '交互专家',
-          group: '蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED',
+          signature: 'The sea embraces all rivers, and tolerance is great',
+          title: 'Interaction Expert',
+          group:
+            'Ant Financial Services - XXXX Business Group - XXXX Platform Department - XXXX Technology Department - UED',
           tags: [
             {
               key: '0',
-              label: '很有想法的',
+              label: 'very thoughtful',
             },
             {
               key: '1',
-              label: '专注设计',
+              label: 'focus on design',
             },
             {
               key: '2',
-              label: '辣~',
+              label: 'spicy~',
             },
             {
               key: '3',
-              label: '大长腿',
+              label: 'long legs',
             },
             {
               key: '4',
-              label: '川妹子',
+              label: 'Sichuan girl',
             },
             {
               key: '5',
-              label: '海纳百川',
+              label: 'the sea embraces all rivers',
             },
           ],
           notifyCount: 12,
@@ -151,15 +152,15 @@ const Login: React.FC = () => {
           access: 'admin',
           geographic: {
             province: {
-              label: '浙江省',
+              label: 'Zhejiang Province',
               key: '330000',
             },
             city: {
-              label: '杭州市',
+              label: 'Hangzhou City',
               key: '330100',
             },
           },
-          address: '西湖区工专路 77 号',
+          address: 'No. 77, Gongzhuan Road, Xihu District',
           phone: '0752-268888888',
         };
         flushSync(() => {
@@ -168,19 +169,19 @@ const Login: React.FC = () => {
             currentUser: currentUserData,
           });
         });
-        // setUserLoginState( { token: '123', access: 'admin'  });
+        // setUserLoginState( { token: '123', access: 'admin' });
         // console.log(initialState)
         history.push('/');
         // navigate('/');
         return;
       }
 
-      //       setUserLoginState({ token: '123', access: 'admin' });
-      //       如果失败去设置用户错误信息
+      // setUserLoginState({ token: '123', access: 'admin' });
+      // If failed, set user error message
     } catch (error) {
       const defaultLoginFailureMessage = intl.formatMessage({
         id: 'pages.login.failure',
-        defaultMessage: '登录失败，请重试！',
+        defaultMessage: 'Login failed, please try again! ',
       });
       console.log(error);
       message.error(defaultLoginFailureMessage);
@@ -194,7 +195,7 @@ const Login: React.FC = () => {
         <title>
           {intl.formatMessage({
             id: 'menu.login',
-            defaultMessage: '登录页',
+            defaultMessage: 'Login page',
           })}
           - {Settings.title}
         </title>
@@ -212,18 +213,18 @@ const Login: React.FC = () => {
             maxWidth: '75vw',
           }}
           logo={<img alt="logo" src="/logo.svg" />}
-          title="Ant Design"
+          // title="پورتال بانک ملی ایران"
           subTitle={intl.formatMessage({ id: 'pages.layouts.userLayout.title' })}
           initialValues={{
             autoLogin: true,
           }}
           actions={[
-            <FormattedMessage
-              key="loginWith"
-              id="pages.login.loginWith"
-              defaultMessage="其他登录方式"
-            />,
-            <ActionIcons key="icons" />,
+            // <FormattedMessage
+            //   key="loginWith"
+            //   id="pages.login.loginWith"
+            //   defaultMessage="Other login methods"
+            // />,
+            // <ActionIcons key="icons" />,
           ]}
           onFinish={async (values) => {
             await handleSubmit(values as API.loginUserParams);
@@ -234,30 +235,30 @@ const Login: React.FC = () => {
             onChange={setType}
             centered
             items={[
-              {
-                key: 'account',
-                label: intl.formatMessage({
-                  id: 'pages.login.accountLogin.tab',
-                  defaultMessage: '账户密码登录',
-                }),
-              },
-              {
-                key: 'mobile',
-                label: intl.formatMessage({
-                  id: 'pages.login.phoneLogin.tab',
-                  defaultMessage: '手机号登录',
-                }),
-              },
+              // {
+              //   key: 'account',
+              //   label: intl.formatMessage({
+              //     id: 'pages.login.accountLogin.tab',
+              //     defaultMessage: 'Account password login',
+              //   }),
+              // },
+              // {
+              //   key: 'mobile',
+              //   label: intl.formatMessage({
+              //     id: 'pages.login.phoneLogin.tab',
+              //     defaultMessage: 'Mobile phone number login',
+              //   }),
+              // },
             ]}
           />
 
           {/* {status === 'error' && loginType === 'account' && (
-            <LoginMessage
-              content={intl.formatMessage({
-                id: 'pages.login.accountLogin.errorMessage',
-                defaultMessage: '账户或密码错误(admin/ant.design)',
-              })}
-            />
+          <LoginMessage
+          content={intl.formatMessage({
+          id: 'pages.login.accountLogin.errorMessage',
+          defaultMessage: 'Wrong account or password (admin/ant.design)',
+          })}
+          />
           )} */}
           {type === 'account' && (
             <>
@@ -269,7 +270,7 @@ const Login: React.FC = () => {
                 }}
                 placeholder={intl.formatMessage({
                   id: 'pages.login.username.placeholder',
-                  defaultMessage: '用户名: admin or user',
+                  defaultMessage: 'Username: admin or user',
                 })}
                 rules={[
                   {
@@ -277,7 +278,7 @@ const Login: React.FC = () => {
                     message: (
                       <FormattedMessage
                         id="pages.login.username.required"
-                        defaultMessage="请输入用户名!"
+                        defaultMessage="Please enter username!"
                       />
                     ),
                   },
@@ -291,7 +292,7 @@ const Login: React.FC = () => {
                 }}
                 placeholder={intl.formatMessage({
                   id: 'pages.login.password.placeholder',
-                  defaultMessage: '密码: ant.design',
+                  defaultMessage: 'Password: ant.design',
                 })}
                 rules={[
                   {
@@ -299,7 +300,7 @@ const Login: React.FC = () => {
                     message: (
                       <FormattedMessage
                         id="pages.login.password.required"
-                        defaultMessage="请输入密码！"
+                        defaultMessage="Please enter password!"
                       />
                     ),
                   },
@@ -308,7 +309,7 @@ const Login: React.FC = () => {
             </>
           )}
 
-          {/* {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误" />} */}
+          {/* {status === 'error' && loginType === 'mobile' && <LoginMessage content="Verification code error" />} */}
           {type === 'mobile' && (
             <>
               <ProFormText
@@ -319,7 +320,7 @@ const Login: React.FC = () => {
                 name="mobile"
                 placeholder={intl.formatMessage({
                   id: 'pages.login.phoneNumber.placeholder',
-                  defaultMessage: '手机号',
+                  defaultMessage: 'Mobile phone number',
                 })}
                 rules={[
                   {
@@ -327,7 +328,7 @@ const Login: React.FC = () => {
                     message: (
                       <FormattedMessage
                         id="pages.login.phoneNumber.required"
-                        defaultMessage="请输入手机号！"
+                        defaultMessage="Please enter your mobile phone number!"
                       />
                     ),
                   },
@@ -336,7 +337,7 @@ const Login: React.FC = () => {
                     message: (
                       <FormattedMessage
                         id="pages.login.phoneNumber.invalid"
-                        defaultMessage="手机号格式错误！"
+                        defaultMessage="Mobile phone number format is wrong!"
                       />
                     ),
                   },
@@ -352,18 +353,18 @@ const Login: React.FC = () => {
                 }}
                 placeholder={intl.formatMessage({
                   id: 'pages.login.captcha.placeholder',
-                  defaultMessage: '请输入验证码',
+                  defaultMessage: 'Please enter the verification code',
                 })}
                 captchaTextRender={(timing, count) => {
                   if (timing) {
                     return `${count} ${intl.formatMessage({
                       id: 'pages.getCaptchaSecondText',
-                      defaultMessage: '获取验证码',
+                      defaultMessage: 'Get verification code',
                     })}`;
                   }
                   return intl.formatMessage({
                     id: 'pages.login.phoneLogin.getVerificationCode',
-                    defaultMessage: '获取验证码',
+                    defaultMessage: 'Get verification code',
                   });
                 }}
                 name="captcha"
@@ -373,7 +374,7 @@ const Login: React.FC = () => {
                     message: (
                       <FormattedMessage
                         id="pages.login.captcha.required"
-                        defaultMessage="请输入验证码！"
+                        defaultMessage="Please enter the verification code!"
                       />
                     ),
                   },
@@ -381,37 +382,38 @@ const Login: React.FC = () => {
                 onGetCaptcha={async () =>
                   // phone
                   {
-                    //   const result = await getFakeCaptcha({
-                    //     phone,
-                    //   });
-                    //   if (!result) {
-                    //     return;
-                    //   }
-                    message.success('获取验证码成功！验证码为：1234');
+                    // const result = await getFakeCaptcha({
+                    // phone,
+                    // });
+                    // if (!result) {
+                    // return;
+                    // }
+                    message.success('Get verification code successfully! Verification code: 1234');
                   }
                 }
               />
             </>
           )}
+          
           <div
             style={{
               marginBottom: 24,
             }}
           >
             <ProFormCheckbox noStyle name="autoLogin">
-              <FormattedMessage id="pages.login.rememberMe" defaultMessage="自动登录" />
+              <FormattedMessage id="pages.login.rememberMe" defaultMessage="Automatic login" />
             </ProFormCheckbox>
             <a
               style={{
                 float: 'right',
               }}
             >
-              <FormattedMessage id="pages.login.forgotPassword" defaultMessage="忘记密码" />
+              <FormattedMessage id="pages.login.forgotPassword" defaultMessage="Forgot password" />
             </a>
           </div>
         </LoginForm>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

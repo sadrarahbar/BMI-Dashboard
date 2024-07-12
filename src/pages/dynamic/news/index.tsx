@@ -128,7 +128,7 @@ const Dynamic: React.FC = () => {
               <EyeOutlined />
             </Tooltip>
           </Button>,
-          <Link to={`/content/dynamic/edit/${record?.id}`} key="edit" state={record}>
+          <Link to={`/content/dynamic/news/edit/${record?.id}`} key="edit" state={record}>
             <Button shape="circle" className={classes.editButton}>
               <Tooltip title="ویرایش">
                 <FormOutlined />

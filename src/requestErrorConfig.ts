@@ -2,109 +2,109 @@
 import type { RequestConfig } from '@umijs/max';
 import { message, notification } from 'antd';
 
-// 错误处理方案： 错误类型
+// Error handling scheme: Error type
 enum ErrorShowType {
-        SILENT = 0,
-        WARN_MESSAGE = 1,
-        ERROR_MESSAGE = 2,
-        NOTIFICATION = 3,
-        REDIRECT = 9,
+  SILENT = 0,
+  WARN_MESSAGE = 1,
+  ERROR_MESSAGE = 2,
+  NOTIFICATION = 3,
+  REDIRECT = 9,
 }
-// 与后端约定的响应数据格式
+// Response data format agreed with the backend
 interface ResponseStructure {
-        success: boolean;
-        data: any;
-        errorCode?: number;
-        errorMessage?: string;
-        showType?: ErrorShowType;
+  success: boolean;
+  data: any;
+  errorCode?: number;
+  errorMessage?: string;
+  showType?: ErrorShowType;
 }
 
 /**
- * @name 错误处理
- * pro 自带的错误处理， 可以在这里做自己的改动
- * @doc https://umijs.org/docs/max/request#配置
+ * @name Error handling
+ * Pro's built-in error handling, you can make your own changes here
+ * @doc https://umijs.org/docs/max/request#Configuration
  */
 export const errorConfig: RequestConfig = {
-        // 错误处理： umi@3 的错误处理方案。
-        errorConfig: {
-                // 错误抛出
-                errorThrower: (res) => {
-                        const { success, data, errorCode, errorMessage, showType } =
-                                res as unknown as ResponseStructure;
-                        if (!success) {
-                                const error: any = new Error(errorMessage);
-                                error.name = 'BizError';
-                                error.info = { errorCode, errorMessage, showType, data };
-                                throw error; // 抛出自制的错误
-                        }
-                },
-                // 错误接收及处理
-                errorHandler: (error: any, opts: any) => {
-                        if (opts?.skipErrorHandler) throw error;
-                        // 我们的 errorThrower 抛出的错误。
-                        if (error.name === 'BizError') {
-                                const errorInfo: ResponseStructure | undefined = error.info;
-                                if (errorInfo) {
-                                        const { errorMessage, errorCode } = errorInfo;
-                                        switch (errorInfo.showType) {
-                                                case ErrorShowType.SILENT:
-                                                        // do nothing
-                                                        break;
-                                                case ErrorShowType.WARN_MESSAGE:
-                                                        message.warning(errorMessage);
-                                                        break;
-                                                case ErrorShowType.ERROR_MESSAGE:
-                                                        message.error(errorMessage);
-                                                        break;
-                                                case ErrorShowType.NOTIFICATION:
-                                                        notification.open({
-                                                                description: errorMessage,
-                                                                message: errorCode,
-                                                        });
-                                                        break;
-                                                case ErrorShowType.REDIRECT:
-                                                        // TODO: redirect
-                                                        break;
-                                                default:
-                                                        message.error(errorMessage);
-                                        }
-                                }
-                        } else if (error.response) {
-                                // Axios 的错误
-                                // 请求成功发出且服务器也响应了状态码，但状态代码超出了 2xx 的范围
-                                message.error(`Response status:${error.response.status}`);
-                        } else if (error.request) {
-                                // 请求已经成功发起，但没有收到响应
-                                // \`error.request\` 在浏览器中是 XMLHttpRequest 的实例，
-                                // 而在node.js中是 http.ClientRequest 的实例
-                                message.error('None response! Please retry.');
-                        } else {
-                                // 发送请求时出了点问题
-                                message.error('Request error, please retry.');
-                        }
-                },
-        },
+  // Error handling: umi@3's error handling scheme.
+  errorConfig: {
+    // Error throwing
+    errorThrower: (res) => {
+      const { success, data, errorCode, errorMessage, showType } =
+        res as unknown as ResponseStructure;
+      if (!success) {
+        const error: any = new Error(errorMessage);
+        error.name = 'BizError';
+        error.info = { errorCode, errorMessage, showType, data };
+        throw error; // Throws self-made errors
+      }
+    },
+    // Error reception and processing
+    errorHandler: (error: any, opts: any) => {
+      if (opts?.skipErrorHandler) throw error;
+      // Error thrown by our errorThrower.
+      if (error.name === 'BizError') {
+        const errorInfo: ResponseStructure | undefined = error.info;
+        if (errorInfo) {
+          const { errorMessage, errorCode } = errorInfo;
+          switch (errorInfo.showType) {
+            case ErrorShowType.SILENT:
+              // do nothing
+              break;
+            case ErrorShowType.WARN_MESSAGE:
+              message.warning(errorMessage);
+              break;
+            case ErrorShowType.ERROR_MESSAGE:
+              message.error(errorMessage);
+              break;
+            case ErrorShowType.NOTIFICATION:
+              notification.open({
+                description: errorMessage,
+                message: errorCode,
+              });
+              break;
+            case ErrorShowType.REDIRECT:
+              // TODO: redirect
+              break;
+            default:
+              message.error(errorMessage);
+          }
+        }
+      } else if (error.response) {
+        // Axios error
+        // The request was successfully sent and the server also responded with a status code, but the status code is outside the 2xx range
+        message.error(`Response status:${error.response.status}`);
+      } else if (error.request) {
+        // The request was successfully initiated, but no response was received
+        // \`error.request\` is an instance of XMLHttpRequest in the browser,
+        // and an instance of http.ClientRequest in node.js
+        message.error('None response! Please retry.');
+      } else {
+        // Something went wrong when sending the request
+        message.error('Request error, please retry.');
+      }
+    },
+  },
 
-        // 请求拦截器
-        requestInterceptors: [
-                (config: RequestOptions) => {
-                        // 拦截请求配置，进行个性化处理。
-                        // const url = config?.url?.concat('?token = 123');
-                        //       return { ...config, url };
-                        return { ...config };
-                },
-        ],
+  // Request Interceptor
+  requestInterceptors: [
+    (config: RequestOptions) => {
+      // Intercept request configuration for personalized processing.
+      // const url = config?.url?.concat('?token = 123');
+      // return { ...config, url };
+      return { ...config };
+    },
+  ],
 
-        // 响应拦截器
-        responseInterceptors: [
-                (response) => {
-                        // 拦截响应数据，进行个性化处理
-                        const { data } = response as unknown as ResponseStructure;
+  // Response Interceptor
+  responseInterceptors: [
+    (response) => {
+      // Intercept response data and perform personalized processing
+      const { data } = response as unknown as ResponseStructure;
 
-                        if (data?.success === false) {
-                                message.error('请求失败！');
-                        }
-                        return response;
-                },
-        ],
+      if (data?.success === false) {
+        message.error('Request failed!');
+      }
+      return response;
+    },
+  ],
 };
