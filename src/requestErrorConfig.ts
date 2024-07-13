@@ -19,7 +19,7 @@ interface ResponseStructure {
   showType?: ErrorShowType;
 }
 
-/**
+/*
  * @name Error handling
  * Pro's built-in error handling, you can make your own changes here
  * @doc https://umijs.org/docs/max/request#Configuration

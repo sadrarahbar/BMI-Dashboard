@@ -11,10 +11,9 @@ import { errorConfig } from './requestErrorConfig';
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/login';
 
-/**
+/*
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
  * */
-
 
 export async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
@@ -85,8 +84,10 @@ export async function getInitialState(): Promise<{
     }
     return undefined;
   };
+
   // If it is not a login page, execute
   const { location } = history;
+
   if (location.pathname !== loginPath) {
     const currentUser = await fetchUserInfo();
     return {
@@ -95,6 +96,7 @@ export async function getInitialState(): Promise<{
       settings: defaultSettings as Partial<LayoutSettings>,
     };
   }
+
   return {
     fetchUserInfo,
     settings: defaultSettings as Partial<LayoutSettings>,
@@ -112,6 +114,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
       // Enabled Languages
       <SelectLang key="SelectLang" />,
     ],
+
     avatarProps: {
       src: initialState?.currentUser?.avatar,
       title: <AvatarName />,
@@ -119,10 +122,12 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
         return <AvatarDropdown>{avatarChildren}</AvatarDropdown>;
       },
     },
+
     // waterMarkProps: {
     //   content: initialState?.currentUser?.name,
     // },
     // footerRender: () => <Footer />,
+
     onPageChange: () => {
       const { location } = history;
       // If not logged in, redirect to login
@@ -130,6 +135,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
         history.push(loginPath);
       }
     },
+
     bgLayoutImgList: [
       {
         src: 'https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/D2LWSqNny4sAAAAAAAAAAAAAFl94AQBr',
@@ -150,6 +156,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
         width: '331px',
       },
     ],
+
     links: isDev
       ? [
           <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
@@ -158,41 +165,49 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
           </Link>,
         ]
       : [],
+
     menuHeaderRender: undefined,
+
     // Custom 403 page
     // unAccessible: <div>unAccessible</div>,
     // Add a loading state
+
     childrenRender: (children) => {
       // if (initialState?.loading) return <PageLoading />;
       return (
         <>
           {children}
-          // Desabled Setting Drawer
-          {isDev && (
-            <SettingDrawer
-              disableUrlParams
-              enableDarkTheme
-              settings={initialState?.settings}
-              onSettingChange={(settings) => {
-                setInitialState((preInitialState) => ({
-                  ...preInitialState,
-                  settings,
-                }));
-              }}
-            />
-          )}
+          {
+            // Desabled Setting Drawer
+
+            isDev && (
+              <SettingDrawer
+                disableUrlParams
+                enableDarkTheme
+                settings={initialState?.settings}
+                onSettingChange={(settings) => {
+                  setInitialState((preInitialState) => ({
+                    ...preInitialState,
+                    settings,
+                  }));
+                }}
+              />
+            )
+          }
         </>
       );
     },
+
     ...initialState?.settings,
   };
 };
 
-/**
+/*
  * @name request configuration, you can configure error handling
  * It provides a unified network request and error handling solution based on useRequest of axios and ahooks.
  * @doc https://umijs.org/docs/max/request#Configuration
  */
+
 export const request = {
   ...errorConfig,
 };

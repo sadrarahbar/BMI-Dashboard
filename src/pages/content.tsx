@@ -3,7 +3,7 @@ import { useModel } from '@umijs/max';
 import { Card, theme } from 'antd';
 import React from 'react';
 
-/**
+/*
 * Each individual card is extracted into components for reuse of styles
 * @param param0
 * @returns

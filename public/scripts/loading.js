@@ -1,4 +1,4 @@
-/**
+/*
  * loading Placeholder
  * Solve the problem of white screen when loading for the first time
  */

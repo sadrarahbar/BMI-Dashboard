@@ -1,4 +1,4 @@
-/**
+/*
  * @name Configuration of the proxy
  * @see  The agent cannot take effect in the production environment, so there is no configuration of the production environment
  * -------------------------------
@@ -23,7 +23,7 @@ export default {
                 },
         },
         mako: {},
-        /**
+        /*
          * @name Detailed proxy configuration
          * @doc https://github.com/chimurai/http-proxy-middleware
          */

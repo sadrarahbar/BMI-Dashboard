@@ -9,14 +9,14 @@ import routes from './routes';
 const { REACT_APP_ENV = 'dev' } = process.env;
 
 export default defineConfig({
-  /**
+  /*
    * @name Enable hash mode
    * @description Include a hash suffix in the build output. Commonly used for incremental releases and to avoid browser cache.
    * @doc https://umijs.org/docs/api/config#hash
    */
   hash: true,
 
-  /**
+  /*
    * @name Compatibility settings
    * @description IE11 compatibility may not be perfect. Check all dependencies used.
    * @doc https://umijs.org/docs/api/config#targets
@@ -24,14 +24,14 @@ export default defineConfig({
   // targets: {
   //   ie: 11,
   // },
-  /**
+  /*
    * @name Routing configuration. Files not included in the routes will not be compiled.
    * @description Only supports path, component, routes, redirect, wrappers, and title configurations.
    * @doc https://umijs.org/docs/guides/routes
    */
   // umi routes: https://umijs.org/docs/routing
   routes,
-  /**
+  /*
    * @name Theme configuration
    * @description Although called a theme, it is actually just a Less variable setting.
    * @doc Ant Design theme settings https://ant.design/docs/react/customize-theme-cn
@@ -43,13 +43,13 @@ export default defineConfig({
     'root-entry-name': 'variable',
     fontFamily: 'IRANSans',
   },
-  /**
+  /*
    * @name Internationalization configuration for moment.js
    * @description If internationalization is not required, enabling this can reduce the size of the JS bundle.
    * @doc https://umijs.org/docs/api/config#ignoremomentlocale
    */
   ignoreMomentLocale: true,
-  /**
+  /*
    * @name Proxy configuration
    * @description Allows your local server to proxy to your server, enabling you to access server data.
    * @see Note that the proxy can only be used during local development and will not be used after building.
@@ -57,24 +57,24 @@ export default defineConfig({
    * @doc Proxy configuration https://umijs.org/docs/api/config#proxy
    */
   proxy: proxy[REACT_APP_ENV as keyof typeof proxy],
-  /**
+  /*
    * @name Fast hot reload configuration
    * @description A great hot reload component that preserves state during updates.
    */
   fastRefresh: true,
   //============== The following are all max plugin configurations ===============
-  /**
+  /*
    * @name Data flow plugin
    * @@doc https://umijs.org/docs/max/data-flow
    */
   model: {},
-  /**
+  /*
    * A global initial data flow that can be used to share data between plugins
    * @description Can be used to store global data, such as user information or global states. The global initial state is created at the very beginning of the Umi project.
    * @doc https://umijs.org/docs/max/data-flow#%E5%85%A8%E5%B1%80%E5%88%9D%E5%A7%8B%E7%8A%B6%68
    */
   initialState: {},
-  /**
+  /*
    * @name layout plugin
    * @doc https://umijs.org/docs/max/layout-menu
    */
@@ -83,7 +83,7 @@ export default defineConfig({
     locale: true, // Use locale settings
     ...defaultSettings,
   },
-  /**
+  /*
    * @name moment2dayjs plugin
    * @description Replaces moment with dayjs in the project
    * @doc https://umijs.org/docs/max/moment2dayjs
@@ -92,7 +92,7 @@ export default defineConfig({
     preset: 'antd',
     plugins: ['duration'],
   },
-  /**
+  /*
    * @name internationalization plugin
    * @doc https://umijs.org/docs/max/i18n
    */
@@ -104,13 +104,13 @@ export default defineConfig({
     baseNavigator: true,
   },
 
-  /**
+  /*
    * @name Ant Design plugin
    * @description Built-in babel import plugin
    * @doc https://umijs.org/docs/max/antd#antd
    */
   antd: {},
-  /**
+  /*
    * @name Network request configuration
    * @description It provides a unified network request and error handling solution based on axios and ahooks' useRequest.
    * @doc https://umijs.org/docs/max/request
@@ -118,13 +118,13 @@ export default defineConfig({
   request: {
     dataField: '',
   },
-  /**
+  /*
    * @name Access control plugin
    * @description An access control plugin based on initialState. initialState must be enabled first.
    * @doc https://umijs.org/docs/max/access
    */
   access: {},
-  /**
+  /*
    * @name Extra scripts in <head>
    * @description Configures extra scripts in the <head> section
    */
@@ -134,7 +134,7 @@ export default defineConfig({
   ],
   //================ pro plugin configuration =================
   presets: ['umi-presets-pro'],
-  /**
+  /*
    * @name Configuration of the openAPI plugin
    * @description Generates serve and mock based on the openapi specification, which can reduce a lot of boilerplate code
    * @doc https://pro.ant.design/zh-cn/docs/openapi/

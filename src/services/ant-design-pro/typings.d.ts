@@ -11,49 +11,49 @@ declare namespace API {
   };
 
   type deleteOrderParams = {
-    /** ID of the order that needs to be deleted */
+    /* ID of the order that needs to be deleted */
     orderId: number;
   };
 
   type deletePetParams = {
-    /** Pet id to delete */
+    /* Pet id to delete */
     petId: number;
   };
 
   type deleteUserParams = {
-    /** The name that needs to be deleted */
+    /* The name that needs to be deleted */
     username: string;
   };
 
   type findPetsByStatusParams = {
-    /** Status values that need to be considered for filter */
+    /* Status values that need to be considered for filter */
     status: ('available' | 'pending' | 'sold');
   };
 
   type findPetsByTagsParams = {
-    /** Tags to filter by */
+    /* Tags to filter by */
     tags: string[];
   };
 
   type getOrderByIdParams = {
-    /** ID of pet that needs to be fetched */
+    /* ID of pet that needs to be fetched */
     orderId: number;
   };
 
   type getPetByIdParams = {
-    /** ID of pet to return */
+    /* ID of pet to return */
     petId: number;
   };
 
   type getUserByNameParams = {
-    /** The name that needs to be fetched. Use user1 for testing.  */
+    /* The name that needs to be fetched. Use user1 for testing.  */
     username: string;
   };
 
   type loginUserParams = {
-    /** The user name for login */
+    /* The user name for login */
     username: string;
-    /** The password for login in clear text */
+    /* The password for login in clear text */
     password: string;
   };
   //   type loginUserResponse = {
@@ -73,7 +73,7 @@ declare namespace API {
     petId?: number;
     quantity?: number;
     shipDate?: string;
-    /** Order Status */
+    /* Order Status */
     status?: 'placed' | 'approved' | 'delivered';
     complete?: boolean;
   };
@@ -85,7 +85,7 @@ declare namespace API {
     key?:number;
     photoUrls: string[];
     tags?: Tag[];
-    /** pet status in the store */
+    /* pet status in the store */
     status?: 'available' | 'pending' | 'sold';
   };
 
@@ -95,17 +95,17 @@ declare namespace API {
   };
 
   type updatePetWithFormParams = {
-    /** ID of pet that needs to be updated */
+    /* ID of pet that needs to be updated */
     petId: number;
   };
 
   type updateUserParams = {
-    /** name that need to be updated */
+    /* name that need to be updated */
     username: string;
   };
 
   type uploadFileParams = {
-    /** ID of pet to update */
+    /* ID of pet to update */
     petId: number;
   };
 
@@ -117,7 +117,7 @@ declare namespace API {
     email?: string;
     password?: string;
     phone?: string;
-    /** User Status */
+    /* User Status */
     userStatus?: number;
   };
 }

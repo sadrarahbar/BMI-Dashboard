@@ -8,10 +8,15 @@ import View from './components/view';
 import useStyles from './style.style';
 
 const Dynamic: React.FC = () => {
+
   const { styles: classes } = useStyles();
+
   const [currentRecord, setCurrentRecord] = useState<API.Pet | null>(null);
+
   const actionRef = useRef<ActionType>();
+
   const [openView, setOpenView] = useState<boolean>(false);
+
   const showDeleteconfirm = (currentItem: API.Pet) => {
     Modal.confirm({
       title: 'حذف ',
@@ -37,13 +42,16 @@ const Dynamic: React.FC = () => {
   };
 
   const [params, setParams] = useState({}); // Initial params (including status filter)
+
   const handleParamsChange = (newParams) => {
     console.log(newParams);
 
     //     setParams(params=>{return{...params,page: newParams.current,
     //         pageSize: newParams.pageSize}}); // Update state on table changes (sorting, filtering)
   };
+
   const { initialState } = useModel('@@initialState');
+
   const columns: ProColumns<API.Pet>[] = [
     {
       title: 'تصویر',
@@ -149,6 +157,7 @@ const Dynamic: React.FC = () => {
       },
     },
   ];
+
   return (
     <PageContainer>
       <Card
@@ -191,6 +200,7 @@ const Dynamic: React.FC = () => {
       />
     </PageContainer>
   );
+  
 };
 
 export default Dynamic;

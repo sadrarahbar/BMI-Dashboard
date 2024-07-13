@@ -40,14 +40,14 @@ const useStyles = createStyles(({ token }) => {
 });
 
 export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu, children }) => {
- /**
+ /*
 * Log out and save the current URL
 */
   const loginOut = async () => {
 //     await outLogin();
     const { search, pathname } = window.location;
     const urlParams = new URL(window.location.href).searchParams;
-  /** This method will jump to the location of the redirect parameter */
+  /* This method will jump to the location of the redirect parameter */
     const redirect = urlParams.get('redirect');
     // Note: There may be security issues, please note
     if (window.location.pathname !== '/login' && !redirect) {

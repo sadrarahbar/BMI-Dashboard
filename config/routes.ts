@@ -1,4 +1,4 @@
-﻿/**
+﻿/*
 * @name Umi routing configuration
 * @description Only supports configuration of path, component, routes, redirect, wrappers, name, and icon.
 * @param path Path only supports two types of placeholder configuration: the first is the dynamic parameter :id, and the second is the * wildcard, which can only appear at the end of the route string.
