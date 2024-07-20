@@ -27,7 +27,7 @@ declare namespace API {
 
   type findPetsByStatusParams = {
     /* Status values that need to be considered for filter */
-    status: ('available' | 'pending' | 'sold');
+    status: 'available' | 'pending' | 'sold';
   };
 
   type findPetsByTagsParams = {
@@ -65,7 +65,7 @@ declare namespace API {
     type?: string;
     code?: number;
     message?: string;
-    currentUser: { token?: string; access?: string };
+    currentUser: { token?: string; access?: string,avatar:string,name:string };
   };
 
   type Order = {
@@ -79,10 +79,11 @@ declare namespace API {
   };
 
   type Pet = {
+    file: any;
     id?: string;
     category?: Category;
     name: string;
-    key?:number;
+    key?: number;
     photoUrls: string[];
     tags?: Tag[];
     /* pet status in the store */

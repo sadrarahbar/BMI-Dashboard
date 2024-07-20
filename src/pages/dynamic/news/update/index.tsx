@@ -35,7 +35,7 @@ const Update: React.FC = () => {
     { value: 'pending', label: 'Pending' },
     { value: 'sold', label: 'Sold' },
   ];
-  const isCreateMode = location?.pathname === '/content/dynamic/create';
+  const isCreateMode = location?.pathname === '/content/dynamic/news/create';
   const locationState: API.Pet = location?.state;
   const record = {
     ...locationState,
@@ -59,14 +59,14 @@ const Update: React.FC = () => {
       const response = await uploadFile(params, body, file);
       console.log('Upload successful:', response);
       message.success('با موفقیت آپلود شد');
-      history.push('/content/dynamic'); // Navigate to a specific URL
+      history.push('/content/dynamic/news'); // Navigate to a specific URL
     } catch (error) {
       console.error('Upload failed:', error);
       message.error('عملیات آپلود موفقیت آمیز نبود !');
     }
   }
   const handleCancel = () => {
-    history.push('/content/dynamic');
+    history.push('/content/dynamic/news');
   };
   const submitHandler = (formData: API.Pet) => {
     const filteredTagOptions = tagOptions
@@ -101,7 +101,7 @@ const Update: React.FC = () => {
       };
       updatePet(body).then((res) => {
         formData?.file?.map((f) => {
-          handleFileUpload(res?.id, f, `fileName:${res?.name}`);
+          return handleFileUpload(res?.id, f, `fileName:${res?.name}`);
         });
       });
     }
