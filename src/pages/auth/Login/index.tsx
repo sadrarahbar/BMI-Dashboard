@@ -1,10 +1,12 @@
-import { Footer } from '@/components';
+// import { Footer } from '@/components';
 import { history } from '@umijs/max';
 // import { login } from '@/services/ant-design-pro/api';
 import { loginUser } from '@/services/ant-design-pro/user';
 // import { getFakeCaptcha } from '@/services/ant-design-pro/login';
+import Dashboard from '@/pages/dashboard';
 import {
   AlipayCircleOutlined,
+  CrownFilled,
   LockOutlined,
   MobileOutlined,
   TaobaoCircleOutlined,
@@ -17,13 +19,12 @@ import {
   ProFormCheckbox,
   ProFormText,
 } from '@ant-design/pro-components';
-import { FormattedMessage, Helmet, SelectLang, useIntl, useModel, useNavigate } from '@umijs/max';
+import { FormattedMessage, Helmet, SelectLang, useIntl, useModel } from '@umijs/max';
 import { message, Tabs } from 'antd';
 import { createStyles } from 'antd-style';
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
 import Settings from '../../../../config/defaultSettings';
-
 const useStyles = createStyles(({ token }) => {
   return {
     action: {
@@ -97,13 +98,13 @@ const Lang = () => {
 // };
 
 const Login: React.FC = () => {
-  const [userLoginState, setUserLoginState] = useState<API.loginUserResponse['currentUser']>({});
+  //   const [userLoginState, setUserLoginState] = useState<API.loginUserResponse['currentUser']>({});
   const [type, setType] = useState<string>('account');
   const { initialState, setInitialState } = useModel('@@initialState');
 
   const { styles } = useStyles();
   const intl = useIntl();
-  const navigate = useNavigate();
+  //   const navigate = useNavigate();
   console.log('initialState:', initialState);
   const handleSubmit = async (values: API.loginUserParams) => {
     try {
@@ -111,6 +112,45 @@ const Login: React.FC = () => {
       const res = await loginUser({ ...values });
       if (res?.message?.includes('logged in')) {
         message.success('با موفقیت وارد شدید !');
+        const dynamicRoutes = [
+          {
+            path: '/admin',
+            name: 'پروفایل',
+            parentId: 'ant-design-pro-layout',
+            icon: <CrownFilled />,
+            //   access: 'canAdmin',
+            element: <Dashboard />, // Ensure the parent route has an element
+            routes: [
+              {
+                path: '/admin',
+                redirect: '/admin/sub-page',
+                element: <Dashboard />,
+                component: './pages/dashboard',
+              },
+              {
+                path: '/admin/sub-page',
+                name: 'پروفایل',
+                element: <Dashboard />, // Ensure child route has an element
+                component: './pages/dashboard',
+              },
+            ],
+            children: [
+              {
+                path: '/admin',
+                redirect: '/admin/sub-page',
+                element: <Dashboard />,
+                component: './pages/dashboard',
+              },
+              {
+                path: '/admin/sub-page',
+                name: 'پروفایل',
+                element: <Dashboard />, // Ensure child route has an element
+                component: './pages/dashboard',
+              },
+            ],
+          },
+        ];
+
         const currentUserData = {
           name: 'Serati Ma',
           avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
@@ -162,6 +202,7 @@ const Login: React.FC = () => {
           },
           address: 'No. 77, Gongzhuan Road, Xihu District',
           phone: '0752-268888888',
+          dynamicRoutes: dynamicRoutes,
         };
         flushSync(() => {
           setInitialState({
@@ -172,6 +213,7 @@ const Login: React.FC = () => {
         // setUserLoginState( { token: '123', access: 'admin' });
         // console.log(initialState)
         history.push('/');
+
         // navigate('/');
         return;
       }
@@ -218,14 +260,16 @@ const Login: React.FC = () => {
           initialValues={{
             autoLogin: true,
           }}
-          actions={[
-            // <FormattedMessage
-            //   key="loginWith"
-            //   id="pages.login.loginWith"
-            //   defaultMessage="Other login methods"
-            // />,
-            // <ActionIcons key="icons" />,
-          ]}
+          actions={
+            [
+              // <FormattedMessage
+              //   key="loginWith"
+              //   id="pages.login.loginWith"
+              //   defaultMessage="Other login methods"
+              // />,
+              // <ActionIcons key="icons" />,
+            ]
+          }
           onFinish={async (values) => {
             await handleSubmit(values as API.loginUserParams);
           }}
@@ -234,22 +278,24 @@ const Login: React.FC = () => {
             activeKey={type}
             onChange={setType}
             centered
-            items={[
-              // {
-              //   key: 'account',
-              //   label: intl.formatMessage({
-              //     id: 'pages.login.accountLogin.tab',
-              //     defaultMessage: 'Account password login',
-              //   }),
-              // },
-              // {
-              //   key: 'mobile',
-              //   label: intl.formatMessage({
-              //     id: 'pages.login.phoneLogin.tab',
-              //     defaultMessage: 'Mobile phone number login',
-              //   }),
-              // },
-            ]}
+            items={
+              [
+                // {
+                //   key: 'account',
+                //   label: intl.formatMessage({
+                //     id: 'pages.login.accountLogin.tab',
+                //     defaultMessage: 'Account password login',
+                //   }),
+                // },
+                // {
+                //   key: 'mobile',
+                //   label: intl.formatMessage({
+                //     id: 'pages.login.phoneLogin.tab',
+                //     defaultMessage: 'Mobile phone number login',
+                //   }),
+                // },
+              ]
+            }
           />
 
           {/* {status === 'error' && loginType === 'account' && (
@@ -394,7 +440,7 @@ const Login: React.FC = () => {
               />
             </>
           )}
-          
+
           <div
             style={{
               marginBottom: 24,

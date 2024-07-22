@@ -1,12 +1,13 @@
 import { AvatarDropdown, AvatarName, SelectLang } from '@/components';
 // import { currentUser as queryCurrentUser } from '@/services/ant-design-pro/api';
-import { LinkOutlined } from '@ant-design/icons';
+import { CrownFilled, LinkOutlined } from '@ant-design/icons';
 import type { Settings as LayoutSettings } from '@ant-design/pro-components';
 import { SettingDrawer } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history, Link } from '@umijs/max';
 import defaultSettings from '../config/defaultSettings';
 import './assets/styles/IranSansFont.css';
+import Dashboard from './pages/dashboard';
 import { errorConfig } from './requestErrorConfig';
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/login';
@@ -14,6 +15,44 @@ const loginPath = '/login';
 /*
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
  * */
+const dynamicRoutes = [
+  {
+    path: '/admin',
+    name: 'پروفایل',
+    parentId: 'ant-design-pro-layout',
+    icon: <CrownFilled />,
+    //   access: 'canAdmin',
+    element: <Dashboard />, // Ensure the parent route has an element
+    routes: [
+      {
+        path: '/admin',
+        redirect: '/admin/sub-page',
+        element: <Dashboard />,
+        component: './pages/dashboard',
+      },
+      {
+        path: '/admin/sub-page',
+        name: 'پروفایل',
+        element: <Dashboard />, // Ensure child route has an element
+        component: './pages/dashboard',
+      },
+    ],
+    children: [
+      {
+        path: '/admin',
+        redirect: '/admin/sub-page',
+        element: <Dashboard />,
+        component: './pages/dashboard',
+      },
+      {
+        path: '/admin/sub-page',
+        name: 'پروفایل',
+        element: <Dashboard />, // Ensure child route has an element
+        component: './pages/dashboard',
+      },
+    ],
+  },
+];
 
 export async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
@@ -77,6 +116,47 @@ export async function getInitialState(): Promise<{
         },
         address: 'No. 77 Gongzhuan Road, Xihu District',
         phone: '0752-268888888',
+        dynamicRoutes: dynamicRoutes,
+        // dynamicRoutes: [
+        //   {
+        //     path: '/content/dynamic/news',
+        //     name: 'اخبار',
+        //     component: './dynamic/news',
+        //   },
+        //   {
+        //     path: '/content/dynamic/news/edit/:id',
+        //     access: 'canUpdateNews',
+        //     name: 'به روز رسانی خبر',
+        //     component: './dynamic/news/update',
+        //     hideInMenu: true,
+        //   },
+        //   {
+        //     icon: 'smile',
+        //     path: '/content/dynamic/news/create',
+        //     access: 'canAddNews',
+        //     name: 'ایجاد خبر جدید',
+        //     component: './dynamic/news/update',
+        //     hideInMenu: true,
+        //   },
+        //   {
+        //     path: '/content/dynamic/journals',
+        //     name: 'نشریات',
+        //     component: './dynamic/journals',
+        //   },
+        //   {
+        //     path: '/content/dynamic/journals/edit/:id',
+        //     name: 'به روز رسانی نشریه',
+        //     component: './dynamic/journals/update',
+        //     hideInMenu: true,
+        //   },
+        //   {
+        //     icon: 'smile',
+        //     path: '/content/dynamic/journals/create',
+        //     name: 'ایجاد نشریه جدید',
+        //     component: './dynamic/journals/update',
+        //     hideInMenu: true,
+        //   },
+        // ],
       };
       return currentUserData;
     } catch (error) {
@@ -96,17 +176,38 @@ export async function getInitialState(): Promise<{
       settings: defaultSettings as Partial<LayoutSettings>,
     };
   }
-
   return {
     fetchUserInfo,
     settings: defaultSettings as Partial<LayoutSettings>,
   };
 }
 
+export function patchClientRoutes({ routes }) {
+  console.log('patchClientRoutes', routes);
+  // Unshift the new admin route to the beginning of the routes array
+  dynamicRoutes.map((r) => routes.unshift(r));
+}
 // APIs supported by ProLayout https://procomponents.ant.design/components/layout
 
 export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
+  console.log('Initial State:', initialState);
+
+  const { currentUser } = initialState || {};
+  const dynamicRoutes = currentUser?.dynamicRoutes ? currentUser.dynamicRoutes : [];
+
+  console.log('Dynamic Routes Array:', dynamicRoutes);
+
   return {
+    menu: {
+      params: initialState?.currentUser,
+      request: async (params, defaultMenuData) => {
+        console.log('Default Menu Data:', defaultMenuData);
+        console.log('Dynamic Routes:', dynamicRoutes);
+
+        // Merge default menu data with dynamic routes
+        return [...defaultMenuData, ...dynamicRoutes];
+      },
+    },
     actionsRender: () => [
       // Disabled Question
       // <Question key="doc" />,
@@ -169,7 +270,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     menuHeaderRender: undefined,
 
     // Custom 403 page
-//     unAccessible: <div>unAccessible</div>,
+    //     unAccessible: <div>unAccessible</div>,
     // Add a loading state
 
     childrenRender: (children) => {
