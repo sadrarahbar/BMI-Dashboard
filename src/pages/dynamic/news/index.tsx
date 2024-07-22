@@ -1,14 +1,14 @@
 import { deletePet, findPetsByStatus } from '@/services/ant-design-pro/pet';
 import { DeleteOutlined, EyeOutlined, FormOutlined } from '@ant-design/icons';
 import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
-import { getLocale, Link, useModel } from '@umijs/max';
+import { getLocale, Link, useAccess, useModel } from '@umijs/max';
 import { Button, Card, Image, message, Modal, Tooltip } from 'antd';
 import React, { useRef, useState } from 'react';
 import View from './components/view';
 import useStyles from './style.style';
 
 const Dynamic: React.FC = () => {
-
+  const access = useAccess();
   const { styles: classes } = useStyles();
 
   const [currentRecord, setCurrentRecord] = useState<API.Pet | null>(null);
@@ -136,6 +136,7 @@ const Dynamic: React.FC = () => {
               <EyeOutlined />
             </Tooltip>
           </Button>,
+          !access.canUpdateNews?null:
           <Link to={`/content/dynamic/news/edit/${record?.id}`} key="edit" state={record}>
             <Button shape="circle" className={classes.editButton}>
               <Tooltip title="ویرایش">
@@ -143,6 +144,7 @@ const Dynamic: React.FC = () => {
               </Tooltip>
             </Button>
           </Link>,
+          !access.canDeleteNews?null:
           <Button
             key="delete"
             onClick={() => showDeleteconfirm(record)}
@@ -183,13 +185,17 @@ const Dynamic: React.FC = () => {
             labelWidth: 180,
             defaultCollapsed: true,
           }}
-          toolBarRender={() => [
-            <Link to="/content/dynamic/create" key="create">
-              <Button key="Add" type="primary" className={classes.addButton}>
-                افزودن
-              </Button>
-            </Link>,
-          ]}
+          toolBarRender={() =>
+            !access.canAddNews
+              ? []
+              : [
+                  <Link to="/content/dynamic/create" key="create">
+                    <Button key="Add" type="primary" className={classes.addButton}>
+                      افزودن
+                    </Button>
+                  </Link>,
+                ]
+          }
         />
       </Card>
       <View
@@ -200,7 +206,6 @@ const Dynamic: React.FC = () => {
       />
     </PageContainer>
   );
-  
 };
 
 export default Dynamic;

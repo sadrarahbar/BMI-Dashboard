@@ -64,7 +64,7 @@ export async function getInitialState(): Promise<{
         notifyCount: 12,
         unreadCount: 11,
         country: 'China',
-        access: 'admin',
+        access: 'admin  deleteNews',
         geographic: {
           province: {
             label: 'Zhejiang Province',
@@ -169,7 +169,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     menuHeaderRender: undefined,
 
     // Custom 403 page
-    // unAccessible: <div>unAccessible</div>,
+//     unAccessible: <div>unAccessible</div>,
     // Add a loading state
 
     childrenRender: (children) => {

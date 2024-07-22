@@ -54,6 +54,7 @@ const Routes = ({}) => {
               },
               {
                 path: '/content/dynamic/news/edit/:id',
+                access: 'canUpdateNews',
                 name: 'به روز رسانی خبر',
                 component: './dynamic/news/update',
                 hideInMenu: true,
@@ -61,6 +62,7 @@ const Routes = ({}) => {
               {
                 icon: 'smile',
                 path: '/content/dynamic/news/create',
+                access: 'canAddNews',
                 name: 'ایجاد خبر جدید',
                 component: './dynamic/news/update',
                 hideInMenu: true,
