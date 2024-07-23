@@ -44,6 +44,47 @@ const Routes = [
         icon: 'smile',
         name: 'محتوای داینامیک',
         path: '/content/dynamic',
+        // routes: [
+        //   {
+        //     path: '/content/dynamic/news',
+        //     name: 'اخبار',
+        //     component: './dynamic/news',
+        //   },
+        //   {
+        //     path: '/content/dynamic/news/edit/:id',
+        //     access: 'canUpdateNews',
+        //     name: 'به روز رسانی خبر',
+        //     component: './dynamic/news/update',
+        //     hideInMenu: true,
+        //   },
+        //   {
+        //     icon: 'smile',
+        //     path: '/content/dynamic/news/create',
+        //     access: 'canAddNews',
+        //     name: 'ایجاد خبر جدید',
+        //     component: './dynamic/news/update',
+        //     hideInMenu: true,
+        //   },
+
+        //   {
+        //     path: '/content/dynamic/journals',
+        //     name: 'نشریات',
+        //     component: './dynamic/journals',
+        //   },
+        //   {
+        //     path: '/content/dynamic/journals/edit/:id',
+        //     name: 'به روز رسانی نشریه',
+        //     component: './dynamic/journals/update',
+        //     hideInMenu: true,
+        //   },
+        //   {
+        //     icon: 'smile',
+        //     path: '/content/dynamic/journals/create',
+        //     name: 'ایجاد نشریه جدید',
+        //     component: './dynamic/journals/update',
+        //     hideInMenu: true,
+        //   },
+        // ],
       },
       {
         icon: 'smile',

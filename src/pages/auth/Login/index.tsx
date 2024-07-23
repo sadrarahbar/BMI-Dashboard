@@ -112,44 +112,7 @@ const Login: React.FC = () => {
       const res = await loginUser({ ...values });
       if (res?.message?.includes('logged in')) {
         message.success('با موفقیت وارد شدید !');
-        const dynamicRoutes = [
-          {
-            path: '/admin',
-            name: 'پروفایل',
-            parentId: 'ant-design-pro-layout',
-            icon: <CrownFilled />,
-            //   access: 'canAdmin',
-            element: <Dashboard />, // Ensure the parent route has an element
-            routes: [
-              {
-                path: '/admin',
-                redirect: '/admin/sub-page',
-                element: <Dashboard />,
-                component: './pages/dashboard',
-              },
-              {
-                path: '/admin/sub-page',
-                name: 'پروفایل',
-                element: <Dashboard />, // Ensure child route has an element
-                component: './pages/dashboard',
-              },
-            ],
-            children: [
-              {
-                path: '/admin',
-                redirect: '/admin/sub-page',
-                element: <Dashboard />,
-                component: './pages/dashboard',
-              },
-              {
-                path: '/admin/sub-page',
-                name: 'پروفایل',
-                element: <Dashboard />, // Ensure child route has an element
-                component: './pages/dashboard',
-              },
-            ],
-          },
-        ];
+
 
         const currentUserData = {
           name: 'Serati Ma',
@@ -202,7 +165,7 @@ const Login: React.FC = () => {
           },
           address: 'No. 77, Gongzhuan Road, Xihu District',
           phone: '0752-268888888',
-          dynamicRoutes: dynamicRoutes,
+
         };
         flushSync(() => {
           setInitialState({
