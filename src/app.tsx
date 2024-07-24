@@ -58,14 +58,12 @@ const dynamicRoutes = [
     icon: <CrownTwoTone />,
     path: '/content/dynamic/news',
     name: 'اخبار',
-    component: './dynamic/news',
     element: <DynamicPage />,
   },
   {
     path: '/content/dynamic/news/edit/:id',
     access: 'canUpdateNews',
     name: 'به روز رسانی خبر',
-    component: './dynamic/news/update',
     element: <DynamicPage />,
     hideInMenu: true,
   },
@@ -73,7 +71,6 @@ const dynamicRoutes = [
     path: '/content/dynamic/news/create',
     access: 'canAddNews',
     name: 'ایجاد خبر جدید',
-    component: './dynamic/news/update',
     element: <DynamicPage />,
     hideInMenu: true,
   },
@@ -82,13 +79,11 @@ const dynamicRoutes = [
     icon: <CrownFilled />,
     path: '/content/dynamic/journals',
     name: 'نشریات',
-    component: './dynamic/journals',
     element: <DynamicPage />,
   },
   {
     path: '/content/dynamic/journals/edit/:id',
     name: 'به روز رسانی نشریه',
-    component: './dynamic/journals/update',
     element: <DynamicPage />,
     hideInMenu: true,
   },
@@ -96,7 +91,6 @@ const dynamicRoutes = [
     icon: <CrownTwoTone />,
     path: '/content/dynamic/journals/create',
     name: 'ایجاد نشریه جدید',
-    component: './dynamic/journals/update',
     element: <DynamicPage />,
     hideInMenu: true,
   },
@@ -235,7 +229,7 @@ export function patchClientRoutes({ routes }) {
           return mr;
         });  
       
-        console.log(mergedRoutes)
+        console.log("mergedRoutes:",mergedRoutes)
         mergedRoutes.map(r=>routes.unshift(r))
       }
 // APIs supported by ProLayout https://procomponents.ant.design/components/layout
