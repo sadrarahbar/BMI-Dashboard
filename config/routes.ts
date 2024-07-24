@@ -92,31 +92,31 @@ const Routes = [
         path: '/content/static',
         routes: [
           {
-            path: '/content/static',
+            path: '/content/static/setting',
             name: 'تنظیمات',
-            component: './404',
+            component: './statics/setting',
           },
         ],
       },
     ],
   },
-  //       {
-  //         path: '/admin',
-  //         name: 'پروفایل',
-  //         icon: 'crown',
-  //         access: 'canAdmin',
-  //         routes: [
-  //           {
-  //             path: '/admin',
-  //             redirect: '/admin/sub-page',
-  //           },
-  //           {
-  //             path: '/admin/sub-page',
-  //             name: 'پروفایل',
-  //             component: './admin',
-  //           },
-  //         ],
-  //       },
+  {
+    path: '/admin',
+    name: 'پروفایل',
+    icon: 'crown',
+    access: 'canAdmin',
+    routes: [
+      {
+        path: '/admin',
+        redirect: '/admin/sub-page',
+      },
+      {
+        path: '/admin/sub-page',
+        name: 'پروفایل',
+        component: './admin',
+      },
+    ],
+  },
   {
     path: '/',
     redirect: '/dashboard',

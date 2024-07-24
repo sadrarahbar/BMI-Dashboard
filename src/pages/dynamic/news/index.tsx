@@ -7,7 +7,7 @@ import React, { useRef, useState } from 'react';
 import View from './components/view';
 import useStyles from './style.style';
 
-const Dynamic: React.FC = () => {
+const News: React.FC = () => {
   const access = useAccess();
   const { styles: classes } = useStyles();
 
@@ -161,7 +161,7 @@ const Dynamic: React.FC = () => {
   ];
 
   return (
-    <PageContainer>
+    <>
       <Card
         styles={{
           body: {
@@ -189,7 +189,7 @@ const Dynamic: React.FC = () => {
             !access.canAddNews
               ? []
               : [
-                  <Link to="/content/dynamic/create" key="create">
+                  <Link to="/content/dynamic/news/create" key="create">
                     <Button key="Add" type="primary" className={classes.addButton}>
                       افزودن
                     </Button>
@@ -204,8 +204,8 @@ const Dynamic: React.FC = () => {
         open={openView}
         setOpen={setOpenView}
       />
-    </PageContainer>
+    </>
   );
 };
 
-export default Dynamic;
+export default News;

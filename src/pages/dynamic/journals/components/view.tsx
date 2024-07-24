@@ -11,7 +11,7 @@ interface ViewProps {
 
 const { Divider } = ProCard;
 
-const View: FC<ViewProps> = (props) => {
+const ViewJournals: FC<ViewProps> = (props) => {
   const { record, setCurrentRecord, open, setOpen } = props;
   console.log(record);
   return (
@@ -41,4 +41,4 @@ const View: FC<ViewProps> = (props) => {
   );
 };
 
-export default View;
+export default ViewJournals;

@@ -152,7 +152,7 @@ const Login: React.FC = () => {
           notifyCount: 12,
           unreadCount: 11,
           country: 'China',
-          access: 'admin',
+          access: 'admin  deleteNews addNews updateNews',
           geographic: {
             province: {
               label: 'Zhejiang Province',

@@ -15,44 +15,7 @@ const loginPath = '/login';
 /*
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
  * */
-// const dynamicRoutes = [
-//   {
-//     path: '/admin',
-//     name: 'پروفایل',
-//     parentId: 'ant-design-pro-layout',
-//     icon: <CrownFilled />,
-//     //   access: 'canAdmin',
-//     element: <Dashboard />, // Ensure the parent route has an element
-//     routes: [
-//       {
-//         path: '/admin',
-//         redirect: '/admin/sub-page',
-//         element: <Dashboard />,
-//         component: './pages/dashboard',
-//       },
-//       {
-//         path: '/admin/sub-page',
-//         name: 'پروفایل',
-//         element: <Dashboard />, // Ensure child route has an element
-//         component: './pages/dashboard',
-//       },
-//     ],
-//     children: [
-//       {
-//         path: '/admin',
-//         redirect: '/admin/sub-page',
-//         element: <Dashboard />,
-//         component: './pages/dashboard',
-//       },
-//       {
-//         path: '/admin/sub-page',
-//         name: 'پروفایل',
-//         element: <Dashboard />, // Ensure child route has an element
-//         component: './pages/dashboard',
-//       },
-//     ],
-//   },
-// ];
+
 const dynamicRoutes = [
   {
     icon: <CrownTwoTone />,
@@ -145,7 +108,7 @@ export async function getInitialState(): Promise<{
         notifyCount: 12,
         unreadCount: 11,
         country: 'China',
-        access: 'admin  deleteNews',
+        access: 'admin  deleteNews addNews updateNews',
         geographic: {
           province: {
             label: 'Zhejiang Province',

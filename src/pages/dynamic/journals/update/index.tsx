@@ -12,7 +12,7 @@ import { Button, Card, Flex, message } from 'antd';
 import React from 'react';
 import useStyles from './style.style';
 
-const Update: React.FC = () => {
+const UpdateJournals: React.FC = () => {
   const { styles: classes } = useStyles();
   const { initialState } = useModel('@@initialState');
   const { location } = history;
@@ -219,4 +219,4 @@ const Update: React.FC = () => {
   );
 };
 
-export default Update;
+export default UpdateJournals;

@@ -12,7 +12,7 @@ import { Button, Card, Flex, message } from 'antd';
 import React from 'react';
 import useStyles from './style.style';
 
-const Update: React.FC = () => {
+const UpdateNews: React.FC = () => {
   const { styles: classes } = useStyles();
   const { initialState } = useModel('@@initialState');
   const { location } = history;
@@ -46,8 +46,8 @@ const Update: React.FC = () => {
       ? { value: locationState?.category?.id, label: locationState?.category?.name }
       : undefined,
   };
-  console.log(locationState);
-  console.log(record);
+//   console.log(locationState);
+//   console.log(record);
   async function handleFileUpload(petId: number, file: File, additionalMetadata?: string) {
     const params = {
       petId: petId,
@@ -219,4 +219,4 @@ const Update: React.FC = () => {
   );
 };
 
-export default Update;
+export default UpdateNews;

@@ -7,7 +7,7 @@ import React, { useRef, useState } from 'react';
 import View from './components/view';
 import useStyles from './style.style';
 
-const Dynamic: React.FC = () => {
+const Journals: React.FC = () => {
   const { styles: classes } = useStyles();
   const [currentRecord, setCurrentRecord] = useState<API.Pet | null>(null);
   const actionRef = useRef<ActionType>();
@@ -150,7 +150,7 @@ const Dynamic: React.FC = () => {
     },
   ];
   return (
-    <PageContainer>
+    <>
       <Card
         styles={{
           body: {
@@ -175,7 +175,7 @@ const Dynamic: React.FC = () => {
             defaultCollapsed: true,
           }}
           toolBarRender={() => [
-            <Link to="/content/dynamic/create" key="create">
+            <Link to="/content/dynamic/journals/create" key="create">
               <Button key="Add" type="primary" className={classes.addButton}>
                 افزودن
               </Button>
@@ -189,8 +189,8 @@ const Dynamic: React.FC = () => {
         open={openView}
         setOpen={setOpenView}
       />
-    </PageContainer>
+    </>
   );
 };
 
-export default Dynamic;
+export default Journals;
