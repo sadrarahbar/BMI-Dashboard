@@ -1,52 +1,68 @@
 import { PageContainer } from '@ant-design/pro-components';
-import { history, useModel } from '@umijs/max';
-import { Card, theme } from 'antd';
-import React from 'react';
+import { history } from '@umijs/max';
+
+import React, { useMemo } from 'react';
 import Journals from './journals';
 import UpdateJournals from './journals/update';
 import News from './news';
-import UpdateNews from './news/update';
+// import UpdateNews from './news/update';
+import { updateNewsJson } from './news/fakeData';
+import RenderElement from './renderElement';
+
+// Extracted Content component for better readability and performance
+const Content: React.FC<{ pathname: string }> = ({ pathname }) => {
+  //   const [json, setJson] = useState<JsonComponent | null>(null);
+  //   const [error, setError] = useState<string | null>(null);
+
+  //   useEffect(() => {
+  //     const fetchJson = async () => {
+  //       try {
+  //         const response = await fetch(`/api/get-json?pathname=${encodeURIComponent(pathname)}`);
+  //         if (!response.ok) {
+  //           throw new Error('Failed to fetch JSON');
+  //         }
+  //         const data = await response.json();
+  //         setJson(data);
+  //       } catch (err) {
+  //         setError(err.message);
+  //       }
+  //     };
+
+  //     fetchJson();
+  //   }, [pathname]);
+
+  //   if (error) {
+  //     return <div>Error: {error}</div>;
+  //   }
+
+  //   if (!json) {
+  //     return <div>Loading...</div>;
+  //   }
+  switch (true) {
+    case pathname === '/content/dynamic/news':
+      return <News />;
+    case pathname === '/content/dynamic/news/create':
+    case pathname.startsWith('/content/dynamic/news/edit'):
+      return <RenderElement json={updateNewsJson} />;
+    case pathname === '/content/dynamic/journals':
+      return <Journals />;
+    case pathname === '/content/dynamic/journals/create':
+    case pathname.startsWith('/content/dynamic/journals/edit'):
+      return <UpdateJournals />;
+    default:
+      return <div>Page not found</div>;
+  }
+};
 
 const DynamicPage: React.FC = () => {
-  const { token } = theme.useToken();
-  const { initialState } = useModel('@@initialState');
   const { location } = history;
-  console.log(location.pathname);
-  const Content = () => {
-    if (location.pathname === '/content/dynamic/news') {
-      return <News />;
-    } else if (location.pathname === '/content/dynamic/news/create') {
-      return <UpdateNews />;
-    } else if (location.pathname.startsWith('/content/dynamic/news/edit')) {
-      return <UpdateNews />;
-    } else if (location.pathname === '/content/dynamic/journals') {
-      return <Journals />;
-    } else if (location.pathname === '/content/dynamic/journals/create') {
-      return <UpdateJournals />;
-    } else if (location.pathname.startsWith('/content/dynamic/journals/edit')) {
-      return <UpdateJournals />;
-    }
-
-    // Fallback to handle unmatched routes
-    return <div>Page not found</div>;
-  };
-  return (
-    <PageContainer>
-      <Card
-        style={{}}
-        styles={{
-          body: {
-            backgroundImage:
-              initialState?.settings?.navTheme === 'realDark'
-                ? 'background-image: linear-gradient(75deg, #1A1B1F 0%, #191C1F 100%)'
-                : 'background-image: linear-gradient(75deg, #FBFDFF 0%, #F5F7FF 100%)',
-          },
-        }}
-      >
-        <Content />
-      </Card>
-    </PageContainer>
+  // Memoize Content component to prevent unnecessary re-renders
+  const MemoizedContent = useMemo(
+    () => <Content pathname={location.pathname} />,
+    [location.pathname],
   );
+
+  return <PageContainer>{MemoizedContent}</PageContainer>;
 };
 
 export default DynamicPage;

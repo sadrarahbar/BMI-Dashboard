@@ -1,6 +1,6 @@
 import { deletePet, findPetsByStatus } from '@/services/ant-design-pro/pet';
 import { DeleteOutlined, EyeOutlined, FormOutlined } from '@ant-design/icons';
-import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
+import { ActionType, ProColumns, ProTable } from '@ant-design/pro-components';
 import { getLocale, Link, useModel } from '@umijs/max';
 import { Button, Card, Image, message, Modal, Tooltip } from 'antd';
 import React, { useRef, useState } from 'react';

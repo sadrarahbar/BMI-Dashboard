@@ -1,20 +1,18 @@
 import { addPet, updatePet, uploadFile } from '@/services/ant-design-pro/pet';
 import {
   nanoid,
-  PageContainer,
   ProForm,
   ProFormSelect,
   ProFormText,
   ProFormUploadDragger,
 } from '@ant-design/pro-components';
-import { history, useModel } from '@umijs/max';
-import { Button, Card, Flex, message } from 'antd';
+import { history } from '@umijs/max';
+import { Button, Flex, message } from 'antd';
 import React from 'react';
 import useStyles from './style.style';
 
 const UpdateJournals: React.FC = () => {
   const { styles: classes } = useStyles();
-  const { initialState } = useModel('@@initialState');
   const { location } = history;
   //   const { id } = useParams();
 
@@ -108,114 +106,112 @@ const UpdateJournals: React.FC = () => {
   };
 
   return (
-    <PageContainer>
-      <Card
-        styles={{
-          body: {
-            padding: '0px',
-            backgroundImage:
-              initialState?.settings?.navTheme === 'realDark'
-                ? 'background-image: linear-gradient(75deg, #1A1B1F 0%, #191C1F 100%)'
-                : 'background-image: linear-gradient(75deg, #FBFDFF 0%, #F5F7FF 100%)',
+    //     <PageContainer>
+    //       <Card
+    //         styles={{
+    //           body: {
+    //             padding: '0px',
+    //             backgroundImage:
+    //               initialState?.settings?.navTheme === 'realDark'
+    //                 ? 'background-image: linear-gradient(75deg, #1A1B1F 0%, #191C1F 100%)'
+    //                 : 'background-image: linear-gradient(75deg, #FBFDFF 0%, #F5F7FF 100%)',
+    //           },
+    //         }}
+    //       >
+    <ProForm
+      submitter={{
+        searchConfig: {
+          resetText: 'reset',
+          submitText: 'submit',
+        },
+        resetButtonProps: {
+          style: {
+            display: 'none',
           },
-        }}
-      >
-        <ProForm
-          submitter={{
-            searchConfig: {
-              resetText: 'reset',
-              submitText: 'submit',
-            },
-            resetButtonProps: {
-              style: {
-                display: 'none',
-              },
-            },
-            submitButtonProps: {},
-            render: (props) => {
-              return [
-                <Flex gap="middle" className={classes.footer} key="submitBtns">
-                  <Button key="submit" onClick={() => props.form?.submit?.()} type="primary">
-                    {isCreateMode ? 'ایجاد' : 'ویرایش'}
-                  </Button>
-                  <Button key="rest" onClick={handleCancel} htmlType="reset">
-                    انصراف
-                  </Button>
-                </Flex>,
-              ];
-            },
-          }}
-          onFinish={async (data) => submitHandler(data)}
-        >
-          <ProFormUploadDragger
-            label="بارگزاری عکس"
-            name="file"
-            rules={[
-              {
-                required: true,
-                message: 'ورود این فیلد الزامی است',
-              },
-            ]}
-            title={
-              <p className="ant-upload-text">
-                برای بارگزاری فایل کلیک کنید یا فایل را اینجا رها کنید
-              </p>
-            }
-            description={<p className="ant-upload-hint">jpg - png - jpeg</p>}
-            //     action={`https://petstore.swagger.io/v2/pet/${values?.key}/uploadImage`}
-            //     accept="png"
-            initialValue={
-              locationState?.photoUrls
-                ? [
-                    ...locationState?.photoUrls?.map((p) => {
-                      return { name: p, uid: nanoid() };
-                    }),
-                  ]
-                : []
-            }
-          />
-          <ProFormText
-            name="name"
-            label={'نام'}
-            initialValue={record?.name}
-            rules={[
-              {
-                required: true,
-                message: 'ورود این فیلد الزامی است',
-              },
-            ]}
-          />
-          <ProFormSelect
-            name="category"
-            label="دسته"
-            options={categoryOptions}
-            initialValue={record?.category}
-            allowClear
-            rules={[
-              {
-                required: true,
-                message: 'ورود این فیلد الزامی است',
-              },
-            ]}
-          />
-          <ProFormSelect
-            name="tags"
-            label="تگ"
-            options={tagOptions}
-            initialValue={record?.tags}
-            mode="multiple"
-            allowClear
-          />
-          <ProFormSelect
-            name="status"
-            label="وضعیت"
-            options={statusOptions}
-            allowClear
-            initialValue={record?.status}
-          />
-        </ProForm>
-      </Card>
-    </PageContainer>
+        },
+        submitButtonProps: {},
+        render: (props) => {
+          return [
+            <Flex gap="middle" className={classes.footer} key="submitBtns">
+              <Button key="submit" onClick={() => props.form?.submit?.()} type="primary">
+                {isCreateMode ? 'ایجاد' : 'ویرایش'}
+              </Button>
+              <Button key="rest" onClick={handleCancel} htmlType="reset">
+                انصراف
+              </Button>
+            </Flex>,
+          ];
+        },
+      }}
+      onFinish={async (data) => submitHandler(data)}
+    >
+      <ProFormUploadDragger
+        label="بارگزاری عکس"
+        name="file"
+        rules={[
+          {
+            required: true,
+            message: 'ورود این فیلد الزامی است',
+          },
+        ]}
+        title={
+          <p className="ant-upload-text">برای بارگزاری فایل کلیک کنید یا فایل را اینجا رها کنید</p>
+        }
+        description={<p className="ant-upload-hint">jpg - png - jpeg</p>}
+        //     action={`https://petstore.swagger.io/v2/pet/${values?.key}/uploadImage`}
+        //     accept="png"
+        initialValue={
+          locationState?.photoUrls
+            ? [
+                ...locationState?.photoUrls?.map((p) => {
+                  return { name: p, uid: nanoid() };
+                }),
+              ]
+            : []
+        }
+      />
+      <ProFormText
+        name="name"
+        label={'نام'}
+        initialValue={record?.name}
+        rules={[
+          {
+            required: true,
+            message: 'ورود این فیلد الزامی است',
+          },
+        ]}
+      />
+      <ProFormSelect
+        name="category"
+        label="دسته"
+        options={categoryOptions}
+        initialValue={record?.category}
+        allowClear
+        rules={[
+          {
+            required: true,
+            message: 'ورود این فیلد الزامی است',
+          },
+        ]}
+      />
+      <ProFormSelect
+        name="tags"
+        label="تگ"
+        options={tagOptions}
+        initialValue={record?.tags}
+        mode="multiple"
+        allowClear
+      />
+      <ProFormSelect
+        name="status"
+        label="وضعیت"
+        options={statusOptions}
+        allowClear
+        initialValue={record?.status}
+      />
+    </ProForm>
+    //       </Card>
+    //     </PageContainer>
   );
 };
 
