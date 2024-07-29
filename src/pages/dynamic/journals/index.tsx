@@ -76,7 +76,6 @@ const Journals: React.FC = () => {
         return <p className={classes.tableItem}>{record?.name}</p>;
       },
     },
-
     {
       title: 'دسته',
       dataIndex: 'category.name',

@@ -27,16 +27,11 @@ const ViewJournals: FC<ViewProps> = (props) => {
       }}
       width="700px"
     >
-        {/* <ProCard.Group direction={'column'}> */}
-            <Statistic title="آیدی " value={record?.id} />
-          <Divider type={'horizontal'} />
-            <Statistic title="نام" value={record?.name} />
-          <Divider type={'horizontal'} />
-            <Statistic title="وضعیت" value={record?.status} />
-        {/* </ProCard.Group> */}
-      {/* <ProFormText name="id" label={'آیدی '} initialValue={record?.id} />
-      <ProFormText name="name" label={'نام '} initialValue={record?.name} />
-      <ProFormText name="status" label={'وضعیت '} initialValue={record?.status} /> */}
+      <Statistic title="آیدی " value={record?.id} />
+      <Divider type={'horizontal'} />
+      <Statistic title="نام" value={record?.name} />
+      <Divider type={'horizontal'} />
+      <Statistic title="وضعیت" value={record?.status} />
     </Drawer>
   );
 };
