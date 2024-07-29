@@ -64,7 +64,7 @@ const UpdateJournals: React.FC = () => {
     }
   }
   const handleCancel = () => {
-    history.push('/content/dynamic');
+    history.push('/content/dynamic/news');
   };
   const submitHandler = (formData: API.Pet) => {
     const filteredTagOptions = tagOptions
