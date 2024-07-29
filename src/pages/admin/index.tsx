@@ -66,7 +66,7 @@ const AdvancedForm: FC<Record<string, any>> = () => {
   const { styles } = useStyles();
   const [error, setError] = useState<ErrorField[]>([]);
 
-  console.log(error);
+//   console.log(error);
 
   // const getErrorInfo = (errors: ErrorField[]) => {
   //   const errorCount = errors.filter((item) => item.errors.length > 0).length;
@@ -181,7 +181,7 @@ const AdvancedForm: FC<Record<string, any>> = () => {
 
         // Fully customize the entire area
         render: (props) => {
-          console.log(props);
+        //   console.log(props);
           return [
             <Flex gap="middle" className={styles.footer} key="submitBtns">
               <Form.Item>

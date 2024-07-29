@@ -106,7 +106,7 @@ export function patchClientRoutes({ routes }) {
       
         const mergedRoutes = routes?.map(mr => {
           if (mr.id === 'ant-design-pro-layout') {
-                console.log(mr)
+                // console.log(mr)
             return {
               ...mr,
               routes: mr.routes.map(r => {
@@ -125,13 +125,13 @@ export function patchClientRoutes({ routes }) {
               }),
               children: mr.children.map(r => {
                 if (r.path === '/content') {
-                        console.log(r)
+                        // console.log(r)
                   return {
                     ...r,
                     children: r.children.map(ir => {
                       if (ir.path === '/content/dynamic') {
-                        console.log(ir)
-                        console.log({ ...ir, routes: dynamicRoutes, children: dynamicRoutes })
+                        // console.log(ir)
+                        // console.log({ ...ir, routes: dynamicRoutes, children: dynamicRoutes })
                         return { ...ir, routes: dynamicRoutes, children: dynamicRoutes };
                       }
                       
@@ -146,18 +146,18 @@ export function patchClientRoutes({ routes }) {
           return mr;
         });  
       
-        console.log("mergedRoutes:",mergedRoutes)
+        // console.log("mergedRoutes:",mergedRoutes)
         mergedRoutes.map(r=>routes.unshift(r))
       }
 // APIs supported by ProLayout https://procomponents.ant.design/components/layout
 
 export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
-  console.log('Initial State:', initialState);
+//   console.log('Initial State:', initialState);
 
   //   const { currentUser } = initialState || {};
   //   const dynamicRoutes = currentUser?.dynamicRoutes ? currentUser.dynamicRoutes : [];
 
-  console.log('Dynamic Routes Array:', dynamicRoutes);
+//   console.log('Dynamic Routes Array:', dynamicRoutes);
 
   return {
     menu: {

@@ -21,7 +21,7 @@ const Journals: React.FC = () => {
       centered: true,
       style: { direction: getLocale() === 'fa-IR' ? 'rtl' : 'ltr' },
       onOk() {
-        console.log('OK');
+        // console.log('OK');
         deletePet({ petId: currentItem?.key }).then((res) => {
           if (res.code === 200) {
             actionRef.current.reload();

@@ -42,6 +42,7 @@ export default defineConfig({
     // Only when set to variable can configProvide be used to dynamically set the primary color
     'root-entry-name': 'variable',
     fontFamily: 'IRANSans',
+    primaryColor:"#123",
   },
   /*
    * @name Internationalization configuration for moment.js

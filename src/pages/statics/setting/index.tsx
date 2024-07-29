@@ -181,7 +181,7 @@ const Setting: FC<Record<string, any>> = () => {
 
         // Fully customize the entire area
         render: (props) => {
-          console.log(props);
+        //   console.log(props);
           return [
             <Flex gap="middle" className={styles.footer} key="submitBtns">
               <Form.Item>

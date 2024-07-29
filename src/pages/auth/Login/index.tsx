@@ -105,7 +105,7 @@ const Login: React.FC = () => {
   const { styles } = useStyles();
   const intl = useIntl();
   //   const navigate = useNavigate();
-  console.log('initialState:', initialState);
+//   console.log('initialState:', initialState);
   const handleSubmit = async (values: API.loginUserParams) => {
     try {
       // Login

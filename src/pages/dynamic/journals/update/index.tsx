@@ -44,8 +44,8 @@ const UpdateJournals: React.FC = () => {
       ? { value: locationState?.category?.id, label: locationState?.category?.name }
       : undefined,
   };
-  console.log(locationState);
-  console.log(record);
+//   console.log(locationState);
+//   console.log(record);
   async function handleFileUpload(petId: number, file: File, additionalMetadata?: string) {
     const params = {
       petId: petId,
