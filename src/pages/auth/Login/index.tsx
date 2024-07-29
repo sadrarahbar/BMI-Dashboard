@@ -118,54 +118,7 @@ const Login: React.FC = () => {
           name: 'Serati Ma',
           avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
           userid: '00000001',
-          email: 'antdesign@alipay.com',
-          signature: 'The sea embraces all rivers, and tolerance is great',
-          title: 'Interaction Expert',
-          group:
-            'Ant Financial Services - XXXX Business Group - XXXX Platform Department - XXXX Technology Department - UED',
-          tags: [
-            {
-              key: '0',
-              label: 'very thoughtful',
-            },
-            {
-              key: '1',
-              label: 'focus on design',
-            },
-            {
-              key: '2',
-              label: 'spicy~',
-            },
-            {
-              key: '3',
-              label: 'long legs',
-            },
-            {
-              key: '4',
-              label: 'Sichuan girl',
-            },
-            {
-              key: '5',
-              label: 'the sea embraces all rivers',
-            },
-          ],
-          notifyCount: 12,
-          unreadCount: 11,
-          country: 'China',
           access: 'admin  deleteNews addNews updateNews',
-          geographic: {
-            province: {
-              label: 'Zhejiang Province',
-              key: '330000',
-            },
-            city: {
-              label: 'Hangzhou City',
-              key: '330100',
-            },
-          },
-          address: 'No. 77, Gongzhuan Road, Xihu District',
-          phone: '0752-268888888',
-
         };
         flushSync(() => {
           setInitialState({

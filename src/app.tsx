@@ -74,53 +74,7 @@ export async function getInitialState(): Promise<{
         avatar:
           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_UP3m1iNsigc_SlmkKuMlPcDeEEfe9DewQYSQCLti-DtNK1BOgkyTHvynZh2frtu3Z7s&usqp=CAU',
         userid: '00000001',
-        email: 'antdesign@alipay.com',
-        signature: 'The sea embraces all rivers, and tolerance is great',
-        title: 'Interaction expert',
-        group:
-          'Ant Financial Services Group - XXXX Business Group - XXXX Platform Department - XXXX Technology Department - UED',
-        tags: [
-          {
-            key: '0',
-            label: 'Very thoughtful',
-          },
-          {
-            key: '1',
-            label: 'Focus on design',
-          },
-          {
-            key: '2',
-            label: 'Spicy~',
-          },
-          {
-            key: '3',
-            label: 'Long legs',
-          },
-          {
-            key: '4',
-            label: 'Sichuan girl',
-          },
-          {
-            key: '5',
-            label: 'The sea embraces all rivers',
-          },
-        ],
-        notifyCount: 12,
-        unreadCount: 11,
-        country: 'China',
         access: 'admin  deleteNews addNews updateNews',
-        geographic: {
-          province: {
-            label: 'Zhejiang Province',
-            key: '330000',
-          },
-          city: {
-            label: 'Hangzhou',
-            key: '330100',
-          },
-        },
-        address: 'No. 77 Gongzhuan Road, Xihu District',
-        phone: '0752-268888888',
         dynamicRoutes: dynamicRoutes,
       };
       return currentUserData;
