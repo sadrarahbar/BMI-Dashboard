@@ -33,7 +33,7 @@ const UpdateJournals: React.FC = () => {
     { value: 'pending', label: 'Pending' },
     { value: 'sold', label: 'Sold' },
   ];
-  const isCreateMode = location?.pathname === '/content/dynamic/create';
+  const isCreateMode = location?.pathname === '/content/dynamic/journals/create';
   const locationState: API.Pet = location?.state;
   const record = {
     ...locationState,
@@ -57,7 +57,7 @@ const UpdateJournals: React.FC = () => {
       const response = await uploadFile(params, body, file);
       console.log('Upload successful:', response);
       message.success('با موفقیت آپلود شد');
-      history.push('/content/dynamic'); // Navigate to a specific URL
+      history.push('/content/dynamic/journals'); // Navigate to a specific URL
     } catch (error) {
       console.error('Upload failed:', error);
       message.error('عملیات آپلود موفقیت آمیز نبود !');
@@ -98,6 +98,7 @@ const UpdateJournals: React.FC = () => {
         photoUrls: record?.photoUrls, //todo
       };
       updatePet(body).then((res) => {
+        console.log(res)
         formData?.file?.map((f) => {
           handleFileUpload(res?.id, f, `fileName:${res?.name}`);
         });

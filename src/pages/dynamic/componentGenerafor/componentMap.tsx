@@ -1,5 +1,4 @@
-import React, { lazy, Suspense } from 'react';
-import { JsonComponent } from './types';
+import { lazy } from 'react';
 
 // Lazy load @ant-design/pro-components
 const PageContainer = lazy(() =>
@@ -41,8 +40,8 @@ const ProFormDependency = lazy(() =>
 const ProFormFieldSet = lazy(() =>
   import('@ant-design/pro-components').then((module) => ({ default: module.ProFormFieldSet })),
 );
-const ProFormGroup = lazy(() =>
-  import('@ant-design/pro-components').then((module) => ({ default: module.ProFormGroup })),
+const ProGroup = lazy(() =>
+  import('@ant-design/pro-components').then((module) => ({ default: module.ProGroup })),
 );
 const ProFormList = lazy(() =>
   import('@ant-design/pro-components').then((module) => ({ default: module.ProFormList })),
@@ -182,7 +181,7 @@ const componentMap: { [key: string]: React.LazyExoticComponent<React.ComponentTy
   ProField,
   ProFormDependency,
   ProFormFieldSet,
-  ProFormGroup,
+  ProGroup,
   ProFormList,
   ProFormMoney,
   ProFormRadio,
@@ -265,60 +264,4 @@ const componentMap: { [key: string]: React.LazyExoticComponent<React.ComponentTy
   Typography,
   Upload,
 };
-
-// Render Functions
-const RenderElement: React.FC<{ json: JsonComponent; props?: any }> = ({ json, props = {} }) => {
-  const { type, props: componentProps, children } = json;
-  const Component = componentMap[type];
-
-  if (!Component) {
-    return null;
-  }
-
-  // Resolve dynamic props
-  const resolvedProps = { ...componentProps };
-  for (let key in resolvedProps) {
-    if (resolvedProps.hasOwnProperty(key)) {
-      switch (resolvedProps[key]) {
-        case 'record.id':
-          resolvedProps[key] = props.record?.id;
-          break;
-        case 'record.name':
-          resolvedProps[key] = props.record?.name;
-          break;
-        case 'record.status':
-          resolvedProps[key] = props.record?.status;
-          break;
-        case 'handleClose':
-          resolvedProps[key] = () => {
-            props.setOpen(false);
-            props.setCurrentRecord(null);
-          };
-          break;
-        default:
-          if (key === 'open') {
-            resolvedProps[key] = props.open;
-          }
-          break;
-      }
-    }
-  }
-
-  if (children && children.length > 0) {
-    return (
-      <Suspense fallback={<div>Loading...</div>}>
-        <Component {...resolvedProps}>
-          {children.map((child, index) => (
-            <RenderElement key={index} json={child} props={props} />
-          ))}
-        </Component>
-      </Suspense>
-    );
-  }
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Component {...resolvedProps} />
-    </Suspense>
-  );
-};
-export default RenderElement;
+export default componentMap;

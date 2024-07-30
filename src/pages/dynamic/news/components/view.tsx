@@ -13,7 +13,7 @@ const { Divider } = ProCard;
 
 const ViewNews: FC<ViewProps> = (props) => {
   const { record, setCurrentRecord, open, setOpen } = props;
-//   console.log(record);
+
   return (
     <Drawer
       title=" جزئیات "

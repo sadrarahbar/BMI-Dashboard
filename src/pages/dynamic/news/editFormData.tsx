@@ -1,24 +1,97 @@
+import { addPet, updatePet, uploadFile } from '@/services/ant-design-pro/pet';
 import { ProFormProps } from '@ant-design/pro-components';
-import { Button, Flex } from 'antd';
-import { JsonComponent } from '../types';
-// Define the handleCancel function
 import { history } from '@umijs/max';
+import { Button, Flex, message } from 'antd';
+import { JsonComponent } from '../types';
 const handleCancel = () => {
   history.push('/content/dynamic/news');
-  // Additional logic for handling cancel can be added here
 };
-
-// Define the submitHandler function
-const submitHandler = (data: any) => {
-  console.log('Form submitted with data:', data);
-  // Additional logic for form submission can be added here
-};
-
-// Function to determine if the mode is create
 const isCreateMode = (): boolean => {
   return history?.location?.pathname === '/content/dynamic/news/create';
 };
-export const updateNewsJson: JsonComponent = {
+const categoryOptions = [
+  { value: 0, label: 'دسته0' },
+  { value: 1, label: 'دسته1' },
+  { value: 2, label: 'دسته2' },
+];
+
+const tagOptions = [
+  { value: 0, label: 'تگ 0' },
+  { value: 1, label: 'تگ 1' },
+  { value: 2, label: 'تگ 2' },
+];
+
+async function handleFileUpload(petId: number, file: File, additionalMetadata?: string) {
+  const params = {
+    petId: petId,
+  };
+  const body = {
+    additionalMetadata: additionalMetadata,
+  };
+  try {
+    const response = await uploadFile(params, body, file);
+    console.log('Upload successful:', response);
+    message.success('با موفقیت آپلود شد');
+  } catch (error) {
+    console.error('Upload failed:', error);
+    message.error('عملیات آپلود موفقیت آمیز نبود !');
+  }
+  history.push('/content/dynamic/news'); 
+}
+
+const submitHandler = (formData: API.Pet) => {
+  const locationState = history?.location?.state || {};
+  const record = {
+    ...locationState,
+    tags: locationState?.tags?.map((t) => {
+      return { value: t?.id, label: t?.name };
+    }),
+    category: locationState?.category
+      ? { value: locationState?.category?.id, label: locationState?.category?.name }
+      : undefined,
+  };
+  const filteredTagOptions = tagOptions
+    ?.filter((option) => formData?.tags?.includes(option?.value))
+    ?.map((item) => ({ id: +item?.value, name: item?.label }));
+
+  const filteredCategoryOptions = categoryOptions
+    ?.filter((cat) => formData?.category === cat?.value)
+    ?.map((item) => ({ id: +item?.value, name: item?.label }))[0];
+
+  if (isCreateMode()) {
+    addPet({
+      category: filteredCategoryOptions,
+      name: formData?.name,
+      photoUrls: [''], //todo
+      tags: filteredTagOptions,
+      status: formData?.status,
+    }).then((res) => {
+      if (res?.id) {
+        message.success('با موفقیت اضافه شد');
+        formData?.file?.map((f) => handleFileUpload(res?.id, f, `fileName:${res?.name}`));
+      } else {
+        message.error('عملیات موفقیت آمیز نبود');
+      }
+    });
+  } else {
+    const body = {
+      id: locationState?.key || 0,
+      category: filteredCategoryOptions,
+      name: formData?.name,
+      tags: filteredTagOptions,
+      status: formData?.status,
+      photoUrls: record?.photoUrls, //todo
+    };
+    updatePet(body).then((res) => {
+      console.log(res);
+      formData?.file?.map((f) => {
+        handleFileUpload(res?.id, f, `fileName:${res?.name}`);
+      });
+    });
+  }
+};
+
+export const editFormJson: JsonComponent = {
   type: 'Card',
   props: {},
   children: [

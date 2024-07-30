@@ -1,15 +1,11 @@
 import { PageContainer } from '@ant-design/pro-components';
 import { history } from '@umijs/max';
-
 import React, { useMemo } from 'react';
 import Journals from './journals';
 import UpdateJournals from './journals/update';
 import News from './news';
-// import UpdateNews from './news/update';
-import { updateNewsJson } from './news/fakeData';
-import RenderElement from './renderElement';
-
-// Extracted Content component for better readability and performance
+import FormGenerator from './componentGenerafor/form';
+import { editFormJson } from './news/editFormData';
 const Content: React.FC<{ pathname: string }> = ({ pathname }) => {
   //   const [json, setJson] = useState<JsonComponent | null>(null);
   //   const [error, setError] = useState<string | null>(null);
@@ -43,7 +39,7 @@ const Content: React.FC<{ pathname: string }> = ({ pathname }) => {
       return <News />;
     case pathname === '/content/dynamic/news/create':
     case pathname.startsWith('/content/dynamic/news/edit'):
-      return <RenderElement json={updateNewsJson} />;
+      return <Generator json={updateNewsJson} />;
     case pathname === '/content/dynamic/journals':
       return <Journals />;
     case pathname === '/content/dynamic/journals/create':
@@ -56,7 +52,6 @@ const Content: React.FC<{ pathname: string }> = ({ pathname }) => {
 
 const DynamicPage: React.FC = () => {
   const { location } = history;
-  // Memoize Content component to prevent unnecessary re-renders
   const MemoizedContent = useMemo(
     () => <Content pathname={location.pathname} />,
     [location.pathname],
