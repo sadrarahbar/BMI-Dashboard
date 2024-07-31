@@ -39,7 +39,7 @@ const Content: React.FC<{ pathname: string }> = ({ pathname }) => {
       return <News />;
     case pathname === '/content/dynamic/news/create':
     case pathname.startsWith('/content/dynamic/news/edit'):
-      return <Generator json={updateNewsJson} />;
+      return <FormGenerator json={editFormJson} />;
     case pathname === '/content/dynamic/journals':
       return <Journals />;
     case pathname === '/content/dynamic/journals/create':
