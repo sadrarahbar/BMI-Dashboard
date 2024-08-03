@@ -1,8 +1,7 @@
 import { deletePet, findPetsByStatus } from '@/services/ant-design-pro/pet';
-import { DeleteOutlined, EyeOutlined, FormOutlined } from '@ant-design/icons';
-import { ActionType, ProColumns } from '@ant-design/pro-components';
-import { getLocale, Link, useAccess, useModel } from '@umijs/max';
-import { Button, Card, message, Modal, Tooltip } from 'antd';
+import { ActionType } from '@ant-design/pro-components';
+import { getLocale, useAccess } from '@umijs/max';
+import { message, Modal } from 'antd';
 import React, { useRef, useState } from 'react';
 import ListGenerator from '../componentGenerafor/list';
 import View from './components/view';
@@ -10,7 +9,6 @@ import useStyles from './style.style';
 
 const News: React.FC = () => {
   const access = useAccess();
-  const [params, setParams] = useState({}); // Initial params (including status filter)
   const [currentRecord, setCurrentRecord] = useState<API.Pet | null>(null);
   const [openView, setOpenView] = useState<boolean>(false);
   const actionRef = useRef<ActionType>();
@@ -127,7 +125,7 @@ const News: React.FC = () => {
 
   return (
     <>
-        <ListGenerator json={newsListJson} request={findPetsByStatus} />
+      <ListGenerator json={newsListJson} request={findPetsByStatus} />
       <View
         record={currentRecord}
         setCurrentRecord={setCurrentRecord}
