@@ -1,8 +1,9 @@
-import { InfoCircleOutlined } from '@ant-design/icons';
+import { ClockCircleOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { Area, Base, Scatter } from '@ant-design/plots';
-import { PageContainer } from '@ant-design/pro-components';
-import { Card, Col, Row, Tooltip } from 'antd';
-import type { FC } from 'react';
+import { PageContainer, ProCard, StatisticCard } from '@ant-design/pro-components';
+import { Card, Col, Row, theme, Timeline, Tooltip } from 'antd';
+import RcResizeObserver from 'rc-resize-observer';
+import { useState, type FC } from 'react';
 import ChartCard from './components/ChartCard';
 import Field from './components/Field';
 
@@ -114,8 +115,161 @@ const baseChartConfig = {
   children: [{ type: 'interval', encode: { x: 'name', y: 'value', color: 'name' } }],
 };
 const Dashboard: FC = () => {
+  const { token } = theme.useToken();
+  const { Statistic, Divider } = StatisticCard;
+  const [responsive, setResponsive] = useState(false);
+  const imgStyle = {
+    display: 'block',
+    width: 42,
+    height: 42,
+  };
   return (
     <PageContainer>
+      <RcResizeObserver
+        key="resize-observer"
+        onResize={(offset) => {
+          setResponsive(offset.width < 596);
+        }}
+      >
+        <StatisticCard.Group style={{ marginBlock: 24 }} direction={responsive ? 'column' : 'row'}>
+          <StatisticCard
+            statistic={{
+              title: 'جمع کل',
+              value: 601986875,
+            }}
+          />
+          <Divider type={responsive ? 'horizontal' : 'vertical'} />
+          <StatisticCard
+            statistic={{
+              title: 'درامد شعبه ها',
+              value: 3701928,
+              description: <Statistic title="افزایش" value="61.5%" />,
+            }}
+            chart={
+              <img
+                src="https://gw.alipayobjects.com/zos/alicdn/ShNDpDTik/huan.svg"
+                alt="حساب"
+                width="100%"
+              />
+            }
+            chartPlacement="left"
+          />
+          <StatisticCard
+            statistic={{
+              title: 'هزینه کل',
+              value: 1806062,
+              description: <Statistic title="افزایش" value="38.5%" />,
+            }}
+            chart={
+              <img
+                src="https://gw.alipayobjects.com/zos/alicdn/6YR18tCxJ/huanlv.svg"
+                alt="حساب"
+                width="100%"
+              />
+            }
+            chartPlacement="left"
+          />
+        </StatisticCard.Group>
+      </RcResizeObserver>
+      <Row gutter={24} style={{ marginTop: 24 }}>
+        <Col {...topColResponsiveProps}>
+          <StatisticCard
+            statistic={{
+              title: ' تعداد کارشناس ',
+              value: 475,
+              icon: (
+                <img
+                  style={imgStyle}
+                  src="https://gw.alipayobjects.com/mdn/rms_7bc6d8/afts/img/A*-jVKQJgA1UgAAAAAAAAAAABkARQnAQ"
+                  alt="icon"
+                />
+              ),
+            }}
+          />
+        </Col>
+        <Col {...topColResponsiveProps}>
+          <StatisticCard
+            statistic={{
+              title: 'تعداد مشتری ',
+              value: 1754,
+              icon: (
+                <img
+                  style={imgStyle}
+                  src="https://gw.alipayobjects.com/mdn/rms_7bc6d8/afts/img/A*pUkAQpefcx8AAAAAAAAAAABkARQnAQ"
+                  alt="icon"
+                />
+              ),
+            }}
+          />
+        </Col>
+        <Col {...topColResponsiveProps}>
+          <StatisticCard
+            statistic={{
+              title: 'تعدا حساب ',
+              value: 87,
+              icon: (
+                <img
+                  style={imgStyle}
+                  src="https://gw.alipayobjects.com/mdn/rms_7bc6d8/afts/img/A*FPlYQoTNlBEAAAAAAAAAAABkARQnAQ"
+                  alt="icon"
+                />
+              ),
+            }}
+          />
+        </Col>
+        <Col {...topColResponsiveProps}>
+          <StatisticCard
+            statistic={{
+              title: 'درآمد',
+              value: 2176,
+              icon: (
+                <img
+                  style={imgStyle}
+                  src="https://gw.alipayobjects.com/mdn/rms_7bc6d8/afts/img/A*dr_0RKvVzVwAAAAAAAAAAABkARQnAQ"
+                  alt="icon"
+                />
+              ),
+            }}
+          />
+        </Col>
+      </Row>
+      <Row gutter={24}>
+        <Col xl={16} lg={24} md={24} sm={24} xs={24}>
+          <Card
+            style={{
+              marginBottom: 24,
+              height: '400px',
+            }}
+            bordered={false}
+            title="تغییرات فصلی "
+            //     loading={data?.radarData?.length === 0}
+          >
+            <Scatter
+              {...scatterConfig}
+              style={{
+                width: '100%',
+              }}
+            />
+          </Card>
+        </Col>
+        <Col xl={8} lg={24} md={24} sm={24} xs={24}>
+          <Card
+            style={{
+              marginBottom: 24,
+              height: '400px',
+            }}
+            bordered={false}
+            title="امتیاز کلی "
+          >
+            <Base
+              style={{
+                width: '100%',
+              }}
+              {...baseChartConfig}
+            />
+          </Card>
+        </Col>
+      </Row>
       <Row gutter={24}>
         <Col {...topColResponsiveProps}>
           <ChartCard
@@ -234,43 +388,120 @@ const Dashboard: FC = () => {
           </ChartCard>
         </Col>
       </Row>
-      <Row gutter={24}>
-        <Col xl={16} lg={24} md={24} sm={24} xs={24}>
-          <Card
-            style={{
-              marginBottom: 24,
-              height: '400px',
-            }}
-            bordered={false}
-            title="تغییرات فصلی "
-            //     loading={data?.radarData?.length === 0}
-          >
-            <Scatter
-              {...scatterConfig}
-              style={{
-                width: '100%',
-              }}
+      <RcResizeObserver
+        key="resize-observer"
+        onResize={(offset) => {
+          setResponsive(offset.width < 596);
+        }}
+      >
+        <ProCard
+          title="شاخص پرداخت"
+          extra="2 اکتبر 2023"
+          split={responsive ? 'horizontal' : 'vertical'}
+          headerBordered
+          bordered
+        >
+          <ProCard split="horizontal">
+            <ProCard split="horizontal">
+              <ProCard split="vertical">
+                <StatisticCard
+                  statistic={{
+                    title: 'بورس',
+                    value: 234,
+                    description: <Statistic title="افزایش" value="8.04%" trend="down" />,
+                  }}
+                />
+                <StatisticCard
+                  statistic={{
+                    title: 'سکه',
+                    value: 234,
+                    description: <Statistic title="کاهش" value="8.04%" trend="up" />,
+                  }}
+                />
+              </ProCard>
+              <ProCard split="vertical">
+                <StatisticCard
+                  statistic={{
+                    title: 'ارز',
+                    value: '12/56',
+                    suffix: '个',
+                  }}
+                />
+                <StatisticCard
+                  statistic={{
+                    title: 'طلا',
+                    value: '134',
+                    suffix: '个',
+                  }}
+                />
+              </ProCard>
+            </ProCard>
+            <StatisticCard
+              title="واریز"
+              chart={
+                <img
+                  src="https://gw.alipayobjects.com/zos/alicdn/_dZIob2NB/zhuzhuangtu.svg"
+                  width="100%"
+                />
+              }
             />
-          </Card>
-        </Col>
-        <Col xl={8} lg={24} md={24} sm={24} xs={24}>
-          <Card
-            style={{
-              marginBottom: 24,
-              height: '400px',
-            }}
-            bordered={false}
-            title="امتیاز کلی "
+          </ProCard>
+          <StatisticCard
+            title="تایم لاین"
           >
-            <Base
-              style={{
-                width: '100%',
-              }}
-              {...baseChartConfig}
+            <Timeline
+              mode="alternate"
+              items={[
+                {
+                children: 'ایجاد یک سایت خدمات 2015-09-01',
+                },
+                {
+                children: 'حل مشکلات اولیه شبکه 2015-09-01',
+                color: 'green',
+                },
+                {
+                dot: <ClockCircleOutlined style={{ fontSize: '16px' }} />,
+                children:' اما باید از این ببریم که هر لذتی که به دست بیاوریم، یک درد و رنج همراه دارد. چرا که هر لذتی که به دست آوریم، هزینه‌هایی دارد که باید پرداخت شود و این هزینه‌ها معمولاً بیش از لذتی است که به دست می‌آوریم.,'},
+                {
+                color: 'red',
+                children: 'حل مشکلات شبکه در حال انجام 2015-09-01',
+                },
+                {
+                children: 'ایجاد یک سایت خدمات 2015-09-01',
+                },
+                {
+                dot: <ClockCircleOutlined style={{ fontSize: '16px' }} />,
+                children: 'آزمایش فنی 2015-09-01',
+                },
+                {
+                color: 'red',
+                children: 'حل مشکلات شبکه در حال انجام 2015-09-01',
+                },
+                {
+                children: 'ایجاد یک سایت خدمات 2015-09-01',
+                },
+                {
+                dot: <ClockCircleOutlined style={{ fontSize: '16px' }} />,
+                children: 'آزمایش فنی 2015-09-01',
+                },
+                {
+                children: 'ایجاد یک سایت خدمات 2015-09-01',
+                },
+                {
+                children: 'حل مشکلات اولیه شبکه 2015-09-01',
+                color: 'green',
+                },
+                {
+                dot: <ClockCircleOutlined style={{ fontSize: '16px' }} />,
+                children:' اما باید از این ببریم که هر لذتی که به دست بیاوریم، یک درد و رنج همراه دارد. چرا که هر لذتی که به دست آوریم، هزینه‌هایی دارد که باید پرداخت شود و این هزینه‌ها معمولاً بیش از لذتی است که به دست می‌آوریم.,'},
+                ]}
             />
-          </Card>
-        </Col>
-      </Row>
+          </StatisticCard>
+        </ProCard>
+      </RcResizeObserver>
+    
+
+  
     </PageContainer>
   );
 };
